@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navController = navHostFragment.getNavController();
 
         // Activity 바텀 NavigationView 설정
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
     }
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         NavDestination currentDestination = navController.getCurrentDestination();
         NavDestination tag1 = navController.getGraph().findNode(R.id.mainFragment);
         if (currentDestination == tag1) {
-            BottomNavigationView bnv = findViewById(R.id.bottomNavigationView);
+            BottomNavigationView bnv = findViewById(R.id.bottomNavigation);
             updateBottomMenu(bnv);
         }
     }

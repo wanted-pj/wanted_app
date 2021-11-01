@@ -14,7 +14,7 @@ public class Friend {
         this.major = major;
         this.imgRes = imgRes;
     }
-
+    //dfsdd
     public String getName() {
         return name;
     }

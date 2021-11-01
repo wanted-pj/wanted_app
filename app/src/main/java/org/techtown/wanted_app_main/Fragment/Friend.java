@@ -7,6 +7,7 @@ public class Friend {
     public String school;
     public String major;
     public int imgRes;
+    public String etc;
 
     public Friend(String name, String school, String major, int imgRes) {
         this.name = name;

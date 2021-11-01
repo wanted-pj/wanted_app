@@ -21,7 +21,7 @@ public class CommunityFragment extends Fragment {
   public CommunityFragment() {
     // Required empty public constructor
   }
-
+  // test
   public static CommunityFragment newInstance(String param1, String param2) {
     CommunityFragment fragment = new CommunityFragment();
 //        Bundle args = new Bundle();

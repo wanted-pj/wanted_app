@@ -10,21 +10,21 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            // 학교친구
+            // 커뮤니티
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -35,18 +35,80 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="학교친구"
+                        android:text="너, 내 동료가 돼라!"
                         android:textColor="@color/colorPrimaryDark"
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:letterSpacing="-0.05"/>
 
                     <Button
-                        android:id="@+id/arrow_school"
+                        android:id="@+id/arrow_community"
                         android:layout_width="10dp"
                         android:layout_height="15dp"
                         android:background="@drawable/arrow"
                         android:layout_marginLeft="10dp"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_community"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+            // 학교친구
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="우린 칭구칭긔"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:letterSpacing="-0.05"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="8dp">
+
+                    <Button
+                        android:id="@+id/btnSchool"
+                        android:text="학교친구"
+                        style="@style/friendBtn"/>
+
+                    <Button
+                        android:id="@+id/btnMajor"
+                        android:text="학과친구"
+                        android:layout_marginLeft="10dp"
+                        style="@style/friendBtn"/>
+
+                    <Button
+                        android:id="@+id/btnAddress"
+                        android:text="동네친구"
+                        android:layout_marginLeft="10dp"
+                        style="@style/friendBtn"/>
 
                 </LinearLayout>
 
@@ -54,53 +116,40 @@
                     android:id="@+id/recyclerView_school"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginBottom="5dp"
                     android:nestedScrollingEnabled="false"
                     android:overScrollMode="never" />
             </LinearLayout>
 
-            // 학과친구
+            // Footer
             <LinearLayout
+                android:id="@+id/footer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="230dp"
+                android:background="#e4e3e3"
                 android:orientation="vertical">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/logo" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="학과친구"
-                        android:textColor="@color/colorPrimaryDark"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:letterSpacing="-0.05"/>
-
-                    <Button
-                        android:id="@+id/arrow_major"
-                        android:layout_width="10dp"
-                        android:layout_height="15dp"
-                        android:background="@drawable/arrow"
-                        android:layout_marginLeft="10dp"/>
-
-                </LinearLayout>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView_major"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginBottom="5dp"
-                    android:nestedScrollingEnabled="false"
-                    android:overScrollMode="never" />
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingMultiplier="1.2"
+                    android:text="상호명: 원티드\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @원티드 친구 추가하고 소식을 받아보세요"
+                    android:textColor="#ff191919"
+                    android:textSize="8sp" />
+
             </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

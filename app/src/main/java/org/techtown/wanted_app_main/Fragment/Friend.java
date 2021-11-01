@@ -1,13 +1,10 @@
 package org.techtown.wanted_app_main.Fragment;
 
-import java.io.Serializable;
-
 public class Friend {
     public String name;
     public String school;
     public String major;
     public int imgRes;
-    public String etc;
 
     public Friend(String name, String school, String major, int imgRes) {
         this.name = name;

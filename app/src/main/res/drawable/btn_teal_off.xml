@@ -5,7 +5,7 @@
         android:layout_width="180dp"
         android:layout_height="30dp"/>
     <solid
-        android:color="@color/colorPrimary"/>
+        android:color="#00ffffff"/>
     <corners
         android:bottomLeftRadius="30dp"
         android:bottomRightRadius="30dp"

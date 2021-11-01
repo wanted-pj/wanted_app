@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +17,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainFragment extends Fragment {
 
     private RecyclerView recyclerViewSchool;
-    private RecyclerView recyclerViewMajor;
+    private RecyclerView recyclerViewCommunity;
     private FriendAdapter friendAdapter;
+    private PostingAdapter postingAdapter;
     private ArrayList<Friend> friendItems;
+    private ArrayList<Posting> postingItems;
+    private Button btnSchool, btnMajor, btnAddress;
 
     private static NavController navController;
     private static String spinnerString = "학교친구";
@@ -58,8 +60,20 @@ public class MainFragment extends Fragment {
         friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
         friendAdapter = new FriendAdapter();
+        postingAdapter = new PostingAdapter();
 
-        /* initiate recyclerview */
+        // 커뮤니티
+        recyclerViewCommunity = view.findViewById(R.id.recyclerView_community);
+        recyclerViewCommunity.setAdapter(postingAdapter);
+        recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
+
+        postingItems = new ArrayList<>();
+        postingItems.add(new Posting("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        postingItems.add(new Posting("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        postingItems.add(new Posting("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        postingAdapter.setPostingList(postingItems);
+
+        // 친구
         recyclerViewSchool = view.findViewById(R.id.recyclerView_school);
         recyclerViewSchool.setAdapter(friendAdapter);
         recyclerViewSchool.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
@@ -70,15 +84,35 @@ public class MainFragment extends Fragment {
         friendItems.add(new Friend("시미즈", "서강대학교", "수학교육과", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
         friendAdapter.setFriendList(friendItems);
 
-        recyclerViewMajor = view.findViewById(R.id.recyclerView_major);
-        recyclerViewMajor.setAdapter(friendAdapter);
-        recyclerViewMajor.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
+        btnSchool = view.findViewById(R.id.btnSchool);
+        btnMajor = view.findViewById(R.id.btnMajor);
+        btnAddress = view.findViewById(R.id.btnAddress);
 
+        // 처음 btn 지정
+        btnSchool.setBackgroundResource(R.drawable.btn_teal);
+        btnSchool.setTextColor(getResources().getColor(R.color.white));
 
+        // btn 클릭 이벤트
+        Button.OnClickListener onClickListener = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch(v.getId()) {
+                    case R.id.btnSchool:
+                        onButtonClicked(0);
+                        break;
+                    case R.id.btnMajor:
+                        onButtonClicked(1);
+                        break;
+                    case R.id.btnAddress:
+                        onButtonClicked(2);
+                        break;
+                }
+            }
+        };
 
-
-
-
+        btnSchool.setOnClickListener(onClickListener);
+        btnMajor.setOnClickListener(onClickListener);
+        btnAddress.setOnClickListener(onClickListener);
 
 //        // 스피너 값 값 가져오기
 //        Spinner friends_category = view.findViewById(R.id.main_spinner_category);
@@ -118,5 +152,23 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+    }
+
+    public void onButtonClicked (int index) {
+        List<Button> buttons = Arrays.asList(btnSchool, btnMajor, btnAddress);
+
+        for (int i = 0; i < buttons.size(); i++) {
+            Button button = buttons.get(i);
+
+            if (i == index) {
+                button.setBackgroundResource(R.drawable.btn_teal);
+                button.setTextColor(getResources().getColor(R.color.white));
+            }
+            else {
+                button.setBackgroundResource(R.drawable.btn_teal_off);
+                button.setTextColor(getResources().getColor(R.color.colorPrimary));
+            }
+        }
+
     }
 }

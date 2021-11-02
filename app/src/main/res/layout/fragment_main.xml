@@ -84,7 +84,12 @@
                         android:textSize="20sp"
                         android:textStyle="bold"
                         android:letterSpacing="-0.05"/>
-
+                    <Button
+                        android:id="@+id/arrow_showfriends"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/arrow"
+                        android:layout_marginLeft="10dp"/>
                 </LinearLayout>
 
                 <LinearLayout

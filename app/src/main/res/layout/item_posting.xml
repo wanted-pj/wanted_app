@@ -41,7 +41,7 @@
 
     <LinearLayout
         android:id="@+id/posting"
-        android:layout_width="300dp"
+        android:layout_width="280dp"
         android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintTop_toTopOf="parent"

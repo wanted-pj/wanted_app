@@ -19,7 +19,7 @@
             android:layout_marginLeft="10dp"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            app:srcCompat="@drawable/proimage" />
+            app:srcCompat="@drawable/profile_basic2" />
 
         <LinearLayout
 
@@ -50,8 +50,8 @@
     <View
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#E1DCDC"/>
+        android:layout_height="1dp"
+        android:background="#009688"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,11 +85,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="학교"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -107,11 +107,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="전공"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -129,11 +129,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="학년"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -162,11 +162,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="학번"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,11 +188,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="성별"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -213,11 +213,11 @@
 
                     <Button
                         android:layout_width="55dp"
-                        android:layout_height="30dp"
+                        android:layout_height="35dp"
                         android:clickable="false"
                         android:text="지역"
                         android:textColor="@color/black"
-                        android:textSize="10dp" />
+                        android:textSize="11dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -236,9 +236,10 @@
 
         </LinearLayout>
         <View
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
+            android:layout_marginBottom="15dp"
             android:background="#E1DCDC"/>
 
 

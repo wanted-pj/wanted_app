@@ -5,11 +5,24 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
+    <!--커뮤니티-->
     <fragment
         android:id="@+id/communityFragment"
         android:name="org.techtown.wanted_app_main.Fragment.CommunityFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community" />
+        tools:layout="@layout/fragment_community">
+            <action
+                android:id="@+id/action_contest_to_detailpost"
+                app:destination="@id/DetailPost" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/DetailPost"
+        android:name="org.techtown.wanted_app_main.Fragment.Community.DetailPostFragment"
+        android:label="fragment_detailpost"
+        tools:layout="@layout/fragment_detail_post" />
+
+    <!--  -->
     <fragment
         android:id="@+id/profileFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileFragment"
@@ -56,8 +69,16 @@
             android:id="@+id/action_showFriendsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
+
+
     <action
         android:id="@+id/action_global_chatFragment"
         app:destination="@id/chatFragment"
         app:popUpTo="@id/mainFragment" />
+
+
+
+
+
+
 </navigation>

@@ -4,11 +4,9 @@ public class DetailPost_item {
     String image;
     String id;
 
-
     public DetailPost_item(String image, String id){
         this.image=image;
         this.id=id;
-
     }
 
     public String getImage() {
@@ -19,7 +17,6 @@ public class DetailPost_item {
         this.image = image;
     }
 
-
     public String getId() {
         return id;
     }
@@ -27,6 +24,4 @@ public class DetailPost_item {
     public void  setId(String title) {
         this.id = id;
     }
-
-
 }

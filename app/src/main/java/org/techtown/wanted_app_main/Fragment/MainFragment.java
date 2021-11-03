@@ -353,6 +353,5 @@ public class MainFragment extends Fragment {
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
         }
-
     }
 }

@@ -45,16 +45,20 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerViewCommunity;
     private FriendAdapter friendAdapter;
     private BoardAdapter boardAdapter;
-    private ArrayList<Friend> friendItems;
+    private ArrayList<Friend> friendItems = new ArrayList<>();
     private ArrayList<Board> boardItems;
     private Button btnSchool, btnMajor, btnAddress;
 
     public List<Personal> personal_list = new ArrayList<>();
+    public List<Personal> personal_list_app = new ArrayList<>();
     public List<Posting> posting_list = new ArrayList<>();
+    public List<Posting> posting_list_app = new ArrayList<>();
 
     private static NavController navController;
     private static String spinnerString = "학교친구";
     private static String[] friendsCategoryList;
+
+    private int id;
 
     public MainFragment() {
         // Required empty public constructor
@@ -80,6 +84,11 @@ public class MainFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         friendsCategoryList = getResources().getStringArray(R.array.friends_array);
+
+        Bundle bundle = getArguments();
+        //id = bundle.getInt("id");
+        id = 1;
+        Log.d("test_MainFragment", String.valueOf(id));
 
         friendAdapter = new FriendAdapter();
         boardAdapter = new BoardAdapter();
@@ -114,13 +123,32 @@ public class MainFragment extends Fragment {
 
                 personal_list = gson.fromJson(changeString, listType);
 
-                friendItems = new ArrayList<>();
-
                 for(int i=0; i<personal_list.size(); i++) {
-                    int image = getResources().getIdentifier(personal_list.get(i).img , "drawable", getContext().getPackageName());
-                    friendItems.add(new Friend(personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, image));
+                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
+                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
+                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).carrer, personal_list.get(i).gender, personal_list.get(i).img));
                 }
 
+                //전체 출력 코드
+                /*for(int i=0; i<personal_list_app.size(); i++) {
+                    int image = getResources().getIdentifier(personal_list_app.get(i).img , "drawable", getContext().getPackageName());
+                    friendItems.add(new Friend(personal_list_app.get(i).nickname, personal_list_app.get(i).school, personal_list_app.get(i).major, image));
+                }
+                friendAdapter.setFriendList(friendItems);*/
+
+                friendItems.clear();
+                for(int i=0; i<personal_list_app.size(); i++) {
+                    if(id == personal_list_app.get(i).id) {
+                        String school = personal_list_app.get(i).school;
+                        for(int j=0; j<personal_list_app.size(); j++) {
+                            if(id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
+                                int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
+                                friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                            }
+                        }
+                    }
+                    break;
+                }
                 friendAdapter.setFriendList(friendItems);
 
                 StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
@@ -138,6 +166,11 @@ public class MainFragment extends Fragment {
 
                         posting_list = gson.fromJson(changeString, listType);
 
+                        for(int i=0; i<posting_list.size(); i++) {
+                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).category, posting_list.get(i).title,
+                                    posting_list.get(i).content, posting_list.get(i).personal_id));
+                        }
+
                         boardItems = new ArrayList<>();
 
                         String writer = null;
@@ -146,7 +179,7 @@ public class MainFragment extends Fragment {
                         for(int i = 0; i< posting_list.size(); i++) {
                             int writer_num = posting_list.get(i).personal_id;
                             for(int j=0; j< personal_list.size(); j++) {
-                                if(writer_num == personal_list.get(j).personal_id) {
+                                if(writer_num == personal_list.get(j).id) {
                                     writer = personal_list.get(i).nickname;
                                     string_image = personal_list.get(i).img;
                                 }
@@ -173,7 +206,13 @@ public class MainFragment extends Fragment {
         });
         requestQueue.add(stringRequest);
 
-        // 친구
+        boardItems = new ArrayList<>();
+        boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        boardItems.add(new Board("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        boardAdapter.setPostingList(boardItems);
+
+        //친구
         recyclerViewSchool = view.findViewById(R.id.recyclerView_school);
         recyclerViewSchool.setAdapter(friendAdapter);
         recyclerViewSchool.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
@@ -193,12 +232,54 @@ public class MainFragment extends Fragment {
                 switch(v.getId()) {
                     case R.id.btnSchool:
                         onButtonClicked(0);
+                        friendItems.clear();
+                        for(int i=0; i<personal_list_app.size(); i++) {
+                            if(id == personal_list_app.get(i).id) {
+                                String school = personal_list_app.get(i).school;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        friendAdapter.setFriendList(friendItems);
                         break;
                     case R.id.btnMajor:
                         onButtonClicked(1);
+                        friendItems.clear();
+                        for(int i=0; i<personal_list_app.size(); i++) {
+                            if(id == personal_list_app.get(i).id) {
+                                String major = personal_list_app.get(i).major;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(id != personal_list_app.get(j).id && major.equals(personal_list_app.get(j).major)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        friendAdapter.setFriendList(friendItems);
                         break;
                     case R.id.btnAddress:
                         onButtonClicked(2);
+                        friendItems.clear();
+                        for(int i=0; i<personal_list_app.size(); i++) {
+                            if(id == personal_list_app.get(i).id) {
+                                String address = personal_list_app.get(i).address;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(id != personal_list_app.get(j).id && address.equals(personal_list_app.get(j).address)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        friendAdapter.setFriendList(friendItems);
                         break;
                 }
             }

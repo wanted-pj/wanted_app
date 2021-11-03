@@ -83,7 +83,7 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        friendsCategoryList = getResources().getStringArray(R.array.friends_array);
+        //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
         Bundle bundle = getArguments();
         //id = bundle.getInt("id");
@@ -320,6 +320,15 @@ public class MainFragment extends Fragment {
 //            bundle.putString("friendsCategory", spinnerString);
 //            navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
 //        });
+
+
+        Button btnGoFriend = view.findViewById(R.id.arrow_showfriends);
+
+       btnGoFriend.setOnClickListener(view1 -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("friendsCategory", "test");
+          navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
+      });
         return view;
     }
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="friends_array">
-        <item>학교친구</item>
-        <item>동네친구</item>
-        <item>같은과친구</item>
+    <string-array name="schoolArray">
+        <item>명지대학교</item>
+        <item>숭실대학교</item>
+        <item>동국대학교</item>
     </string-array>
-
 </resources>

@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textSize="14dp"
-        android:text="역량"
+        android:text="(null 가능)"
         android:textColor="@color/black"
         android:letterSpacing="-0.05"
         app:layout_constraintTop_toTopOf="parent"

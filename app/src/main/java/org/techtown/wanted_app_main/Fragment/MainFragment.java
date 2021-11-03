@@ -324,10 +324,10 @@ public class MainFragment extends Fragment {
 
         Button btnGoFriend = view.findViewById(R.id.arrow_showfriends);
 
-       btnGoFriend.setOnClickListener(view1 -> {
-            Bundle bundle = new Bundle();
+        btnGoFriend.setOnClickListener(view1 -> {
+            Bundle bundle1 = new Bundle();
             bundle.putString("friendsCategory", "test");
-          navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
+          navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle1);
       });
         return view;
     }

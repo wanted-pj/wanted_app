@@ -47,6 +47,9 @@ public class MainFragment extends Fragment {
     private BoardAdapter boardAdapter;
     private ArrayList<Friend> friendItems = new ArrayList<>();
     private ArrayList<Board> boardItems;
+    private ArrayList<Friend> friendItems;
+    private RecyclerView recyclerViewFriend;
+
     private Button btnSchool, btnMajor, btnAddress;
 
     public List<Personal> personal_list = new ArrayList<>();
@@ -212,14 +215,26 @@ public class MainFragment extends Fragment {
         boardItems.add(new Board("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
         boardAdapter.setPostingList(boardItems);
 
-        //친구
-        recyclerViewSchool = view.findViewById(R.id.recyclerView_school);
-        recyclerViewSchool.setAdapter(friendAdapter);
-        recyclerViewSchool.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
+        // 친구
+        recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);
+        recyclerViewFriend.setAdapter(friendAdapter);
+        recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
 
-        btnSchool = view.findViewById(R.id.btnSchool);
-        btnMajor = view.findViewById(R.id.btnMajor);
-        btnAddress = view.findViewById(R.id.btnAddress);
+        friendItems = new ArrayList<>();
+        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier( "@drawable/profile_basic4", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic5", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier( "@drawable/profile_basic6", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        // 아래 두개는 display 안 됨 (item display 갯수제한 테스트용 -> DB 연동하고 필요 없어지면 지워주세요)
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+
+        friendAdapter.setFriendList(friendItems);
+
+        btnSchool = view.findViewById(R.id.btn_school);
+        btnMajor = view.findViewById(R.id.btn_major);
+        btnAddress = view.findViewById(R.id.btn_address);
 
         // 처음 btn 지정
         btnSchool.setBackgroundResource(R.drawable.btn_teal);
@@ -230,7 +245,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switch(v.getId()) {
-                    case R.id.btnSchool:
+                    case R.id.btn_school:
                         onButtonClicked(0);
                         friendItems.clear();
                         for(int i=0; i<personal_list_app.size(); i++) {
@@ -247,7 +262,7 @@ public class MainFragment extends Fragment {
                         }
                         friendAdapter.setFriendList(friendItems);
                         break;
-                    case R.id.btnMajor:
+                    case R.id.btn_major:
                         onButtonClicked(1);
                         friendItems.clear();
                         for(int i=0; i<personal_list_app.size(); i++) {
@@ -264,7 +279,7 @@ public class MainFragment extends Fragment {
                         }
                         friendAdapter.setFriendList(friendItems);
                         break;
-                    case R.id.btnAddress:
+                    case R.id.btn_address:
                         onButtonClicked(2);
                         friendItems.clear();
                         for(int i=0; i<personal_list_app.size(); i++) {
@@ -324,7 +339,7 @@ public class MainFragment extends Fragment {
 
         Button btnGoFriend = view.findViewById(R.id.arrow_showfriends);
 
-        btnGoFriend.setOnClickListener(view1 -> {
+       btnGoFriend.setOnClickListener(view1 -> {
             Bundle bundle1 = new Bundle();
             bundle.putString("friendsCategory", "test");
           navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle1);
@@ -353,5 +368,6 @@ public class MainFragment extends Fragment {
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
         }
+
     }
 }

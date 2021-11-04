@@ -305,6 +305,15 @@ public class MainFragment extends Fragment {
         btnMajor.setOnClickListener(onClickListener);
         btnAddress.setOnClickListener(onClickListener);
 
+
+        //커뮤니티로 이동
+        Button btnGoCommunity = view.findViewById(R.id.arrow_community);
+
+        btnGoCommunity.setOnClickListener(view1 -> {
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("btnGoCommunity", "test");
+            navController.navigate(R.id.action_mainFragment_to_communityFragment, bundle);
+        });
         return view;
     }
 

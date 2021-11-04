@@ -41,7 +41,7 @@
             app:destination="@id/profileFragment" />
         <action
             android:id="@+id/action_mainFragment_to_showFriendsFragment"
-            app:destination="@id/showFriendsFragment" />
+            app:destination="@id/FriendMoreFragment" />
     </fragment>
     <action
         android:id="@+id/action_global_mainFragment"
@@ -69,7 +69,12 @@
             android:id="@+id/action_showFriendsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
     </fragment>
-
+    <fragment
+        android:id="@+id/FriendMoreFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.FriendMoreFragment"
+        android:label="fragment_show_friends"
+        tools:layout="@layout/fragment_friend_more" >
+    </fragment>
 
     <action
         android:id="@+id/action_global_chatFragment"

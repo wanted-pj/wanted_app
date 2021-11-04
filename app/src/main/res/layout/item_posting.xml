@@ -2,75 +2,84 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="5dp"
     android:paddingBottom="5dp">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         // 프로필
+
         <LinearLayout
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_weight="0"
             android:gravity="center"
-            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/posting">
+            app:layout_constraintRight_toLeftOf="@+id/board"
+            app:layout_constraintTop_toTopOf="parent">
 
             // 사진
+
             <ImageView
                 android:id="@+id/iv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:src="@drawable/profile_basic3"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/profile_basic3" />
 
             // 닉네임
+
             <TextView
                 android:id="@+id/tv_writer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:letterSpacing="-0.05"
                 android:text="시미즈"
-                android:textSize="12sp"
                 android:textColor="@color/black"
-                android:letterSpacing="-0.05"/>
+                android:textSize="12sp" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/posting"
-            android:layout_width="match_parent"
+            android:id="@+id/board"
+            android:layout_width="fill_parent"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/profile"
-            app:layout_constraintRight_toRightOf="parent">
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             // 말풍선
+
             <ImageView
                 android:id="@+id/postBubbleArow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/postbubble_arrow"
-                app:layout_constraintTop_toTopOf="@+id/postBubble"
-                app:layout_constraintRight_toLeftOf="@+id/postBubble" />
+                app:layout_constraintRight_toLeftOf="@+id/postBubble"
+                app:layout_constraintTop_toTopOf="@+id/postBubble" />
 
             <LinearLayout
                 android:id="@+id/postBubble"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/postbubble_body"
-                android:orientation="horizontal"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 app:layout_constraintLeft_toRightOf="@id/postBubbleArow"
@@ -81,22 +90,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
+                    android:letterSpacing="-0.05"
                     android:text="공모전"
-                    android:textSize="14sp"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:letterSpacing="-0.05"/>
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="원티드 해커톤 같이 나가실 개발자 구해요!"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"
                     android:ellipsize="end"
+                    android:letterSpacing="-0.05"
                     android:maxLines="1"
-                    android:letterSpacing="-0.05"/>
+                    android:text="원티드 해커톤 같이 나가실 개발자 구해요!"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
             </LinearLayout>
 

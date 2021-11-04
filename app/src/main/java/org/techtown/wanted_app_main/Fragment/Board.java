@@ -1,12 +1,12 @@
 package org.techtown.wanted_app_main.Fragment;
 
-public class Posting {
+public class Board {
     public String category;
     public String title;
     public String writer;
     public int imgRes;
 
-    public Posting(String category, String title, String writer, int imgRes) {
+    public Board(String category, String title, String writer, int imgRes) {
         this.category = category;
         this.title = title;
         this.writer = writer;

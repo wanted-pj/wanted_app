@@ -12,9 +12,9 @@ import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
 
-public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHolder> {
+public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 
-    private ArrayList<Posting> postingList = new ArrayList<Posting>();
+    private ArrayList<Board> boardList = new ArrayList<Board>();
 
     @NonNull
     @Override
@@ -27,18 +27,18 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Posting posting = postingList.get(position);
-        viewHolder.setPost(posting);
+        Board board = boardList.get(position);
+        viewHolder.setPost(board);
     }
 
-    public void setPostingList(ArrayList<Posting> arrayList){
-        this.postingList = arrayList;
+    public void setPostingList(ArrayList<Board> arrayList){
+        this.boardList = arrayList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return postingList.size();
+        return boardList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -56,11 +56,11 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
             iv = itemView.findViewById(R.id.iv);
         }
 
-        public void setPost(Posting posting) {
-            tv_category.setText(posting.getCategory());
-            tv_title.setText(posting.getTitle());
-            tv_writer.setText(String.valueOf(posting.getWriter()));
-            iv.setImageResource(posting.getImgRes());
+        public void setPost(Board board) {
+            tv_category.setText(board.getCategory());
+            tv_title.setText(board.getTitle());
+            tv_writer.setText(String.valueOf(board.getWriter()));
+            iv.setImageResource(board.getImgRes());
         }
     }
 }

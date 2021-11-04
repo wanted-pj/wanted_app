@@ -1,9 +1,12 @@
 package org.techtown.wanted_app_main.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
@@ -11,9 +14,29 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.techtown.wanted_app_main.R;
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Personal;
+import org.techtown.wanted_app_main.database.Posting;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ProfileFragment extends Fragment {
 
@@ -25,6 +48,10 @@ public class ProfileFragment extends Fragment {
     private TeamAdapter teamAdapter;
     private ArrayList<Team> teamItems;
 
+    public List<Personal> personal_list = new ArrayList<>();
+
+    private int id;
+
     public ProfileFragment() {
     }
 
@@ -34,6 +61,11 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        Bundle bundle = getArguments();
+        //id = bundle.getInt("id");
+        id = 1;
+        Log.d("test_MainFragment", String.valueOf(id));
 
         // 역량
         careerAdapter = new CareerAdapter();
@@ -59,6 +91,67 @@ public class ProfileFragment extends Fragment {
         teamItems.add(new Team("원티드 피우다팀"));
         teamItems.add(new Team("신림 모각코"));
         teamAdapter.setTeamList(teamItems);
+
+        ImageView img = view.findViewById(R.id.pf_img);
+        TextView nick = view.findViewById(R.id.pf_nickname);
+        TextView school = view.findViewById(R.id.pf_school);
+        TextView major = view.findViewById(R.id.pf_major);
+        TextView address = view.findViewById(R.id.pf_address);
+        TextView grade = view.findViewById(R.id.pf_grade);
+        TextView age = view.findViewById(R.id.pf_age);
+        TextView gender = view.findViewById(R.id.pf_gender);
+
+        //서버 호출
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        String url = "http://13.125.214.178:8080/personal" + id;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 한글깨짐 해결 코드
+                String changeString = new String();
+                try {
+                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+
+                personal_list = gson.fromJson(changeString, listType);
+
+                int image = getResources().getIdentifier(personal_list.get(0).img , "drawable", getContext().getPackageName());
+                img.setImageResource(image);
+                nick.setText(personal_list.get(0).nickname);
+                school.setText(personal_list.get(0).school);
+                major.setText(personal_list.get(0).major);
+                address.setText(personal_list.get(0).address);
+                grade.setText(personal_list.get(0).grade);
+                age.setText(personal_list.get(0).age);
+                if(personal_list.get(0).gender == 0) {
+                    gender.setText("남");
+                } else if(personal_list.get(0).gender == 1) {
+                    gender.setText("여");
+                }
+
+                List<String> carrer_list = Arrays.asList(personal_list.get(0).carrer.split(","));
+                careerItems.clear();
+                for(int i=0; i<carrer_list.size(); i++) {
+                    careerItems.add(new Career(carrer_list.get(i)));
+                }
+                careerAdapter.setCareerList(careerItems);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(stringRequest);
 
         return view;
     }

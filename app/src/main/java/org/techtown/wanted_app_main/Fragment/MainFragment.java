@@ -47,7 +47,6 @@ public class MainFragment extends Fragment {
     private BoardAdapter boardAdapter;
     private ArrayList<Friend> friendItems = new ArrayList<>();
     private ArrayList<Board> boardItems;
-    private ArrayList<Friend> friendItems;
     private RecyclerView recyclerViewFriend;
 
     private Button btnSchool, btnMajor, btnAddress;
@@ -99,7 +98,7 @@ public class MainFragment extends Fragment {
         // 커뮤니티
         recyclerViewCommunity = view.findViewById(R.id.recyclerView_community);
         recyclerViewCommunity.setAdapter(boardAdapter);
-        recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
+        recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
         //서버 호출
         RequestQueue requestQueue;
@@ -122,11 +121,12 @@ public class MainFragment extends Fragment {
                     e.printStackTrace();
                 }
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+                Type listType = new TypeToken<ArrayList<Personal>>() {
+                }.getType();
 
                 personal_list = gson.fromJson(changeString, listType);
 
-                for(int i=0; i<personal_list.size(); i++) {
+                for (int i = 0; i < personal_list.size(); i++) {
                     personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
                             personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
                             personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).carrer, personal_list.get(i).gender, personal_list.get(i).img));
@@ -140,13 +140,13 @@ public class MainFragment extends Fragment {
                 friendAdapter.setFriendList(friendItems);*/
 
                 friendItems.clear();
-                for(int i=0; i<personal_list_app.size(); i++) {
-                    if(id == personal_list_app.get(i).id) {
+                for (int i = 0; i < personal_list_app.size(); i++) {
+                    if (id == personal_list_app.get(i).id) {
                         String school = personal_list_app.get(i).school;
-                        for(int j=0; j<personal_list_app.size(); j++) {
-                            if(id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
-                                int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
-                                friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                        for (int j = 0; j < personal_list_app.size(); j++) {
+                            if (id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
+                                int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
+                                friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
                             }
                         }
                     }
@@ -165,11 +165,12 @@ public class MainFragment extends Fragment {
                             e.printStackTrace();
                         }
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                        Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+                        Type listType = new TypeToken<ArrayList<Personal>>() {
+                        }.getType();
 
                         posting_list = gson.fromJson(changeString, listType);
 
-                        for(int i=0; i<posting_list.size(); i++) {
+                        for (int i = 0; i < posting_list.size(); i++) {
                             posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).category, posting_list.get(i).title,
                                     posting_list.get(i).content, posting_list.get(i).personal_id));
                         }
@@ -179,15 +180,15 @@ public class MainFragment extends Fragment {
                         String writer = null;
                         String string_image = null;
 
-                        for(int i = 0; i< posting_list.size(); i++) {
+                        for (int i = 0; i < posting_list.size(); i++) {
                             int writer_num = posting_list.get(i).personal_id;
-                            for(int j=0; j< personal_list.size(); j++) {
-                                if(writer_num == personal_list.get(j).id) {
+                            for (int j = 0; j < personal_list.size(); j++) {
+                                if (writer_num == personal_list.get(j).id) {
                                     writer = personal_list.get(i).nickname;
                                     string_image = personal_list.get(i).img;
                                 }
                             }
-                            int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                            int image = getResources().getIdentifier(string_image, "drawable", getContext().getPackageName());
                             boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
                         }
 
@@ -210,25 +211,25 @@ public class MainFragment extends Fragment {
         requestQueue.add(stringRequest);
 
         boardItems = new ArrayList<>();
-        boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        boardItems.add(new Board("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        boardItems.add(new Board("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
         boardAdapter.setPostingList(boardItems);
 
         // 친구
         recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);
         recyclerViewFriend.setAdapter(friendAdapter);
-        recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
+        recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
         friendItems = new ArrayList<>();
-        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier( "@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier( "@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
         // 아래 두개는 display 안 됨 (item display 갯수제한 테스트용 -> DB 연동하고 필요 없어지면 지워주세요)
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
 
         friendAdapter.setFriendList(friendItems);
 
@@ -244,17 +245,17 @@ public class MainFragment extends Fragment {
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch(v.getId()) {
+                switch (v.getId()) {
                     case R.id.btn_school:
                         onButtonClicked(0);
                         friendItems.clear();
-                        for(int i=0; i<personal_list_app.size(); i++) {
-                            if(id == personal_list_app.get(i).id) {
+                        for (int i = 0; i < personal_list_app.size(); i++) {
+                            if (id == personal_list_app.get(i).id) {
                                 String school = personal_list_app.get(i).school;
-                                for(int j=0; j<personal_list_app.size(); j++) {
-                                    if(id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
-                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
-                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                for (int j = 0; j < personal_list_app.size(); j++) {
+                                    if (id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
                                     }
                                 }
                             }
@@ -265,13 +266,13 @@ public class MainFragment extends Fragment {
                     case R.id.btn_major:
                         onButtonClicked(1);
                         friendItems.clear();
-                        for(int i=0; i<personal_list_app.size(); i++) {
-                            if(id == personal_list_app.get(i).id) {
+                        for (int i = 0; i < personal_list_app.size(); i++) {
+                            if (id == personal_list_app.get(i).id) {
                                 String major = personal_list_app.get(i).major;
-                                for(int j=0; j<personal_list_app.size(); j++) {
-                                    if(id != personal_list_app.get(j).id && major.equals(personal_list_app.get(j).major)) {
-                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
-                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                for (int j = 0; j < personal_list_app.size(); j++) {
+                                    if (id != personal_list_app.get(j).id && major.equals(personal_list_app.get(j).major)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
                                     }
                                 }
                             }
@@ -282,13 +283,13 @@ public class MainFragment extends Fragment {
                     case R.id.btn_address:
                         onButtonClicked(2);
                         friendItems.clear();
-                        for(int i=0; i<personal_list_app.size(); i++) {
-                            if(id == personal_list_app.get(i).id) {
+                        for (int i = 0; i < personal_list_app.size(); i++) {
+                            if (id == personal_list_app.get(i).id) {
                                 String address = personal_list_app.get(i).address;
-                                for(int j=0; j<personal_list_app.size(); j++) {
-                                    if(id != personal_list_app.get(j).id && address.equals(personal_list_app.get(j).address)) {
-                                        int image = getResources().getIdentifier(personal_list_app.get(j).img , "drawable", getContext().getPackageName());
-                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, image));
+                                for (int j = 0; j < personal_list_app.size(); j++) {
+                                    if (id != personal_list_app.get(j).id && address.equals(personal_list_app.get(j).address)) {
+                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
+                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
                                     }
                                 }
                             }
@@ -304,46 +305,6 @@ public class MainFragment extends Fragment {
         btnMajor.setOnClickListener(onClickListener);
         btnAddress.setOnClickListener(onClickListener);
 
-//        // 스피너 값 값 가져오기
-//        Spinner friends_category = view.findViewById(R.id.main_spinner_category);
-//        ArrayAdapter<String> friendsAdapter = new ArrayAdapter<>(
-//                getActivity(), android.R.layout.simple_spinner_item, friendsCategoryList); // resource 데이터 넣기
-//
-//        friendsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // 드롭다운 클릭시 선택창 방식
-//        friends_category.setAdapter(friendsAdapter);
-//
-//        // 스피너 이벤트 반응
-//        friends_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                spinnerString = friends_category.getSelectedItem().toString();
-//                System.out.println("친구 선택됨" + spinnerString);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                spinnerString = "학교친구";
-//                System.out.println("아무것도 선택안됨");
-//            }
-//        });
-//
-//        // 버튼클릭시 친구리스트 조회
-//        Button btnGoFriend = view.findViewById(R.id.main_btn_goFriend);
-//
-//        btnGoFriend.setOnClickListener(view1 -> {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("friendsCategory", spinnerString);
-//            navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
-//        });
-
-
-        Button btnGoFriend = view.findViewById(R.id.arrow_showfriends);
-
-       btnGoFriend.setOnClickListener(view1 -> {
-            Bundle bundle1 = new Bundle();
-            bundle.putString("friendsCategory", "test");
-          navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle1);
-      });
         return view;
     }
 
@@ -353,7 +314,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
     }
 
-    public void onButtonClicked (int index) {
+    public void onButtonClicked(int index) {
         List<Button> buttons = Arrays.asList(btnSchool, btnMajor, btnAddress);
 
         for (int i = 0; i < buttons.size(); i++) {
@@ -362,8 +323,7 @@ public class MainFragment extends Fragment {
             if (i == index) {
                 button.setBackgroundResource(R.drawable.btn_teal);
                 button.setTextColor(getResources().getColor(R.color.white));
-            }
-            else {
+            } else {
                 button.setBackgroundResource(R.drawable.btn_teal_off);
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             }

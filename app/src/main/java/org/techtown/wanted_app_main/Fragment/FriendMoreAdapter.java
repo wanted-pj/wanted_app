@@ -13,26 +13,26 @@ import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
 
-public class Detail_FriendAdapter extends RecyclerView.Adapter<Detail_FriendAdapter.ViewHolder> {
+public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.ViewHolder> {
 
-    private ArrayList<Detail_Friend> friendList = new ArrayList<Detail_Friend>();
+    private ArrayList<Friend> friendList = new ArrayList<Friend>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.item_detail_friend, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_friend_more, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Detail_Friend friend = friendList.get(position);
+        Friend friend = friendList.get(position);
         viewHolder.setFriend(friend);
     }
 
-    public void setFriendList(ArrayList<Detail_Friend> arrayList){
+    public void setFriendList(ArrayList<Friend> arrayList){
         this.friendList = arrayList;
         notifyDataSetChanged();
     }
@@ -46,8 +46,7 @@ public class Detail_FriendAdapter extends RecyclerView.Adapter<Detail_FriendAdap
         TextView tv_name;
         TextView tv_school;
         TextView tv_major;
-        TextView tv_gender;
-        TextView tv_grade;
+        TextView tv_address;
         ImageView iv;
 
         public ViewHolder(View itemView) {
@@ -56,17 +55,15 @@ public class Detail_FriendAdapter extends RecyclerView.Adapter<Detail_FriendAdap
             tv_name = itemView.findViewById(R.id.tv_name);
             tv_school = itemView.findViewById(R.id.tv_school);
             tv_major = itemView.findViewById(R.id.tv_major);
-            tv_gender = itemView.findViewById(R.id.tv_gender);
-            tv_grade = itemView.findViewById(R.id.tv_grade);
+            tv_address = itemView.findViewById(R.id.tv_address);
             iv = itemView.findViewById(R.id.iv);
         }
 
-        public void setFriend(Detail_Friend friend) {
+        public void setFriend(Friend friend) {
             tv_name.setText(friend.getName());
             tv_school.setText(friend.getSchool());
-            tv_major.setText(String.valueOf(friend.getMajor()));
-            tv_grade.setText(String.valueOf(friend.getGender()));
-            tv_gender.setText(String.valueOf(friend.getGrade()));
+            tv_major.setText(friend.getMajor());
+            tv_address.setText(friend.getAddress());
             iv.setImageResource(friend.getImgRes());
         }
     }

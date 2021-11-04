@@ -62,9 +62,9 @@
         tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/showFriendsFragment"
-        android:name="org.techtown.wanted_app_main.Fragment.ShowFriendsFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.FriendMoreFragment"
         android:label="fragment_show_friends"
-        tools:layout="@layout/fragment_show_friends" >
+        tools:layout="@layout/fragment_friend_more" >
         <action
             android:id="@+id/action_showFriendsFragment_to_profileFragment"
             app:destination="@id/profileFragment" />

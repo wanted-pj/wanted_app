@@ -22,17 +22,17 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    private RecyclerView recyclerViewSchool;
-    private RecyclerView recyclerViewCommunity;
-    private FriendAdapter friendAdapter;
     private PostingAdapter postingAdapter;
-    private ArrayList<Friend> friendItems;
     private ArrayList<Posting> postingItems;
+    private RecyclerView recyclerViewCommunity;
+
+    private FriendAdapter friendAdapter;
+    private ArrayList<Friend> friendItems;
+    private RecyclerView recyclerViewFriend;
+
     private Button btnSchool, btnMajor, btnAddress;
 
     private static NavController navController;
-    private static String spinnerString = "학교친구";
-    private static String[] friendsCategoryList;
 
     public MainFragment() {
         // Required empty public constructor
@@ -55,9 +55,7 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
         friendAdapter = new FriendAdapter();
         postingAdapter = new PostingAdapter();
@@ -74,19 +72,25 @@ public class MainFragment extends Fragment {
         postingAdapter.setPostingList(postingItems);
 
         // 친구
-        recyclerViewSchool = view.findViewById(R.id.recyclerView_school);
-        recyclerViewSchool.setAdapter(friendAdapter);
-        recyclerViewSchool.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
+        recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);
+        recyclerViewFriend.setAdapter(friendAdapter);
+        recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL,false));
 
         friendItems = new ArrayList<>();
-        friendItems.add(new Friend("가비", "홍익대학교", "컴퓨터공학과", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("시미즈", "서강대학교", "수학교육과", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier( "@drawable/profile_basic4", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic5", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier( "@drawable/profile_basic6", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        // 아래 두개는 display 안 됨 (item display 갯수제한 테스트용 -> DB 연동하고 필요 없어지면 지워주세요)
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+
         friendAdapter.setFriendList(friendItems);
 
-        btnSchool = view.findViewById(R.id.btnSchool);
-        btnMajor = view.findViewById(R.id.btnMajor);
-        btnAddress = view.findViewById(R.id.btnAddress);
+        btnSchool = view.findViewById(R.id.btn_school);
+        btnMajor = view.findViewById(R.id.btn_major);
+        btnAddress = view.findViewById(R.id.btn_address);
 
         // 처음 btn 지정
         btnSchool.setBackgroundResource(R.drawable.btn_teal);
@@ -97,13 +101,13 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 switch(v.getId()) {
-                    case R.id.btnSchool:
+                    case R.id.btn_school:
                         onButtonClicked(0);
                         break;
-                    case R.id.btnMajor:
+                    case R.id.btn_major:
                         onButtonClicked(1);
                         break;
-                    case R.id.btnAddress:
+                    case R.id.btn_address:
                         onButtonClicked(2);
                         break;
                 }
@@ -114,46 +118,6 @@ public class MainFragment extends Fragment {
         btnMajor.setOnClickListener(onClickListener);
         btnAddress.setOnClickListener(onClickListener);
 
-//        // 스피너 값 값 가져오기
-//        Spinner friends_category = view.findViewById(R.id.main_spinner_category);
-//        ArrayAdapter<String> friendsAdapter = new ArrayAdapter<>(
-//                getActivity(), android.R.layout.simple_spinner_item, friendsCategoryList); // resource 데이터 넣기
-//
-//        friendsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // 드롭다운 클릭시 선택창 방식
-//        friends_category.setAdapter(friendsAdapter);
-//
-//        // 스피너 이벤트 반응
-//        friends_category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                spinnerString = friends_category.getSelectedItem().toString();
-//                System.out.println("친구 선택됨" + spinnerString);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//                spinnerString = "학교친구";
-//                System.out.println("아무것도 선택안됨");
-//            }
-//        });
-//
-//        // 버튼클릭시 친구리스트 조회
-//        Button btnGoFriend = view.findViewById(R.id.main_btn_goFriend);
-//
-//        btnGoFriend.setOnClickListener(view1 -> {
-//            Bundle bundle = new Bundle();
-//            bundle.putString("friendsCategory", spinnerString);
-//            navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
-//        });
-
-
-        Button btnGoFriend = view.findViewById(R.id.arrow_showfriends);
-
-       btnGoFriend.setOnClickListener(view1 -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("friendsCategory", "test");
-          navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
-      });
         return view;
     }
 

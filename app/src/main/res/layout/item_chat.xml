@@ -62,7 +62,8 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 app:layout_constraintTop_toBottomOf="@id/sender_txt_nickname"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="3dp"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

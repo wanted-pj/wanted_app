@@ -4,12 +4,14 @@ public class Friend {
     public String name;
     public String school;
     public String major;
+    public String address;
     public int imgRes;
 
-    public Friend(String name, String school, String major, int imgRes) {
+    public Friend(String name, String school, String major, String address, int imgRes) {
         this.name = name;
         this.school = school;
         this.major = major;
+        this.address = address;
         this.imgRes = imgRes;
     }
 
@@ -35,6 +37,14 @@ public class Friend {
 
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getImgRes() {

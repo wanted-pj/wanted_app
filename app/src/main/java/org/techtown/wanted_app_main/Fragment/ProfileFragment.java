@@ -101,57 +101,57 @@ public class ProfileFragment extends Fragment {
         TextView age = view.findViewById(R.id.pf_age);
         TextView gender = view.findViewById(R.id.pf_gender);
 
-        //서버 호출
-        RequestQueue requestQueue;
-        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
-
-        String url = "http://13.125.214.178:8080/personal" + id;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // 한글깨짐 해결 코드
-                String changeString = new String();
-                try {
-                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
-
-                personal_list = gson.fromJson(changeString, listType);
-
-                int image = getResources().getIdentifier(personal_list.get(0).img , "drawable", getContext().getPackageName());
-                img.setImageResource(image);
-                nick.setText(personal_list.get(0).nickname);
-                school.setText(personal_list.get(0).school);
-                major.setText(personal_list.get(0).major);
-                address.setText(personal_list.get(0).address);
-                grade.setText(personal_list.get(0).grade);
-                age.setText(personal_list.get(0).age);
-                if(personal_list.get(0).gender == 0) {
-                    gender.setText("남");
-                } else if(personal_list.get(0).gender == 1) {
-                    gender.setText("여");
-                }
-
-                List<String> carrer_list = Arrays.asList(personal_list.get(0).carrer.split(","));
-                profileCareerItems.clear();
-                for(int i=0; i<carrer_list.size(); i++) {
-                    profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));
-                }
-                profileCareerAdapter.setProfileCareerList(profileCareerItems);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-            }
-        });
-        requestQueue.add(stringRequest);
+//        //서버 호출
+//        RequestQueue requestQueue;
+//        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+//        Network network = new BasicNetwork(new HurlStack());
+//        requestQueue = new RequestQueue(cache, network);
+//        requestQueue.start();
+//
+//        String url = "http://13.125.214.178:8080/personal" + id;
+//
+//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                // 한글깨짐 해결 코드
+//                String changeString = new String();
+//                try {
+//                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+//                } catch (UnsupportedEncodingException e) {
+//                    e.printStackTrace();
+//                }
+//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+//                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+//
+//                personal_list = gson.fromJson(changeString, listType);
+//
+//                int image = getResources().getIdentifier(personal_list.get(0).img , "drawable", getContext().getPackageName());
+//                img.setImageResource(image);
+//                nick.setText(personal_list.get(0).nickname);
+//                school.setText(personal_list.get(0).school);
+//                major.setText(personal_list.get(0).major);
+//                address.setText(personal_list.get(0).address);
+//                grade.setText(personal_list.get(0).grade);
+//                age.setText(personal_list.get(0).age);
+//                if(personal_list.get(0).gender == 0) {
+//                    gender.setText("남");
+//                } else if(personal_list.get(0).gender == 1) {
+//                    gender.setText("여");
+//                }
+//
+//                List<String> carrer_list = Arrays.asList(personal_list.get(0).carrer.split(","));
+//                profileCareerItems.clear();
+//                for(int i=0; i<carrer_list.size(); i++) {
+//                    profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));
+//                }
+//                profileCareerAdapter.setProfileCareerList(profileCareerItems);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//            }
+//        });
+//        requestQueue.add(stringRequest);
 
         return view;
     }

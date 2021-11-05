@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp">
+
+    <LinearLayout
+        android:id="@+id/board_detail_request_layout"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/board_detail_request_btn">
+
+        <ImageView
+            android:id="@+id/board_detail_request_image"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/profile_basic2" />
+
+        <TextView
+            android:id="@+id/board_detail_request_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:text="아이키 "
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.05" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" 님이 신청하셨습니다."
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            android:letterSpacing="-0.05" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/board_detail_request_btn"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        style="@style/btnBasic"
+        android:text="수락"
+        android:textSize="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/board_detail_request_layout"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

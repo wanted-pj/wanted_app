@@ -65,11 +65,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        if(friendList.size() < limit) {
+        if (friendList.size() < limit)
             return friendList.size() + 1;
-        } else {
+        else
             return limit + 1;
-        }
     }
 
     // 포지션에 따라 item의 뷰타입 정의
@@ -101,7 +100,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             footerView.setOnClickListener(view1 -> {
                 Bundle bundle = new Bundle();
                 bundle.putString("friendsCategory", "test");
-                navController.navigate(R.id.action_mainFragment_to_showFriendsFragment, bundle);
+                navController.navigate(R.id.action_mainFragment_to_friendMoreFragment, bundle);
             });
         }
     }

@@ -52,7 +52,7 @@ public class BoardFragment extends Fragment {
 
     private RecyclerView rvBoard;
     private BoardAdapter boardAdapter;
-    private ArrayList<Board> boardItems = new ArrayList<>();;
+    private ArrayList<Board> boardItems = new ArrayList<>();
 
     public BoardFragment() {
         // Required empty public constructor
@@ -186,6 +186,15 @@ public class BoardFragment extends Fragment {
             }
         });
         requestQueue.add(stringRequest);
+
+        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnBoardItemClickListener() {
+            @Override
+            public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("test", "testmessage");
+                navController.navigate(R.id.action_board_to_board_detail, bundle);
+            }
+        });
 
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override

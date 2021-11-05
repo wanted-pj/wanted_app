@@ -100,7 +100,6 @@ public class MainFragment extends Fragment {
         recyclerViewCommunity.setAdapter(boardAdapter);
         recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
-
         //서버 호출
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -254,7 +253,7 @@ public class MainFragment extends Fragment {
         btnGoCommunity.setOnClickListener(view1 -> {
             Bundle bundle1 = new Bundle();
             bundle1.putString("btnGoCommunity", "test");
-            navController.navigate(R.id.action_mainFragment_to_communityFragment, bundle);
+            navController.navigate(R.id.action_mainFragment_to_boardFragment, bundle);
         });
         return view;
     }

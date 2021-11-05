@@ -76,6 +76,45 @@
                         app:tint="@color/grayDark"/>
 
                 </LinearLayout>
+
+                // 별점
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <ImageView
+                        android:id="@+id/pf_star1"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile_star"/>
+
+                    <ImageView
+                        android:id="@+id/pf_star2"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile_star"/>
+
+                    <ImageView
+                        android:id="@+id/pf_star3"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile_star"/>
+
+                    <ImageView
+                        android:id="@+id/pf_star4"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile_star"/>
+
+                    <ImageView
+                        android:id="@+id/pf_star5"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/profile_star_gray"/>
+
+                </LinearLayout>
+
             </LinearLayout>
 
             // 기본정보

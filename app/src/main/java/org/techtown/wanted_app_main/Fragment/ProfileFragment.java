@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment {
     private ProfileTeamAdapter profileTeamAdapter;
     private ArrayList<ProfileTeam> profileTeamItems;
 
-    public List<Personal> personal_list = new ArrayList<>();
+    public Personal personal;
 
     private int id;
 
@@ -108,7 +108,7 @@ public class ProfileFragment extends Fragment {
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
 
-        String url = "http://13.125.214.178:8080/personal" + id;
+        String url = "http://13.125.214.178:8080/personal" + "/" + id;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -121,25 +121,25 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+                Type listType = new TypeToken<Personal>() {}.getType();
 
-                personal_list = gson.fromJson(changeString, listType);
+                personal = gson.fromJson(changeString, listType);
 
-                int image = getResources().getIdentifier(personal_list.get(0).img , "drawable", getContext().getPackageName());
+                int image = getResources().getIdentifier(personal.img , "drawable", getContext().getPackageName());
                 img.setImageResource(image);
-                nick.setText(personal_list.get(0).nickname);
-                school.setText(personal_list.get(0).school);
-                major.setText(personal_list.get(0).major);
-                address.setText(personal_list.get(0).address);
-                grade.setText(personal_list.get(0).grade);
-                age.setText(personal_list.get(0).age);
-                if(personal_list.get(0).gender == 0) {
+                nick.setText(personal.nickname);
+                school.setText(personal.school);
+                major.setText(personal.major);
+                address.setText(personal.address);
+                grade.setText(String.valueOf(personal.grade));
+                age.setText(String.valueOf(personal.age));
+                if(personal.gender == 0) {
                     gender.setText("남");
-                } else if(personal_list.get(0).gender == 1) {
+                } else if(personal.gender == 1) {
                     gender.setText("여");
                 }
 
-                List<String> carrer_list = Arrays.asList(personal_list.get(0).career.split(","));
+                List<String> carrer_list = Arrays.asList(personal.career.split(","));
                 profileCareerItems.clear();
                 for(int i=0; i<carrer_list.size(); i++) {
                     profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));

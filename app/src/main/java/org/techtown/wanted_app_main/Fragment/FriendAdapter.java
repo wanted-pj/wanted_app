@@ -53,13 +53,8 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             // item을 하나하나 보여줌 (bind 시킴)
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             Log.d("test_List" , String.valueOf(friendList.size()));
-            if(friendList.size() > 0 && position < friendList.size()) {
-                Log.d("test_Position" , String.valueOf(position));
-                Friend item = friendList.get(position);
-                itemViewHolder.setFriend(item);
-            }
-            //Friend item = friendList.get(position);
-            //itemViewHolder.setFriend(item);
+            Friend item = friendList.get(position);
+            itemViewHolder.setFriend(item);
         }
     }
 
@@ -70,7 +65,11 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        return limit + 1;
+        if(friendList.size() < limit) {
+            return friendList.size() + 1;
+        } else {
+            return limit + 1;
+        }
     }
 
     // 포지션에 따라 item의 뷰타입 정의

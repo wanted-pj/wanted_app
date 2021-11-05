@@ -139,7 +139,7 @@ public class ProfileFragment extends Fragment {
                     gender.setText("여");
                 }
 
-                List<String> carrer_list = Arrays.asList(personal_list.get(0).carrer.split(","));
+                List<String> carrer_list = Arrays.asList(personal_list.get(0).career.split(","));
                 profileCareerItems.clear();
                 for(int i=0; i<carrer_list.size(); i++) {
                     profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));

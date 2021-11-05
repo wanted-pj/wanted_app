@@ -178,6 +178,7 @@ public class MainFragment extends Fragment {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.e("Dd",error.getMessage());
                     }
                 });
                 requestQueue.add(stringRequest2);
@@ -186,6 +187,7 @@ public class MainFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.e("Dd",error.getMessage());
             }
         });
         requestQueue.add(stringRequest);

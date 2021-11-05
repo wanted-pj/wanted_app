@@ -1,9 +1,9 @@
 package org.techtown.wanted_app_main.Fragment;
 
-public class Career {
+public class ProfileCareer {
     public String content;
 
-    public Career(String content) {
+    public ProfileCareer(String content) {
         this.content = content;
     }
 

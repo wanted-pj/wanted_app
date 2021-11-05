@@ -41,7 +41,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        // 역량
+        // 채팅목록
         chatAdapter = new ChatAdapter();
 
         rvChat = view.findViewById(R.id.recyclerView_chat);

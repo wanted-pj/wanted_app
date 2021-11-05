@@ -1,9 +1,9 @@
 package org.techtown.wanted_app_main.Fragment;
 
-public class Team {
+public class ProfileTeam {
     public String name;
 
-    public Team(String name) {
+    public ProfileTeam(String name) {
         this.name = name;
     }
 

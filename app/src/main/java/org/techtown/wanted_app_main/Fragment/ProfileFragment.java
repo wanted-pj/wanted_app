@@ -41,12 +41,12 @@ import java.util.List;
 public class ProfileFragment extends Fragment {
 
     private RecyclerView rvCareer;
-    private CareerAdapter careerAdapter;
-    private ArrayList<Career> careerItems;
+    private ProfileCareerAdapter profileCareerAdapter;
+    private ArrayList<ProfileCareer> profileCareerItems;
 
     private RecyclerView rvTeam;
-    private TeamAdapter teamAdapter;
-    private ArrayList<Team> teamItems;
+    private ProfileTeamAdapter profileTeamAdapter;
+    private ArrayList<ProfileTeam> profileTeamItems;
 
     public List<Personal> personal_list = new ArrayList<>();
 
@@ -68,29 +68,29 @@ public class ProfileFragment extends Fragment {
         Log.d("test_MainFragment", String.valueOf(id));
 
         // 역량
-        careerAdapter = new CareerAdapter();
+        profileCareerAdapter = new ProfileCareerAdapter();
 
         rvCareer = view.findViewById(R.id.recyclerView_career);
-        rvCareer.setAdapter(careerAdapter);
+        rvCareer.setAdapter(profileCareerAdapter);
         rvCareer.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
 
-        careerItems = new ArrayList<>();
-        careerItems.add(new Career("백엔드 | SpringBoot, Django, Mysql"));
-        careerItems.add(new Career("자격증 | 정보처리기사, SQLD"));
-        careerItems.add(new Career("2021 사이버보안 AI·빅데이터 활용 경진대회 (최우수상)"));
-        careerAdapter.setCareerList(careerItems);
+        profileCareerItems = new ArrayList<>();
+        profileCareerItems.add(new ProfileCareer("백엔드 | SpringBoot, Django, Mysql"));
+        profileCareerItems.add(new ProfileCareer("자격증 | 정보처리기사, SQLD"));
+        profileCareerItems.add(new ProfileCareer("2021 사이버보안 AI·빅데이터 활용 경진대회 (최우수상)"));
+        profileCareerAdapter.setProfileCareerList(profileCareerItems);
 
         // 소속팀
-        teamAdapter = new TeamAdapter();
+        profileTeamAdapter = new ProfileTeamAdapter();
 
         rvTeam = view.findViewById(R.id.recyclerView_team);
-        rvTeam.setAdapter(teamAdapter);
+        rvTeam.setAdapter(profileTeamAdapter);
         rvTeam.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
 
-        teamItems = new ArrayList<>();
-        teamItems.add(new Team("원티드 피우다팀"));
-        teamItems.add(new Team("신림 모각코"));
-        teamAdapter.setTeamList(teamItems);
+        profileTeamItems = new ArrayList<>();
+        profileTeamItems.add(new ProfileTeam("원티드 피우다팀"));
+        profileTeamItems.add(new ProfileTeam("신림 모각코"));
+        profileTeamAdapter.setProfileTeamList(profileTeamItems);
 
         ImageView img = view.findViewById(R.id.pf_img);
         TextView nick = view.findViewById(R.id.pf_nickname);
@@ -140,11 +140,11 @@ public class ProfileFragment extends Fragment {
                 }
 
                 List<String> carrer_list = Arrays.asList(personal_list.get(0).carrer.split(","));
-                careerItems.clear();
+                profileCareerItems.clear();
                 for(int i=0; i<carrer_list.size(); i++) {
-                    careerItems.add(new Career(carrer_list.get(i)));
+                    profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));
                 }
-                careerAdapter.setCareerList(careerItems);
+                profileCareerAdapter.setProfileCareerList(profileCareerItems);
             }
         }, new Response.ErrorListener() {
             @Override

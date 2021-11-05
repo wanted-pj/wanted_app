@@ -23,7 +23,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int limit = 5; // item 디스플레이 갯수 제한
     private final int TYPE_ITEM = 1;
     private final int TYPE_FOOTER = 2;
-    private ArrayList<Friend> friendList = new ArrayList<Friend>();
+    private ArrayList<Friend> friendList = new ArrayList<>();
 
     // 뷰타입에 따라 사용할 뷰홀더 리턴
     @NonNull
@@ -52,6 +52,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         else {
             // item을 하나하나 보여줌 (bind 시킴)
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
+            Log.d("test_List" , String.valueOf(friendList.size()));
             Friend item = friendList.get(position);
             itemViewHolder.setFriend(item);
         }

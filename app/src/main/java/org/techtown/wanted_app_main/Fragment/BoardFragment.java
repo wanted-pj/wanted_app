@@ -16,10 +16,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,6 +101,92 @@ public class BoardFragment extends Fragment {
         boardItems.add(new Board("스터디", "PSAT 스터디 인원 구해요~", "스콧", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
         boardAdapter.setBoardList(boardItems);
 
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        String url1 = "http://13.125.214.178:8080/personal";
+        String url2 = "http://13.125.214.178:8080/posting";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 한글깨짐 해결 코드
+                String changeString = new String();
+                try {
+                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
+
+                personal_list = gson.fromJson(changeString, listType);
+
+                for(int i=0; i<personal_list.size(); i++) {
+                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
+                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
+                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).career, personal_list.get(i).gender, personal_list.get(i).img));
+                }
+
+                StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 한글깨짐 해결 코드
+                        String changeString = new String();
+                        try {
+                            changeString = new String(response.getBytes("8859_1"), "utf-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        Type listType = new TypeToken<ArrayList<Posting>>() {}.getType();
+
+                        posting_list = gson.fromJson(changeString, listType);
+
+                        for(int i=0; i<posting_list.size(); i++) {
+                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).personal, posting_list.get(i).category, posting_list.get(i).title,
+                                    posting_list.get(i).content, posting_list.get(i).connects, posting_list.get(i).team, posting_list.get(i).postingTime));
+                        }
+
+                        boardItems.clear();
+
+                        String writer = null;
+                        String string_image = null;
+
+                        for(int i=0; i<posting_list.size(); i++) {
+                            if(posting_list.get(i).category.equals("공모전")) {
+                                Long writer_num = posting_list.get(i).personal.id;
+                                for(int j=0; j<personal_list.size(); j++) {
+                                    if(writer_num == personal_list.get(j).id) {
+                                        writer = personal_list.get(i).nickname;
+                                        string_image = personal_list.get(i).img;
+                                    }
+                                }
+                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                                boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
+                            }
+                        }
+
+                        boardAdapter.setBoardList(boardItems);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+                requestQueue.add(stringRequest2);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(stringRequest);
+
         boardAdapter.setOnItemClicklistener(new BoardAdapter.OnBoardItemClickListener() {
             @Override
             public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
@@ -94,92 +196,6 @@ public class BoardFragment extends Fragment {
             }
         });
 
-//        RequestQueue requestQueue;
-//        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
-//        Network network = new BasicNetwork(new HurlStack());
-//        requestQueue = new RequestQueue(cache, network);
-//        requestQueue.start();
-//
-//        String url1 = "http://13.125.214.178:8080/personal";
-//        String url2 = "http://13.125.214.178:8080/posting";
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                // 한글깨짐 해결 코드
-//                String changeString = new String();
-//                try {
-//                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
-//
-//                personal_list = gson.fromJson(changeString, listType);
-//
-//                for(int i=0; i<personal_list.size(); i++) {
-//                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
-//                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
-//                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).carrer, personal_list.get(i).gender, personal_list.get(i).img));
-//                }
-//
-//                StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // 한글깨짐 해결 코드
-//                        String changeString = new String();
-//                        try {
-//                            changeString = new String(response.getBytes("8859_1"), "utf-8");
-//                        } catch (UnsupportedEncodingException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                        Type listType = new TypeToken<ArrayList<Personal>>() {}.getType();
-//
-//                        posting_list = gson.fromJson(changeString, listType);
-//
-//                        for(int i=0; i<posting_list.size(); i++) {
-//                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).category, posting_list.get(i).title,
-//                                    posting_list.get(i).content, posting_list.get(i).personal_id));
-//                        }
-//
-//                        boardItems.clear();
-//
-//                        String writer = null;
-//                        String string_image = null;
-//
-//                        for(int i=0; i<posting_list.size(); i++) {
-//                            if(posting_list.get(i).category.equals("공모전")) {
-//                                int writer_num = posting_list.get(i).personal_id;
-//                                for(int j=0; j<personal_list.size(); j++) {
-//                                    if(writer_num == personal_list.get(j).id) {
-//                                        writer = personal_list.get(i).nickname;
-//                                        string_image = personal_list.get(i).img;
-//                                    }
-//                                }
-//                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
-//                                boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
-//                            }
-//                        }
-//
-//                        boardAdapter.setPostingList(boardItems);
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                    }
-//                });
-//                requestQueue.add(stringRequest2);
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        });
-//        requestQueue.add(stringRequest);
-
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,93 +203,93 @@ public class BoardFragment extends Fragment {
                     case R.id.btn_all:
                         onButtonClicked(0);
 
-//                        boardItems.clear();
-//
-//                        String writer = null;
-//                        String string_image = null;
-//
-//                        for(int i=0; i<posting_list_app.size(); i++) {
-//                            if(posting_list_app.get(i).category.equals("공모전")) {
-//                                int writer_num = posting_list_app.get(i).personal_id;
-//                                for(int j=0; j<personal_list_app.size(); j++) {
-//                                    if(writer_num == personal_list_app.get(j).id) {
-//                                        writer = personal_list_app.get(i).nickname;
-//                                        string_image = personal_list_app.get(i).img;
-//                                    }
-//                                }
-//                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
-//                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
-//                            }
-//                        }
-//                        boardAdapter.setPostingList(boardItems);
+                        boardItems.clear();
+
+                        String writer = null;
+                        String string_image = null;
+
+                        for(int i=0; i<posting_list_app.size(); i++) {
+                            if(posting_list_app.get(i).category.equals("공모전")) {
+                                Long writer_num = posting_list_app.get(i).personal.id;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(writer_num == personal_list_app.get(j).id) {
+                                        writer = personal_list_app.get(i).nickname;
+                                        string_image = personal_list_app.get(i).img;
+                                    }
+                                }
+                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
+                            }
+                        }
+                        boardAdapter.setBoardList(boardItems);
                         break;
                     case R.id.btn_contest:
                         onButtonClicked(1);
-//                        boardItems.clear();
-//
-//                        writer = null;
-//                        string_image = null;
-//
-//                        for(int i=0; i<posting_list_app.size(); i++) {
-//                            if(posting_list_app.get(i).category.equals("동아리")) {
-//                                int writer_num = posting_list_app.get(i).personal_id;
-//                                for(int j=0; j<personal_list_app.size(); j++) {
-//                                    if(writer_num == personal_list_app.get(j).id) {
-//                                        writer = personal_list_app.get(i).nickname;
-//                                        string_image = personal_list_app.get(i).img;
-//                                    }
-//                                }
-//                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
-//                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
-//                            }
-//                        }
-//                        boardAdapter.setPostingList(boardItems);
+                        boardItems.clear();
+
+                        writer = null;
+                        string_image = null;
+
+                        for(int i=0; i<posting_list_app.size(); i++) {
+                            if(posting_list_app.get(i).category.equals("동아리")) {
+                                Long writer_num = posting_list_app.get(i).personal.id;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(writer_num == personal_list_app.get(j).id) {
+                                        writer = personal_list_app.get(i).nickname;
+                                        string_image = personal_list_app.get(i).img;
+                                    }
+                                }
+                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
+                            }
+                        }
+                        boardAdapter.setBoardList(boardItems);
 
                         break;
                     case R.id.btn_study:
                         onButtonClicked(2);
-//                        boardItems.clear();
-//
-//                        writer = null;
-//                        string_image = null;
-//
-//                        for(int i=0; i<posting_list_app.size(); i++) {
-//                            if(posting_list_app.get(i).category.equals("대외활동")) {
-//                                int writer_num = posting_list_app.get(i).personal_id;
-//                                for(int j=0; j<personal_list_app.size(); j++) {
-//                                    if(writer_num == personal_list_app.get(j).id) {
-//                                        writer = personal_list_app.get(i).nickname;
-//                                        string_image = personal_list_app.get(i).img;
-//                                    }
-//                                }
-//                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
-//                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
-//                            }
-//                        }
-//                        boardAdapter.setPostingList(boardItems);
+                        boardItems.clear();
+
+                        writer = null;
+                        string_image = null;
+
+                        for(int i=0; i<posting_list_app.size(); i++) {
+                            if(posting_list_app.get(i).category.equals("대외활동")) {
+                                Long writer_num = posting_list_app.get(i).personal.id;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(writer_num == personal_list_app.get(j).id) {
+                                        writer = personal_list_app.get(i).nickname;
+                                        string_image = personal_list_app.get(i).img;
+                                    }
+                                }
+                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
+                            }
+                        }
+                        boardAdapter.setBoardList(boardItems);
 
                         break;
                     case R.id.btn_etc:
                         onButtonClicked(3);
-//                        boardItems.clear();
-//
-//                        writer = null;
-//                        string_image = null;
-//
-//                        for(int i=0; i<posting_list_app.size(); i++) {
-//                            if(posting_list_app.get(i).category.equals("스터디")) {
-//                                int writer_num = posting_list_app.get(i).personal_id;
-//                                for(int j=0; j<personal_list_app.size(); j++) {
-//                                    if(writer_num == personal_list_app.get(j).id) {
-//                                        writer = personal_list_app.get(i).nickname;
-//                                        string_image = personal_list_app.get(i).img;
-//                                    }
-//                                }
-//                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
-//                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
-//                            }
-//                        }
-//                        boardAdapter.setPostingList(boardItems);
+                        boardItems.clear();
+
+                        writer = null;
+                        string_image = null;
+
+                        for(int i=0; i<posting_list_app.size(); i++) {
+                            if(posting_list_app.get(i).category.equals("스터디")) {
+                                Long writer_num = posting_list_app.get(i).personal.id;
+                                for(int j=0; j<personal_list_app.size(); j++) {
+                                    if(writer_num == personal_list_app.get(j).id) {
+                                        writer = personal_list_app.get(i).nickname;
+                                        string_image = personal_list_app.get(i).img;
+                                    }
+                                }
+                                int image = getResources().getIdentifier(string_image , "drawable", getContext().getPackageName());
+                                boardItems.add(new Board(posting_list_app.get(i).category, posting_list_app.get(i).title, writer, image));
+                            }
+                        }
+                        boardAdapter.setBoardList(boardItems);
                         break;
                 }
             }

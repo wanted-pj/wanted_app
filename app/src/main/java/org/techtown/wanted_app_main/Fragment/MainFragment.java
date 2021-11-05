@@ -46,7 +46,7 @@ public class MainFragment extends Fragment {
     private ArrayList<Board> boardItems;
 
     private RecyclerView recyclerViewFriend;
-    private FriendAdapter friendAdapter;
+    private FriendAdapter friendAdapter = new FriendAdapter();
     private ArrayList<Friend> friendItems = new ArrayList<>();
 
     private Button btnSchool, btnMajor, btnAddress;
@@ -92,7 +92,7 @@ public class MainFragment extends Fragment {
         id = 1;
         Log.d("test_MainFragment", String.valueOf(id));
 
-        friendAdapter = new FriendAdapter();
+        //friendAdapter = new FriendAdapter();
         boardAdapter = new BoardAdapter();
 
         // 커뮤니티
@@ -100,115 +100,95 @@ public class MainFragment extends Fragment {
         recyclerViewCommunity.setAdapter(boardAdapter);
         recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
-//        //서버 호출
-//        RequestQueue requestQueue;
-//        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
-//        Network network = new BasicNetwork(new HurlStack());
-//        requestQueue = new RequestQueue(cache, network);
-//        requestQueue.start();
-//
-//        String url1 = "http://13.125.214.178:8080/personal";
-//        String url2 = "http://13.125.214.178:8080/posting";
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                // 한글깨짐 해결 코드
-//                String changeString = new String();
-//                try {
-//                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-//                } catch (UnsupportedEncodingException e) {
-//                    e.printStackTrace();
-//                }
-//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                Type listType = new TypeToken<ArrayList<Personal>>() {
-//                }.getType();
-//
-//                personal_list = gson.fromJson(changeString, listType);
-//
-//                for (int i = 0; i < personal_list.size(); i++) {
-//                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
-//                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
-//                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).carrer, personal_list.get(i).gender, personal_list.get(i).img));
-//                }
-//
-//                //전체 출력 코드
-//                /*for(int i=0; i<personal_list_app.size(); i++) {
-//                    int image = getResources().getIdentifier(personal_list_app.get(i).img , "drawable", getContext().getPackageName());
-//                    friendItems.add(new Friend(personal_list_app.get(i).nickname, personal_list_app.get(i).school, personal_list_app.get(i).major, image));
-//                }
-//                friendAdapter.setFriendList(friendItems);*/
-//
-//                friendItems.clear();
-//                for (int i = 0; i < personal_list_app.size(); i++) {
-//                    if (id == personal_list_app.get(i).id) {
-//                        String school = personal_list_app.get(i).school;
-//                        for (int j = 0; j < personal_list_app.size(); j++) {
-//                            if (id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
-//                                int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
-//                                friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
-//                            }
-//                        }
-//                    }
-//                    break;
-//                }
-//                friendAdapter.setFriendList(friendItems);
-//
-//                StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        // 한글깨짐 해결 코드
-//                        String changeString = new String();
-//                        try {
-//                            changeString = new String(response.getBytes("8859_1"), "utf-8");
-//                        } catch (UnsupportedEncodingException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-//                        Type listType = new TypeToken<ArrayList<Personal>>() {
-//                        }.getType();
-//
-//                        posting_list = gson.fromJson(changeString, listType);
-//
-//                        for (int i = 0; i < posting_list.size(); i++) {
-//                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).category, posting_list.get(i).title,
-//                                    posting_list.get(i).content, posting_list.get(i).personal_id));
-//                        }
-//
-//                        boardItems = new ArrayList<>();
-//
-//                        String writer = null;
-//                        String string_image = null;
-//
-//                        for (int i = 0; i < posting_list.size(); i++) {
-//                            int writer_num = posting_list.get(i).personal_id;
-//                            for (int j = 0; j < personal_list.size(); j++) {
-//                                if (writer_num == personal_list.get(j).id) {
-//                                    writer = personal_list.get(i).nickname;
-//                                    string_image = personal_list.get(i).img;
-//                                }
-//                            }
-//                            int image = getResources().getIdentifier(string_image, "drawable", getContext().getPackageName());
-//                            boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
-//                        }
-//
-//                        boardAdapter.setBoardList(boardItems);
-//
-//                    }
-//                }, new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                    }
-//                });
-//                requestQueue.add(stringRequest2);
-//
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//            }
-//        });
-//        requestQueue.add(stringRequest);
+        //서버 호출
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        String url1 = "http://13.125.214.178:8080/personal";
+        String url2 = "http://13.125.214.178:8080/posting";
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 한글깨짐 해결 코드
+                String changeString = new String();
+                try {
+                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Type listType = new TypeToken<ArrayList<Personal>>() {
+                }.getType();
+
+                personal_list = gson.fromJson(changeString, listType);
+
+                for (int i = 0; i < personal_list.size(); i++) {
+                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
+                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
+                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).career, personal_list.get(i).gender, personal_list.get(i).img));
+                }
+
+                setCategory("school");
+
+                StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // 한글깨짐 해결 코드
+                        String changeString = new String();
+                        try {
+                            changeString = new String(response.getBytes("8859_1"), "utf-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                        Type listType = new TypeToken<ArrayList<Posting>>() {
+                        }.getType();
+
+                        posting_list = gson.fromJson(changeString, listType);
+
+                        for (int i = 0; i < posting_list.size(); i++) {
+                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).personal, posting_list.get(i).category, posting_list.get(i).title,
+                                    posting_list.get(i).content, posting_list.get(i).connects, posting_list.get(i).team, posting_list.get(i).postingTime));
+                        }
+
+                        boardItems = new ArrayList<>();
+
+                        String writer = null;
+                        String string_image = null;
+
+                        for (int i = 0; i < posting_list.size(); i++) {
+                            Long writer_num = posting_list.get(i).personal.id;
+                            for (int j = 0; j < personal_list.size(); j++) {
+                                if (writer_num == personal_list.get(j).id) {
+                                    writer = personal_list.get(i).nickname;
+                                    string_image = personal_list.get(i).img;
+                                }
+                            }
+                            int image = getResources().getIdentifier(string_image, "drawable", getContext().getPackageName());
+                            boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
+                        }
+
+                        boardAdapter.setBoardList(boardItems);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    }
+                });
+                requestQueue.add(stringRequest2);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        requestQueue.add(stringRequest);
 
         boardItems = new ArrayList<>();
         boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
@@ -221,6 +201,7 @@ public class MainFragment extends Fragment {
         recyclerViewFriend.setAdapter(friendAdapter);
         recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
 
+        /*
         friendItems = new ArrayList<>();
         friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
         friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
@@ -231,7 +212,7 @@ public class MainFragment extends Fragment {
         friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
         friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
 
-        friendAdapter.setFriendList(friendItems);
+        friendAdapter.setFriendList(friendItems); */
 
         btnSchool = view.findViewById(R.id.btn_school);
         btnMajor = view.findViewById(R.id.btn_major);
@@ -248,54 +229,15 @@ public class MainFragment extends Fragment {
                 switch (v.getId()) {
                     case R.id.btn_school:
                         onButtonClicked(0);
-//                        friendItems.clear();
-//                        for (int i = 0; i < personal_list_app.size(); i++) {
-//                            if (id == personal_list_app.get(i).id) {
-//                                String school = personal_list_app.get(i).school;
-//                                for (int j = 0; j < personal_list_app.size(); j++) {
-//                                    if (id != personal_list_app.get(j).id && school.equals(personal_list_app.get(j).school)) {
-//                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
-//                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
-//                                    }
-//                                }
-//                            }
-//                            break;
-//                        }
-//                        friendAdapter.setFriendList(friendItems);
+                        setCategory("school");
                         break;
                     case R.id.btn_major:
                         onButtonClicked(1);
-//                        friendItems.clear();
-//                        for (int i = 0; i < personal_list_app.size(); i++) {
-//                            if (id == personal_list_app.get(i).id) {
-//                                String major = personal_list_app.get(i).major;
-//                                for (int j = 0; j < personal_list_app.size(); j++) {
-//                                    if (id != personal_list_app.get(j).id && major.equals(personal_list_app.get(j).major)) {
-//                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
-//                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
-//                                    }
-//                                }
-//                            }
-//                            break;
-//                        }
-//                        friendAdapter.setFriendList(friendItems);
+                        setCategory("major");
                         break;
                     case R.id.btn_address:
                         onButtonClicked(2);
-//                        friendItems.clear();
-//                        for (int i = 0; i < personal_list_app.size(); i++) {
-//                            if (id == personal_list_app.get(i).id) {
-//                                String address = personal_list_app.get(i).address;
-//                                for (int j = 0; j < personal_list_app.size(); j++) {
-//                                    if (id != personal_list_app.get(j).id && address.equals(personal_list_app.get(j).address)) {
-//                                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
-//                                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
-//                                    }
-//                                }
-//                            }
-//                            break;
-//                        }
-//                        friendAdapter.setFriendList(friendItems);
+                        setCategory("address");
                         break;
                 }
             }
@@ -336,6 +278,37 @@ public class MainFragment extends Fragment {
                 button.setTextColor(getResources().getColor(R.color.colorPrimary));
             }
         }
+    }
 
+    public void setCategory(String category) {
+        friendItems.clear();
+        for (int i = 0; i < personal_list_app.size(); i++) {
+            if (id == personal_list_app.get(i).id) {
+                String temp = null;
+                String temp2 = null;
+                if (category.equals("school")) {
+                    temp = personal_list_app.get(i).school;
+                } else if (category.equals("major")) {
+                    temp = personal_list_app.get(i).major;
+                } else if (category.equals("address")) {
+                    temp = personal_list_app.get(i).address;
+                }
+                for (int j = 0; j < personal_list_app.size(); j++) {
+                    if (category.equals("school")) {
+                        temp2 = personal_list_app.get(j).school;
+                    } else if (category.equals("major")) {
+                        temp2 = personal_list_app.get(j).major;
+                    } else if (category.equals("address")) {
+                        temp2 = personal_list_app.get(j).address;
+                    }
+                    if (id != personal_list_app.get(j).id && temp.equals(temp2)) {
+                        int image = getResources().getIdentifier(personal_list_app.get(j).img, "drawable", getContext().getPackageName());
+                        friendItems.add(new Friend(personal_list_app.get(j).nickname, personal_list_app.get(j).school, personal_list_app.get(j).major, personal_list_app.get(j).address, image));
+                    }
+                }
+            }
+            break;
+        }
+        friendAdapter.setFriendList(friendItems);
     }
 }

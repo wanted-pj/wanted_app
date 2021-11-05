@@ -137,7 +137,7 @@
             android:layout_gravity="center_horizontal"
                 android:id="@+id/derequest"
                 android:text="참가 신청"
-                style="@style/requestBtn"/>
+                style="@style/btnRequest"/>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

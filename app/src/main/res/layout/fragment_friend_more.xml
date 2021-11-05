@@ -48,20 +48,26 @@
 
                 <Button
                     android:id="@+id/btn_school_more"
+                    android:layout_height="35dp"
                     android:text="학교친구"
-                    style="@style/friendBtn" />
+                    android:textSize="12dp"
+                    style="@style/btnBasic" />
 
                 <Button
                     android:id="@+id/btn_major_more"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="10dp"
                     android:text="학과친구"
-                    style="@style/friendBtn" />
+                    android:textSize="12dp"
+                    style="@style/btnBasic" />
 
                 <Button
                     android:id="@+id/btn_address_more"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="10dp"
                     android:text="동네친구"
-                    style="@style/friendBtn"/>
+                    android:textSize="12dp"
+                    style="@style/btnBasic"/>
 
             </LinearLayout>
 

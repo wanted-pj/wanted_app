@@ -14,7 +14,20 @@ import java.util.ArrayList;
 
 public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
 
-    private ArrayList<Board> boardList = new ArrayList<Board>();
+    static ArrayList<Board> boardList = new ArrayList<Board>();
+    static BoardAdapter.OnBoardItemClickListener listener;
+
+    public interface OnBoardItemClickListener {
+        public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position);
+    }
+
+    public void setOnItemClicklistener(BoardAdapter.OnBoardItemClickListener listener){
+        this.listener = listener;
+    }
+
+    public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
+        if(listener != null){
+            listener.onItemClick(holder, view, items, position); } }
 
     @NonNull
     @Override
@@ -54,6 +67,13 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             tv_title = itemView.findViewById(R.id.tv_title);
             tv_writer = itemView.findViewById(R.id.tv_writer);
             iv = itemView.findViewById(R.id.iv);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener != null){
+                        listener.onItemClick(BoardAdapter.ViewHolder.this, v, boardList, position);
+                    } } });
         }
 
         public void setBoard(Board board) {

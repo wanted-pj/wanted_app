@@ -36,7 +36,7 @@ public class BoardFragment extends Fragment {
 
     private RecyclerView rvBoard;
     private BoardAdapter boardAdapter;
-    private ArrayList<Board> boardItems = new ArrayList<>();;
+    private ArrayList<Board> boardItems = new ArrayList<>();
 
     public BoardFragment() {
         // Required empty public constructor
@@ -84,6 +84,15 @@ public class BoardFragment extends Fragment {
         boardItems.add(new Board("공모전", "KBSC 소프트웨어 공모전 같이 준비하실 분?", "다니엘", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
         boardItems.add(new Board("스터디", "PSAT 스터디 인원 구해요~", "스콧", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
         boardAdapter.setBoardList(boardItems);
+
+        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnBoardItemClickListener() {
+            @Override
+            public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("test", "testmessage");
+                navController.navigate(R.id.action_board_to_board_detail, bundle);
+            }
+        });
 
 //        RequestQueue requestQueue;
 //        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap

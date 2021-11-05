@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Fragment.BoardDetailFragment">
+
+    // 카테고리 타이틀
+    <TextView
+        android:id="@+id/board_detail_category"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:gravity="center_vertical"
+        android:letterSpacing="-0.05"
+        android:paddingLeft="20dp"
+        android:text="공모전"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    // 카테고리 구분선
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/gray" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollView_board_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            // 제목
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingTop="15dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp">
+
+                // 제목 텍스트
+                <TextView
+                    android:id="@+id/board_detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="-0.05"
+                    android:text="앱 아이디어 공모전 같이 참여할 개발자 구합니다!"
+                    android:textColor="@color/black"
+                    android:textSize="19dp" />
+
+                // 작성자 정보
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/board_detail_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/profile_basic3" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/board_detail_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="-0.05"
+                            android:text="시미즈"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/board_detail_date"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="-0.05"
+                            android:text="2021.11.01"
+                            android:textColor="@color/grayDark"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            // 구분선
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/gray" />
+
+            // 본문
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="-0.05"
+                    android:text="안녕하세요~ 2021년 12월에 하는 앱 아이디어 공모전에 참여하실 안드로이드 개발자 구합니다. 현재 서버개발자 2명있고, 프로젝트 경험있으면 좋겠지만 없어도 같이 만들어가실 분이면 좋겠습니다! 자세한 사항은 쪽지 부탁드립니다."
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+            </LinearLayout>
+
+            // 구분선
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/gray" />
+
+            // 댓글
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_board_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp" />
+
+            // 버튼
+            <Button
+                android:id="@+id/board_detail_request"
+                android:layout_gravity="center_horizontal"
+                android:text="참가 신청"
+                android:textColor="@color/white"
+                style="@style/btnBasic"
+                android:background="@drawable/btn_teal"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"/>
+
+            // Footer
+            <LinearLayout
+                android:id="@+id/footer"
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:background="@color/gray"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:src="@drawable/logo" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:text="상호명: 원티드\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @원티드 친구 추가하고 소식을 받아보세요"
+                    android:textSize="8dp"
+                    android:textColor="#ff191919"
+                    android:letterSpacing="-0.02"
+                    android:lineSpacingMultiplier="1.2" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

@@ -8,9 +8,9 @@
     <!--커뮤니티-->
     <fragment
         android:id="@+id/communityFragment"
-        android:name="org.techtown.wanted_app_main.Fragment.CommunityFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.BoardFragment"
         android:label="fragment_community"
-        tools:layout="@layout/fragment_community">
+        tools:layout="@layout/fragment_board">
             <action
                 android:id="@+id/action_contest_to_detailpost"
                 app:destination="@id/DetailPost" />

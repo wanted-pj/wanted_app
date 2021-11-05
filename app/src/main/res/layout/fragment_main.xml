@@ -74,7 +74,7 @@
 
                 // 커뮤니티 포스팅 목록
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView_community"
+                    android:id="@+id/recyclerView_board"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -119,20 +119,26 @@
 
                     <Button
                         android:id="@+id/btn_school"
+                        android:layout_height="35dp"
                         android:text="학교친구"
-                        style="@style/friendBtn"/>
+                        android:textSize="12dp"
+                        style="@style/btnBasic"/>
 
                     <Button
                         android:id="@+id/btn_major"
+                        android:layout_height="35dp"
                         android:text="학과친구"
+                        android:textSize="12dp"
                         android:layout_marginLeft="10dp"
-                        style="@style/friendBtn"/>
+                        style="@style/btnBasic"/>
 
                     <Button
                         android:id="@+id/btn_address"
+                        android:layout_height="35dp"
                         android:text="동네친구"
+                        android:textSize="12dp"
                         android:layout_marginLeft="10dp"
-                        style="@style/friendBtn"/>
+                        style="@style/btnBasic"/>
 
                 </LinearLayout>
 

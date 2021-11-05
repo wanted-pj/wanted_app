@@ -41,13 +41,13 @@ import java.util.List;
 
 public class MainFragment extends Fragment {
 
-    private RecyclerView recyclerViewSchool;
     private RecyclerView recyclerViewCommunity;
-    private FriendAdapter friendAdapter;
     private BoardAdapter boardAdapter;
-    private ArrayList<Friend> friendItems = new ArrayList<>();
     private ArrayList<Board> boardItems;
+
     private RecyclerView recyclerViewFriend;
+    private FriendAdapter friendAdapter;
+    private ArrayList<Friend> friendItems = new ArrayList<>();
 
     private Button btnSchool, btnMajor, btnAddress;
 
@@ -96,7 +96,7 @@ public class MainFragment extends Fragment {
         boardAdapter = new BoardAdapter();
 
         // 커뮤니티
-        recyclerViewCommunity = view.findViewById(R.id.recyclerView_community);
+        recyclerViewCommunity = view.findViewById(R.id.recyclerView_board);
         recyclerViewCommunity.setAdapter(boardAdapter);
         recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
@@ -192,7 +192,7 @@ public class MainFragment extends Fragment {
                             boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
                         }
 
-                        boardAdapter.setPostingList(boardItems);
+                        boardAdapter.setBoardList(boardItems);
 
                     }
                 }, new Response.ErrorListener() {
@@ -213,8 +213,8 @@ public class MainFragment extends Fragment {
         boardItems = new ArrayList<>();
         boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
         boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        boardItems.add(new Board("대외활동", "KT상상유니브 팀원 구합니다", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        boardAdapter.setPostingList(boardItems);
+        boardItems.add(new Board("기타", "광명에서 카공하실 분!", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        boardAdapter.setBoardList(boardItems);
 
         // 친구
         recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);

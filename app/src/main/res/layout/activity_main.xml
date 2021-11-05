@@ -47,6 +47,7 @@
         app:itemIconTint="@drawable/item_color"
         app:itemTextColor="@drawable/item_color"
         app:labelVisibilityMode="labeled"
+
         app:menu="@menu/menu_bottom" />
 
 </RelativeLayout>

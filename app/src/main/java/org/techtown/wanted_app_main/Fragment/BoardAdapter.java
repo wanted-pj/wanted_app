@@ -20,7 +20,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.item_posting, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_board, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
@@ -28,10 +28,10 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         Board board = boardList.get(position);
-        viewHolder.setPost(board);
+        viewHolder.setBoard(board);
     }
 
-    public void setPostingList(ArrayList<Board> arrayList){
+    public void setBoardList(ArrayList<Board> arrayList){
         this.boardList = arrayList;
         notifyDataSetChanged();
     }
@@ -56,7 +56,7 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             iv = itemView.findViewById(R.id.iv);
         }
 
-        public void setPost(Board board) {
+        public void setBoard(Board board) {
             tv_category.setText(board.getCategory());
             tv_title.setText(board.getTitle());
             tv_writer.setText(String.valueOf(board.getWriter()));

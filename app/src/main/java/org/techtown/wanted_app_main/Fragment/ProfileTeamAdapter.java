@@ -12,45 +12,45 @@ import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
 
-public class CareerAdapter extends RecyclerView.Adapter<CareerAdapter.ViewHolder> {
+public class ProfileTeamAdapter extends RecyclerView.Adapter<ProfileTeamAdapter.ViewHolder> {
 
-    private ArrayList<Career> careerList = new ArrayList<Career>();
+    private ArrayList<ProfileTeam> profileTeamList = new ArrayList<ProfileTeam>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.item_career, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_profile_team, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Career career = careerList.get(position);
-        viewHolder.setCareer(career);
+        ProfileTeam profileTeam = profileTeamList.get(position);
+        viewHolder.setTeam(profileTeam);
     }
 
-    public void setCareerList(ArrayList<Career> arrayList){
-        this.careerList = arrayList;
+    public void setProfileTeamList(ArrayList<ProfileTeam> arrayList){
+        this.profileTeamList = arrayList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return careerList.size();
+        return profileTeamList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_career;
+        TextView tv_team;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv_career = itemView.findViewById(R.id.career_content);
+            tv_team = itemView.findViewById(R.id.team_name);
         }
 
-        public void setCareer(Career career) {
-            tv_career.setText(career.getContent());
+        public void setTeam(ProfileTeam profileTeam) {
+            tv_team.setText(profileTeam.getName());
         }
     }
 }

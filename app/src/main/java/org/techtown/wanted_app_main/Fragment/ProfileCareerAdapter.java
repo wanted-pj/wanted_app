@@ -12,45 +12,45 @@ import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
 
-public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
+public class ProfileCareerAdapter extends RecyclerView.Adapter<ProfileCareerAdapter.ViewHolder> {
 
-    private ArrayList<Team> teamList = new ArrayList<Team>();
+    private ArrayList<ProfileCareer> profileCareerList = new ArrayList<ProfileCareer>();
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.item_team, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_profile_career, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Team team = teamList.get(position);
-        viewHolder.setTeam(team);
+        ProfileCareer profileCareer = profileCareerList.get(position);
+        viewHolder.setCareer(profileCareer);
     }
 
-    public void setTeamList(ArrayList<Team> arrayList){
-        this.teamList = arrayList;
+    public void setProfileCareerList(ArrayList<ProfileCareer> arrayList){
+        this.profileCareerList = arrayList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return teamList.size();
+        return profileCareerList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_team;
+        TextView tv_career;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tv_team = itemView.findViewById(R.id.team_name);
+            tv_career = itemView.findViewById(R.id.career_content);
         }
 
-        public void setTeam(Team team) {
-            tv_team.setText(team.getName());
+        public void setCareer(ProfileCareer profileCareer) {
+            tv_career.setText(profileCareer.getContent());
         }
     }
 }

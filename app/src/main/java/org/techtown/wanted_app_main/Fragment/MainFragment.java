@@ -128,7 +128,8 @@ public class MainFragment extends Fragment {
                 personal_list = gson.fromJson(changeString, listType);
 
                 for (int i = 0; i < personal_list.size(); i++) {
-                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).string_id, personal_list.get(i).pwd,
+                    Log.d("test_personal_id", personal_list.get(i).stringId);
+                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).stringId, personal_list.get(i).pwd,
                             personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
                             personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).career, personal_list.get(i).gender, personal_list.get(i).img));
                 }

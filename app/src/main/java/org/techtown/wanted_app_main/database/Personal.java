@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Personal {
     public Long id;
-    public String string_id;
+    public String stringId;
     public String pwd;
     public String nickname;
     public String school;
@@ -17,10 +17,10 @@ public class Personal {
     public Integer gender;
     public String img;
 
-    public Personal(Long id, String string_id, String pwd, String nickname, String school, String major, Integer grade, Integer age,
+    public Personal(Long id, String stringId, String pwd, String nickname, String school, String major, Integer grade, Integer age,
                     String address, String career, Integer gender, String img) {
         this.id = id;
-        this.string_id = string_id;
+        this.stringId = stringId;
         this.pwd = pwd;
         this.nickname = nickname;
         this.school = school;

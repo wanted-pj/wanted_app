@@ -59,6 +59,7 @@ public class MainFragment extends Fragment {
     private static NavController navController;
     private static String spinnerString = "학교친구";
     private static String[] friendsCategoryList;
+    private int friendsCategory = 0;
 
     private int id;
 
@@ -220,31 +221,28 @@ public class MainFragment extends Fragment {
         btnMajor = view.findViewById(R.id.btn_major);
         btnAddress = view.findViewById(R.id.btn_address);
 
-        // 처음 btn 지정
-        btnSchool.setBackgroundResource(R.drawable.btn_teal);
-        btnSchool.setTextColor(getResources().getColor(R.color.white));
-
         // btn 클릭 이벤트
+        onCategoryClickedChangeButtonDesign(friendsCategory);
         Button.OnClickListener onClickListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.btn_school:
-                        onButtonClicked(0);
+                        friendsCategory = 0;
                         setCategory("school");
                         break;
                     case R.id.btn_major:
-                        onButtonClicked(1);
+                        friendsCategory = 1;
                         setCategory("major");
                         break;
                     case R.id.btn_address:
-                        onButtonClicked(2);
+                        friendsCategory = 2;
                         setCategory("address");
                         break;
                 }
+                onCategoryClickedChangeButtonDesign(friendsCategory);
             }
         };
-
         btnSchool.setOnClickListener(onClickListener);
         btnMajor.setOnClickListener(onClickListener);
         btnAddress.setOnClickListener(onClickListener);
@@ -266,7 +264,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
     }
 
-    public void onButtonClicked(int index) {
+    public void onCategoryClickedChangeButtonDesign(int index) {
         List<Button> buttons = Arrays.asList(btnSchool, btnMajor, btnAddress);
 
         for (int i = 0; i < buttons.size(); i++) {
@@ -312,5 +310,6 @@ public class MainFragment extends Fragment {
             break;
         }
         friendAdapter.setFriendList(friendItems);
+        friendAdapter.setFriendsCategory(friendsCategory);
     }
 }

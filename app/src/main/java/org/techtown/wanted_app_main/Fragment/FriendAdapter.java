@@ -24,6 +24,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private final int TYPE_ITEM = 1;
     private final int TYPE_FOOTER = 2;
     private ArrayList<Friend> friendList = new ArrayList<>();
+    private int friendsCategory = 0; // 0은 school 1은 major 2는 address
 
     // 뷰타입에 따라 사용할 뷰홀더 리턴
     @NonNull
@@ -63,6 +64,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         notifyDataSetChanged();
     }
 
+    public void setFriendsCategory(int friendsCategory) {
+        this.friendsCategory = friendsCategory;
+    }
+
     @Override
     public int getItemCount() {
         if (friendList.size() < limit)
@@ -99,7 +104,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             // footer 클릭이벤트
             footerView.setOnClickListener(view1 -> {
                 Bundle bundle = new Bundle();
-                bundle.putString("friendsCategory", "test");
+                bundle.putInt("friendsCategory", friendsCategory);
                 navController.navigate(R.id.action_mainFragment_to_friendMoreFragment, bundle);
             });
         }

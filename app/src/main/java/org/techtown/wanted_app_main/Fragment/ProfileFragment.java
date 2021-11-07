@@ -11,6 +11,8 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,6 +41,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProfileFragment extends Fragment {
+
+    NavController navController;
 
     private RecyclerView rvCareer;
     private ProfileCareerAdapter profileCareerAdapter;
@@ -91,6 +95,15 @@ public class ProfileFragment extends Fragment {
         profileTeamItems.add(new ProfileTeam("원티드 피우다팀"));
         profileTeamItems.add(new ProfileTeam("신림 모각코"));
         profileTeamAdapter.setProfileTeamList(profileTeamItems);
+
+        profileTeamAdapter.setOnItemClicklistener(new ProfileTeamAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("test", "testmessage");
+                navController.navigate(R.id.action_profile_to_profile_team, bundle);
+            }
+        });
 
         ImageView img = view.findViewById(R.id.pf_img);
         TextView nick = view.findViewById(R.id.pf_nickname);
@@ -159,5 +172,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
     }
 }

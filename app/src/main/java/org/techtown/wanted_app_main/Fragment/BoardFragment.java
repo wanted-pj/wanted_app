@@ -1,5 +1,4 @@
 package org.techtown.wanted_app_main.Fragment;
-//
 
 import android.os.Bundle;
 
@@ -125,11 +124,11 @@ public class BoardFragment extends Fragment {
 
                 personal_list = gson.fromJson(changeString, listType);
 
-                for(int i=0; i<personal_list.size(); i++) {
-                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).stringId, personal_list.get(i).pwd,
-                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
-                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).career, personal_list.get(i).gender, personal_list.get(i).img));
-                }
+//                for(int i=0; i<personal_list.size(); i++) {
+//                    personal_list_app.add(new Personal(personal_list.get(i).id, personal_list.get(i).stringId, personal_list.get(i).pwd,
+//                            personal_list.get(i).nickname, personal_list.get(i).school, personal_list.get(i).major, personal_list.get(i).grade,
+//                            personal_list.get(i).age, personal_list.get(i).address, personal_list.get(i).career, personal_list.get(i).gender, personal_list.get(i).img));
+//                }
 
                 StringRequest stringRequest2 = new StringRequest(Request.Method.GET, url2, new Response.Listener<String>() {
                     @Override
@@ -147,10 +146,13 @@ public class BoardFragment extends Fragment {
                         posting_list = gson.fromJson(changeString, listType);
 
                         for(int i=0; i<posting_list.size(); i++) {
-                            posting_list_app.add(new Posting(posting_list.get(i).posting_id, posting_list.get(i).personal, posting_list.get(i).category, posting_list.get(i).title,
-                                    posting_list.get(i).content, posting_list.get(i).connects, posting_list.get(i).team, posting_list.get(i).postingTime));
+                            posting_list_app.add(new Posting(posting_list.get(i).id, posting_list.get(i).personal, posting_list.get(i).category, posting_list.get(i).title,
+                                    posting_list.get(i).content, posting_list.get(i).connects, posting_list.get(i).postingTime));
                         }
 
+                        for (Posting posting : posting_list) {
+                            System.out.println("포스팅: " + posting);
+                        }
                         boardItems.clear();
 
                         String writer = null;
@@ -187,9 +189,9 @@ public class BoardFragment extends Fragment {
         });
         requestQueue.add(stringRequest);
 
-        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnBoardItemClickListener() {
+        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
+            public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString("test", "testmessage");
                 navController.navigate(R.id.action_board_to_board_detail, bundle);

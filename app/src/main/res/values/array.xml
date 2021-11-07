@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="gender">
+        <item>여자</item>
+        <item>남자</item>
+    </string-array>
+    <string-array name="grade">
+        <item>1학년</item>
+        <item>2학년</item>
+        <item>3학년</item>
+        <item>4학년</item>
+    </string-array>
+</resources>

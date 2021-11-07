@@ -138,11 +138,13 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
+
         Bundle bundle = getArguments();
         //id = bundle.getInt("id");
 //        Personal me = bundle.getParcelable("me");
 //        id = 1;
 //        Log.d("test_MainFragment", String.valueOf(me.id));
+
 
 
         // 커뮤니티 리사이 클러뷰 설정

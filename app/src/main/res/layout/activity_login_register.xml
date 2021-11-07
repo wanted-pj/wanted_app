@@ -17,314 +17,465 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:text="Register"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
+                android:letterSpacing="-0.05"
+                android:text="Register"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
 
-    <!--나이-->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:letterSpacing="-0.05"
-        android:text="Id"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+    <!--id-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="20dp"
+                    android:letterSpacing="-0.05"
+                    android:text="Id"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
 
-    <EditText
-        android:id="@+id/resid"
-        android:background="@drawable/rectangle2"
-        android:layout_marginTop="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:hint="    id"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        tools:ignore="MissingConstraints" />
+                <TextView
+                    android:id="@+id/idmessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:letterSpacing="-0.05"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
 
-    <!--비번-->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:letterSpacing="-0.05"
-        android:text="Password"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-    <EditText
-        android:id="@+id/respwd"
-        android:background="@drawable/rectangle2"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:hint="  Password"
-        tools:ignore="MissingConstraints" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-    <!--닉넴-->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:letterSpacing="-0.05"
-        android:text="Nickname"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-    <EditText
-        android:id="@+id/resname"
-        android:background="@drawable/rectangle2"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:hint="  주디,닉 등"
-        tools:ignore="MissingConstraints" />
+                <EditText
+                    android:id="@+id/resid"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rectangle2"
+                    android:hint="    id"
+                    android:letterSpacing="-0.05"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    tools:ignore="MissingConstraints" />
 
-    <!--나이-->
-    <TextView
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:letterSpacing="-0.05"
-        android:text="Age"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-    <EditText
-        android:id="@+id/reage"
-        android:background="@drawable/rectangle2"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:layout_marginLeft="40dp"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        android:hint="  나이"
-        tools:ignore="MissingConstraints" />
+                <Button
+                    android:id="@+id/id_dup_test"
+                    style="@style/btnBasic"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_teal"
+                    android:text="중복확인"
+                    android:textColor="@color/white" />
 
-    <!--성별-->
-       <TextView
-                android:layout_marginTop="20dp"
+            </LinearLayout>
+
+            <!--비번-->
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="-0.05"
+                android:text="Password"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/respwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle2"
+                android:hint="  Password"
+                android:inputType="textPassword"
+                android:letterSpacing="-0.05"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
+
+            <!--비번확인-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="20dp"
+                    android:letterSpacing="-0.05"
+                    android:text="Password Check"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/pwdmessage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:letterSpacing="-0.05"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    tools:ignore="MissingConstraints" />
+            </LinearLayout>
+
+            <EditText
+                android:inputType="textPassword"
+                android:id="@+id/respwd2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle2"
+                android:hint="  Password"
+                android:letterSpacing="-0.05"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
+
+
+            <!--닉넴-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="-0.05"
+                android:text="Nickname"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/rename"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle2"
+                android:hint="  주디,닉 등"
+                android:letterSpacing="-0.05"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
+
+            <!--나이-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="-0.05"
+                android:text="Age"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <EditText
+                android:id="@+id/reage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rectangle2"
+                android:hint="  나이"
+                android:letterSpacing="-0.05"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:ignore="MissingConstraints" />
+
+            <!--성별-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="Gender"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/regender"/>
-    <!--사는곳-->
+
+            <Spinner
+                android:layout_marginLeft="42dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/regender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <!--사는곳-->
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="Address"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
+
             <Spinner
+                android:layout_marginLeft="42dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/readdress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/readdress"/>
-    <!--학교-->
+                android:layout_height="wrap_content" />
+
+            <!--학교-->
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="School"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
+
             <Spinner
+                android:layout_marginLeft="42dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/reschool"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/reschool"/>
-    <!--학과-->
+                android:layout_height="wrap_content" />
+
+            <!--학과-->
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="Major"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
+
             <Spinner
+                android:layout_marginLeft="42dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/remajor"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/remajor"/>
-    <!--학년-->
+                android:layout_height="wrap_content" />
+
+            <!--학년-->
             <TextView
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="Grade"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
-            <Spinner
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/regrade"/>
-    <!--이미지설정-->
 
-       <TextView
-                android:layout_marginTop="20dp"
+            <Spinner
+                android:layout_marginLeft="42dp"
+                android:spinnerMode="dialog"
+                android:id="@+id/regrade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!--이미지설정-->
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
+                android:layout_marginTop="20dp"
                 android:letterSpacing="-0.05"
                 android:text="Profile Image"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
-        <TextView
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="42dp"
                 android:letterSpacing="-0.05"
                 android:text="원하는 이미지를 선택해주세요"
                 android:textColor="@color/black"
-                android:textSize="10sp"
-                tools:ignore="MissingConstraints" />
-        <LinearLayout
-            android:layout_marginLeft="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/iv1"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_basic1"
-               android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/iv2"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_basic2"
-                android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/iv3"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_basic3"
-                android:layout_weight="1"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            <ImageView
-                android:id="@+id/iv4"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_basic4"
-                android:layout_weight="1"/>
-            <ImageView
-                android:id="@+id/iv5"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_basic5"
-                android:layout_weight="1"/>
-                <ImageView
-                    android:id="@+id/iv6"
-                    android:layout_width="50dp"
-                    android:layout_height="80dp"
-                    android:src="@drawable/profile_basic6"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-        </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:orientation="vertical">
-            <TextView
-                android:layout_marginTop="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="60dp"
-                android:letterSpacing="-0.05"
-                android:text="My Image"
-                android:textColor="@color/colorPrimaryDark"
                 android:textSize="12sp"
-                android:textStyle="bold"
                 tools:ignore="MissingConstraints" />
-            <ImageView
-                android:id="@+id/iv7"
-                android:layout_marginLeft="60dp"
-                android:layout_width="50dp"
-                android:layout_height="80dp"
-                android:src="@drawable/profile_none"
-                android:layout_weight="1"/>
-            </LinearLayout>
-        </LinearLayout>
 
+
+                <LinearLayout
+                    android:layout_marginLeft="42dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:src="@drawable/profile_basic1" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/profile_basic2" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/profile_basic3" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/profile_basic4" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/profile_basic5" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <CheckBox
+                                android:id="@+id/iv6"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <ImageView
+
+                                android:layout_width="50dp"
+                                android:layout_height="80dp"
+                                android:layout_weight="1"
+                                android:src="@drawable/profile_basic6" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+            <!--등록버튼-->
             <Button
                 android:id="@+id/resup"
-                android:layout_gravity="center_horizontal"
-                android:text="등록"
-                android:textColor="@color/white"
                 style="@style/btnBasic"
-                android:background="@drawable/btn_teal"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_teal"
+                android:text="등록"
+                android:textColor="@color/white" />
 </LinearLayout>
+
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

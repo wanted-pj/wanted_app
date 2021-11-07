@@ -97,8 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-                }
-                else { //비정상입력시 재입력, 정상입력시 mainfragment로 이동
+                } else { //비정상입력시 재입력, 정상입력시 mainfragment로 이동
                     RequestQueue requestQueue;
                     Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
                     Network network = new BasicNetwork(new HurlStack());
@@ -106,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
                     requestQueue.start();
 
                     String url1 = "http://13.125.214.178:8080/personal";
-                    String url2 = "http://13.125.214.178:8080/posting";
 
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
                         @Override
@@ -122,31 +120,18 @@ public class LoginActivity extends AppCompatActivity {
                             Type listType = new TypeToken<ArrayList<Personal>>() {
                             }.getType();
                             list = gson.fromJson(changeString, listType);
-                           // Log.e("pwd",list.get(0).pwd.toString());
-                        ArrayList<String> list1 = new ArrayList<>();
-                           for(int i=0; i<list.size(); i++) {
-                         list1.add(list.get(i).pwd);
-                               Log.e("id",list.get(i).pwd);
-                           }
-                            ArrayList<String> list2 = new ArrayList<>();
-                            for(int i=0; i<list.size(); i++) {
-                                list2.add(list.get(i).string_id);
-                                Log.e("id",list.get(i).string_id);
-                            }
 
 
-                            for(int i=0; i<list.size(); i++) {
-                           // String a ="s";
-                                if(Id.compareTo(list1.get(0))==0){
-                                    if(Pwd.compareTo(list.get(i).pwd) == 0) {
-                                        Log.e("pwd",list.get(i).pwd.toString());
+                            for (int i = 0; i < list.size(); i++) {  //id와 pwd비교
+                                if (Id.compareTo(list.get(i).stringId) == 0) {
+                                    if (Pwd.compareTo(list.get(i).pwd) == 0) {
                                         check = true;
                                     }
                                     break;
                                 }
                             }
 
-                            if(check == false) {
+                            if (check == false) { //아이디 비번 정확히 입력x ->재입력하라는 dialog 창이 뜸
                                 dialog = new Dialog(LoginActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                 dialog.setContentView(R.layout.incorrect_id_pwd_dialog);
@@ -158,35 +143,29 @@ public class LoginActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 });
-                            } else {
+                            } else { //올바른 입력시 mainactivity로 이동
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("ID", Id);
                                 startActivity(intent);
                                 finish();
                             }
-
-
-
                         }
-                            }, new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {//서버오류시
 
-                                    Log.e("Dd",error.getMessage());
-                                }
-                            });
-                            requestQueue.add(stringRequest);
-
-
-
-                            //else
+                            Log.e("Dd", error.getMessage());
                         }
+                    });
+                    requestQueue.add(stringRequest);
 
- }});
+
+                }    //else 닫기
+
+            }
+        });
 
         //forgot password클릭시
-
-
 
 
     }

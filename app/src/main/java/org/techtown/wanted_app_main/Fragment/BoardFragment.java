@@ -1,5 +1,4 @@
 package org.techtown.wanted_app_main.Fragment;
-//
 
 import android.os.Bundle;
 
@@ -190,9 +189,9 @@ public class BoardFragment extends Fragment {
         });
         requestQueue.add(stringRequest);
 
-        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnBoardItemClickListener() {
+        boardAdapter.setOnItemClicklistener(new BoardAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BoardAdapter.ViewHolder holder, View view, ArrayList<Board> items, int position) {
+            public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putString("test", "testmessage");
                 navController.navigate(R.id.action_board_to_board_detail, bundle);

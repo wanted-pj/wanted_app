@@ -62,7 +62,7 @@
         android:name="org.techtown.wanted_app_main.Fragment.FriendMoreFragment"
         tools:layout="@layout/fragment_friend_more" >
         <action
-            android:id="@+id/action_friendMoreFragment_to_profileFragment"
+            android:id="@+id/action_friend_to_profile"
             app:destination="@id/profileFragment" />
     </fragment>
 
@@ -76,6 +76,16 @@
     <fragment
         android:id="@+id/profileFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileFragment"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_profile_team"
+            app:destination="@id/profileTeamFragment" />
+    </fragment>
+
+    // 프로필 팀
+    <fragment
+        android:id="@+id/profileTeamFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"
+        tools:layout="@layout/fragment_profile_team" />
 
 </navigation>

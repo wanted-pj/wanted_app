@@ -31,7 +31,7 @@ public class Chat {
         return imgRes;
     }
 
-    public void setImgRes(int imgUrl) {
-        this.imgRes = imgUrl;
+    public void setImgRes(int imgRes) {
+        this.imgRes = imgRes;
     }
 }

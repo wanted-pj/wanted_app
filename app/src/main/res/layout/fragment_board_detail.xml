@@ -37,7 +37,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            // 제목
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,6 +45,17 @@
                 android:paddingTop="15dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp">
+
+                // 작성 날짜
+                <TextView
+                    android:id="@+id/board_detail_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:letterSpacing="-0.05"
+                    android:text="2021.11.01"
+                    android:textColor="@color/grayDark"
+                    android:textSize="12dp" />
 
                 // 제목 텍스트
                 <TextView
@@ -79,21 +89,21 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/board_detail_team"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:letterSpacing="-0.05"
+                            android:text="원티드 피우다팀"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                        <TextView
                             android:id="@+id/board_detail_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:letterSpacing="-0.05"
                             android:text="시미즈"
                             android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/board_detail_date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:letterSpacing="-0.05"
-                            android:text="2021.11.01"
-                            android:textColor="@color/grayDark"
                             android:textSize="12dp" />
                     </LinearLayout>
                 </LinearLayout>

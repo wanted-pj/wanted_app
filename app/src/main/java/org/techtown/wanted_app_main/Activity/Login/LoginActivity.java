@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText getId, getPwd;
     private TextView btnLogin, btnRegister;
-
+    private Personal me;
     private boolean check = false;
     Dialog dialog;
 

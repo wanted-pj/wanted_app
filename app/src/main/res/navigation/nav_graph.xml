@@ -6,7 +6,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
-    // 바텀내비게이션
+    <!--바텀내비게이션-->
     <action
         android:id="@+id/action_global_mainFragment"
         app:destination="@id/mainFragment"
@@ -24,7 +24,7 @@
         app:destination="@id/profileFragment"
         app:popUpTo="@id/mainFragment" />
 
-    // 홈
+    <!--홈-->
     <fragment
         android:id="@+id/mainFragment"
         android:name="org.techtown.wanted_app_main.Fragment.MainFragment"
@@ -33,6 +33,9 @@
             android:id="@+id/action_mainFragment_to_boardFragment"
             app:destination="@id/boardFragment" />
         <action
+            android:id="@+id/action_mainFragment_to_boardDetailFragment"
+            app:destination="@id/boardDetailFragment" />
+        <action
             android:id="@+id/action_mainFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
@@ -40,7 +43,7 @@
             app:destination="@id/friendMoreFragment" />
     </fragment>
 
-    // 커뮤니티
+    <!--커뮤니티-->
     <fragment
         android:id="@+id/boardFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingListFragment"
@@ -50,13 +53,13 @@
                 app:destination="@id/boardDetailFragment" />
     </fragment>
 
-    // 커뮤니티 게시글
+    <!--커뮤니티 게시글-->
     <fragment
         android:id="@+id/boardDetailFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingFragment"
         tools:layout="@layout/fragment_posting" />
 
-    // 친구 더보기
+    <!--친구 더보기-->
     <fragment
         android:id="@+id/friendMoreFragment"
         android:name="org.techtown.wanted_app_main.Fragment.FriendMoreFragment"
@@ -66,13 +69,13 @@
             app:destination="@id/profileFragment" />
     </fragment>
 
-    // 채팅
+    <!--채팅-->
     <fragment
         android:id="@+id/chatFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ChatFragment"
         tools:layout="@layout/fragment_chat" />
 
-    // 프로필
+    <!--프로필-->
     <fragment
         android:id="@+id/profileFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileFragment"
@@ -82,7 +85,7 @@
             app:destination="@id/profileTeamFragment" />
     </fragment>
 
-    // 프로필 팀
+    <!--프로필 팀-->
     <fragment
         android:id="@+id/profileTeamFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"

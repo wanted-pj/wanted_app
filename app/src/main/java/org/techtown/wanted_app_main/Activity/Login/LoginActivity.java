@@ -37,11 +37,10 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private ArrayList<Personal> list = new ArrayList<>();
-    private EditText getId;
-    private EditText getPwd;
-    private TextView registerbtn;
-    private Personal me;
-    ViewGroup loginbtn;
+
+    private EditText getId, getPwd;
+    private TextView btnLogin, btnRegister;
+
     private boolean check = false;
     Dialog dialog;
 
@@ -50,13 +49,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getId = findViewById(R.id.loginid);
-        getPwd = findViewById(R.id.loginpwd);
-        loginbtn = findViewById(R.id.loginbtn);
-        registerbtn = findViewById(R.id.goregister);
+        getId = findViewById(R.id.login_id);
+        getPwd = findViewById(R.id.login_pwd);
+        btnLogin = findViewById(R.id.login_login);
+        btnRegister = findViewById(R.id.login_register);
 
         //register 클릭시
-        registerbtn.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
@@ -65,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
             }});
 
         //login버튼 클릭시
-        loginbtn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Id = getId.getText().toString();

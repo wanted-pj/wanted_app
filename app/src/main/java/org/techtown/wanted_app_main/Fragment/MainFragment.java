@@ -122,6 +122,7 @@ public class MainFragment extends Fragment {
 
                 // 메인 화면에서 포스팅 설정
                 postingAdapter.setPostingList(postingItems);
+
             }
         };
         requestQueue.add(new GetPersonalsRequest(responseListener));

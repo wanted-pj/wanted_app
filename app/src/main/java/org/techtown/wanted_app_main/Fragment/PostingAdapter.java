@@ -24,11 +24,12 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
     static PostingAdapter.OnItemClickListener listener;
 
     public interface OnItemClickListener {
-        public void onItemClick(View view, int position);
+        void onItemClick(View view, int position);
     }
 
     public void setOnItemClicklistener(PostingAdapter.OnItemClickListener listener){
         this.listener = listener;
+
     }
 
     public void onItemClick(View view, int position) {

@@ -1,5 +1,8 @@
 package org.techtown.wanted_app_main.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
 
 import java.util.List;
 
-public class Posting {
+public class Posting implements Parcelable {
     public Long id;
     @SerializedName("personal")
     @Expose
@@ -39,5 +42,39 @@ public class Posting {
                 ", connects=" + connects +
                 ", postingTime='" + postingTime + '\'' +
                 '}';
+    }
+
+    public Posting(Parcel source) {
+        id = source.readLong();
+        category = source.readString();
+        title = source.readString();
+        content = source.readString();
+        postingTime = source.readString();
+    }
+
+    public static final Creator<Posting> CREATOR = new Creator<Posting>() {
+        @Override
+        public Posting createFromParcel(Parcel source) {
+            return new Posting(source);
+        }
+
+        @Override
+        public Posting[] newArray(int size) {
+            return new Posting[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(category);
+        dest.writeString(title);
+        dest.writeString(content);
+        dest.writeString(postingTime);
     }
 }

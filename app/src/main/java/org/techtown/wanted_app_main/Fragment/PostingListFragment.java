@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -40,7 +42,8 @@ import java.util.List;
 
 public class PostingListFragment extends Fragment {
     private static NavController navController;
-    private Button btnAll, btnContest, btnStudy, btnEtc;
+    private Button btnAll, btnContest, btnStudy, btnEtc, btnSearch;
+    private EditText searchText;
 
     // 사람과 포스팅
     public List<Posting> posting_list = new ArrayList<>();
@@ -113,7 +116,7 @@ public class PostingListFragment extends Fragment {
                 }
 
                 // 카테고리에 따라 boadItem채우기
-                setCommunityCategory(communityCategory);
+                setCommunityCategory(communityCategory, "");
                 postingAdapter.setPostingList(postingItems);
             }
         };
@@ -129,6 +132,17 @@ public class PostingListFragment extends Fragment {
         recyclerViewPosting = view.findViewById(R.id.recyclerView_board_more);
         recyclerViewPosting.setAdapter(postingAdapter);
         recyclerViewPosting.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+
+        // SearchText 설정
+        searchText = view.findViewById(R.id.search);
+        btnSearch = view.findViewById(R.id.searchButton);
+
+        btnSearch.setOnClickListener(v -> {
+                    String findingText = searchText.getText().toString();
+                    setCommunityCategory(communityCategory, findingText);
+                }
+        );
+
 
         // 임시데이터 받기
 //        postingItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
@@ -166,7 +180,7 @@ public class PostingListFragment extends Fragment {
                         break;
                 }
                 onCommunityCategoryClickedChangeButtonDesign(communityCategory);
-                setCommunityCategory(communityCategory);
+                setCommunityCategory(communityCategory, searchText.getText().toString());
             }
         };
         btnAll.setOnClickListener(onClickListener);
@@ -179,7 +193,7 @@ public class PostingListFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("test", "testmessage");
+                bundle.putParcelable("posting", postingItems.get(position));
                 navController.navigate(R.id.action_board_to_board_detail, bundle);
             }
         });
@@ -211,17 +225,17 @@ public class PostingListFragment extends Fragment {
     }
 
     // 커뮤니티의 카테고리에 따라서, 카테고리가 일치하는 포스팅정보만 화면에 보여지게 설정
-    public void setCommunityCategory(int communityCategory) {
+    public void setCommunityCategory(int communityCategory, String searchText) {
         postingItems.clear();
         for (Posting posting : posting_list) {
             boolean check = false;
-            if (communityCategory == 0) {
+            if (communityCategory == 0 && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 1 && posting.category.equals("공모전")) {
+            } else if (communityCategory == 1 && posting.category.equals("공모전") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 2 && posting.category.equals("스터디")) {
+            } else if (communityCategory == 2 && posting.category.equals("스터디") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 3 && posting.category.equals("기타")) {
+            } else if (communityCategory == 3 && posting.category.equals("기타") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
             }
             if (check) {

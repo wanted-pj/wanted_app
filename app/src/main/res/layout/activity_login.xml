@@ -9,14 +9,13 @@ android:orientation="vertical"
     tools:context=".Activity.Login.LoginActivity">
 
 
-
     <TextView
-        android:layout_marginTop="300dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="300dp"
         android:letterSpacing="-0.05"
         android:text="Login"
-        android:layout_marginLeft="40dp"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -24,13 +23,14 @@ android:orientation="vertical"
 
     <EditText
         android:id="@+id/loginid"
-        android:background="@drawable/rectangle1"
-        android:layout_marginTop="50dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:hint="   id"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rectangle1"
+        android:hint="   id"
+        android:letterSpacing="-0.05"
+        android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -38,71 +38,67 @@ android:orientation="vertical"
 
     <EditText
         android:id="@+id/loginpwd"
-        android:background="@drawable/rectangle1"
-        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:hint="   Password"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rectangle1"
+        android:hint="   Password"
+        android:letterSpacing="-0.05"
+        android:singleLine="true"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints" />
 
     <LinearLayout
+
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-
-
-    <TextView
-android:id="@+id/forgotpwd"
-        android:layout_marginTop="50dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:letterSpacing="-0.05"
-        android:text="Forgot Password?"
-        android:layout_marginLeft="40dp"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
-
-
-
-    <LinearLayout
-        android:id="@+id/loginbtn"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectangle3">
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/goregister"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="42dp"
-            android:letterSpacing="-0.05"
-            android:text="Login"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints" />
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rectangle3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="-0.05"
+                android:text="Register"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/loginbtn"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/rectangle3">
+
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginTop="20dp"
+                android:letterSpacing="-0.05"
+                android:text="Login"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+        </LinearLayout>
     </LinearLayout>
-    </LinearLayout>
-    <TextView
-        android:id="@+id/goregister"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:letterSpacing="-0.05"
-        android:text="Register"
-        android:textColor="#FFFFFF"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints" />
+
 </LinearLayout>

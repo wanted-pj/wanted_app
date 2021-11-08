@@ -126,6 +126,15 @@ public class MainFragment extends Fragment {
                     boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
                 }
                 boardAdapter.setBoardList(boardItems);
+
+                boardAdapter.setOnItemClicklistener(new BoardAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Bundle bundle = new Bundle();
+                        navController.navigate(R.id.action_mainFragment_to_boardDetailFragment, bundle);
+                    }
+                });
+
             }
         };
         requestQueue.add(new GetPersonalsRequest(responseListener));

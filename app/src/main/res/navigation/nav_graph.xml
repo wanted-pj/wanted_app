@@ -48,16 +48,27 @@
         android:id="@+id/boardFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingListFragment"
         tools:layout="@layout/fragment_posting_list">
-            <action
-                android:id="@+id/action_board_to_board_detail"
-                app:destination="@id/boardDetailFragment" />
+        <action
+            android:id="@+id/action_board_to_board_detail"
+            app:destination="@id/boardDetailFragment" />
+        <action
+            android:id="@+id/action_board_to_board_write"
+            app:destination="@id/postingWriteActivity" />
     </fragment>
 
     <!--커뮤니티 게시글-->
     <fragment
         android:id="@+id/boardDetailFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingFragment"
-        tools:layout="@layout/fragment_posting" />
+        tools:layout="@layout/fragment_posting">
+    </fragment>
+
+    <!--커뮤니티 게시글 작성-->
+    <activity
+        android:id="@+id/postingWriteActivity"
+        android:name="org.techtown.wanted_app_main.Activity.PostingWriteActivity"
+        tools:layout="@layout/activity_posting_write">
+    </activity>
 
     <!--친구 더보기-->
     <fragment

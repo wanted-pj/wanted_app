@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -41,6 +42,7 @@ import java.util.List;
 public class PostingListFragment extends Fragment {
     private static NavController navController;
     private Button btnAll, btnContest, btnStudy, btnEtc;
+    private ImageView btnMyPosting, btnWrite;
 
     // 사람과 포스팅
     public List<Posting> posting_list = new ArrayList<>();
@@ -182,6 +184,14 @@ public class PostingListFragment extends Fragment {
                 bundle.putString("test", "testmessage");
                 navController.navigate(R.id.action_board_to_board_detail, bundle);
             }
+        });
+
+        btnMyPosting = view.findViewById(R.id.btn_myposting);
+        btnWrite = view.findViewById(R.id.btn_write);
+
+        btnWrite.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            navController.navigate(R.id.action_board_to_board_write, bundle);
         });
 
         return view;

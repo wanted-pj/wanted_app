@@ -1,5 +1,10 @@
 package org.techtown.wanted_app_main.database;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +12,7 @@ import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 
 import java.util.ArrayList;
 
-public class Personal {
+public class Personal implements Parcelable, Cloneable {
     @SerializedName("id")
     @Expose
     public Long id;
@@ -42,9 +47,28 @@ public class Personal {
         this.img = img;
         if (postings != null) {
             this.postings = postings;
-        } else{
-            postings = new ArrayList<>();
         }
+    }
+
+    @NonNull
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public Personal(Parcel source) {
+        id = source.readLong();
+        stringId = source.readString();
+        pwd = source.readString();
+        nickname = source.readString();
+        school = source.readString();
+        major = source.readString();
+        grade = source.readInt();
+        age = source.readInt();
+        address = source.readString();
+        career = source.readString();
+        gender = source.readInt();
+        img = source.readString();
     }
 
     @Override
@@ -64,5 +88,39 @@ public class Personal {
                 ", img='" + img + '\'' +
                 ", postings='" + postings +
                 '}';
+    }
+
+
+    public static final Creator<Personal> CREATOR = new Creator<Personal>() {
+        @Override
+        public Personal createFromParcel(Parcel source) {
+            return new Personal(source);
+        }
+
+        @Override
+        public Personal[] newArray(int size) {
+            return new Personal[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(stringId);
+        dest.writeString(pwd);
+        dest.writeString(nickname);
+        dest.writeString(school);
+        dest.writeString(major);
+        dest.writeInt(grade);
+        dest.writeInt(age);
+        dest.writeString(address);
+        dest.writeString(career);
+        dest.writeInt(gender);
+        dest.writeString(img);
     }
 }

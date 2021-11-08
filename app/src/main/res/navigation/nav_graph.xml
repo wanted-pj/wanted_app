@@ -6,7 +6,7 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/mainFragment">
 
-    // 바텀내비게이션
+    <!--바텀내비게이션-->
     <action
         android:id="@+id/action_global_mainFragment"
         app:destination="@id/mainFragment"
@@ -24,7 +24,7 @@
         app:destination="@id/profileFragment"
         app:popUpTo="@id/mainFragment" />
 
-    // 홈
+    <!--홈-->
     <fragment
         android:id="@+id/mainFragment"
         android:name="org.techtown.wanted_app_main.Fragment.MainFragment"
@@ -33,6 +33,9 @@
             android:id="@+id/action_mainFragment_to_boardFragment"
             app:destination="@id/boardFragment" />
         <action
+            android:id="@+id/action_mainFragment_to_boardDetailFragment"
+            app:destination="@id/boardDetailFragment" />
+        <action
             android:id="@+id/action_mainFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
         <action
@@ -40,23 +43,34 @@
             app:destination="@id/friendMoreFragment" />
     </fragment>
 
-    // 커뮤니티
+    <!--커뮤니티-->
     <fragment
         android:id="@+id/boardFragment"
-        android:name="org.techtown.wanted_app_main.Fragment.BoardFragment"
-        tools:layout="@layout/fragment_board">
-            <action
-                android:id="@+id/action_board_to_board_detail"
-                app:destination="@id/boardDetailFragment" />
+        android:name="org.techtown.wanted_app_main.Fragment.PostingListFragment"
+        tools:layout="@layout/fragment_posting_list">
+        <action
+            android:id="@+id/action_board_to_board_detail"
+            app:destination="@id/boardDetailFragment" />
+        <action
+            android:id="@+id/action_board_to_board_write"
+            app:destination="@id/postingWriteActivity" />
     </fragment>
 
-    // 커뮤니티 게시글
+    <!--커뮤니티 게시글-->
     <fragment
         android:id="@+id/boardDetailFragment"
-        android:name="org.techtown.wanted_app_main.Fragment.BoardDetailFragment"
-        tools:layout="@layout/fragment_board_detail" />
+        android:name="org.techtown.wanted_app_main.Fragment.PostingFragment"
+        tools:layout="@layout/fragment_posting">
+    </fragment>
 
-    // 친구 더보기
+    <!--커뮤니티 게시글 작성-->
+    <activity
+        android:id="@+id/postingWriteActivity"
+        android:name="org.techtown.wanted_app_main.Activity.PostingWriteActivity"
+        tools:layout="@layout/activity_posting_write">
+    </activity>
+
+    <!--친구 더보기-->
     <fragment
         android:id="@+id/friendMoreFragment"
         android:name="org.techtown.wanted_app_main.Fragment.FriendMoreFragment"
@@ -66,13 +80,13 @@
             app:destination="@id/profileFragment" />
     </fragment>
 
-    // 채팅
+    <!--채팅-->
     <fragment
         android:id="@+id/chatFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ChatFragment"
         tools:layout="@layout/fragment_chat" />
 
-    // 프로필
+    <!--프로필-->
     <fragment
         android:id="@+id/profileFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileFragment"
@@ -82,7 +96,7 @@
             app:destination="@id/profileTeamFragment" />
     </fragment>
 
-    // 프로필 팀
+    <!--프로필 팀-->
     <fragment
         android:id="@+id/profileTeamFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"

@@ -59,7 +59,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     //학년
     Spinner spinner_grade;
     Integer value_grade;
-    //비밀번호
+    //비밀번호+
     EditText et_pwd, et_pwdcheck;
     TextView pwd_checkmes;
     //아이디
@@ -67,7 +67,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     Button id_dupcheck;
     TextView id_checkmes;
     //이미지
-    CheckBox r1,r2,r3,r4,r5,r6;
+    CheckBox r1, r2, r3, r4, r5, r6;
     String imageName;
     //닉네임
     EditText et_nickname;
@@ -84,9 +84,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_register);
 
         //성별,사는곳,학교,학과,학년 spinner 지정
-        spinner_gender = findViewById(R.id.regender);
+        spinner_gender = findViewById(R.id.register_gender_spinner);
         setSpinner("gender");
-        spinner_grade = findViewById(R.id.regrade);
+        spinner_grade = findViewById(R.id.register_grade_spinner);
         setSpinner("grade");
         //학교 server데이터 가져오기
         //학과 server데이터 가져오기
@@ -94,20 +94,28 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
         //id
-        et_id=findViewById(R.id.resid);
-        id_checkmes = findViewById(R.id.idmessage);
-        id_dupcheck = findViewById(R.id.id_dup_test);
+
+        et_id=findViewById(R.id.register_id);
+        id_checkmes = findViewById(R.id.register_id_check_txt);
+        id_dupcheck = findViewById(R.id.register_id_check_btn);
         id_dupcheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(et_id.getText().equals("")){
+                    id_checkmes.setText("아이디를 입력해주세요.");
+                    return;
+                }
                 checkId();     //id중복확인
-            }});
+            }
+        });
 
 
         //비밀번호
-        et_pwd = findViewById(R.id.respwd);
-        et_pwdcheck = findViewById(R.id.respwd2);
-        pwd_checkmes =findViewById(R.id.pwdmessage);
+
+        et_pwd = findViewById(R.id.register_pwd);
+        et_pwdcheck = findViewById(R.id.register_pwdcheck);
+        pwd_checkmes =findViewById(R.id.register_pwdcheck_txt);
+
         et_pwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         et_pwdcheck.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         checkPwd();  //비밀번호확인: 비밀번호 재입력창 비밀번호랑 다를경우
@@ -120,15 +128,15 @@ public class LoginRegisterActivity extends AppCompatActivity {
         r5 = findViewById(R.id.iv5);
         r6 = findViewById(R.id.iv6);
         r1.setChecked(true);
-        imageName="profile_basic1";//이미지 기본설정
+        imageName = "profile_basic1";//이미지 기본설정
         selectMyImage(); //이미지 선택
 
-        //닉네임,나이
-        et_nickname=findViewById(R.id.rename);
-        et_age=findViewById(R.id.reage);
+
+        //닉네임
+        et_nickname=findViewById(R.id.register_nickname);
 
         //동록 버튼 클릭시
-        post_person=findViewById(R.id.resup);
+        post_person = findViewById(R.id.resup);
         post_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +148,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 String postimage = imageName; //선택된 이미지url 가져오기
                 //Integer postage = Integer.valueOf(et_age.getText().toString());
                 //제대로 입력안했을 시
-                if ((postid.length() <= 0)&&(postpwd.length() <= 0)&&(postnickname.length() <= 0)&&(et_age.getText().toString().length() <= 0)) {
+                if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0) && (et_age.getText().toString().length() <= 0)) {
                     dialog = new Dialog(LoginRegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.register_dialog);
@@ -152,20 +160,19 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
-                }
-                else {  //제대로 입력했을 시 서버에 post 후 LoginActivity로 이동
+                } else {  //제대로 입력했을 시 서버에 post 후 LoginActivity로 이동
                     String url = "http://13.125.214.178:8080/personal";
                     Map map = new HashMap();
                     map.put("stringId", postid);
-                    map.put("pwd",postpwd);
-                    map.put("nickname",postnickname);
-                    map.put("img",postimage);
-                    map.put("school",null);
-                    map.put("major",null);
-                    map.put("grade",postgrade);
-                    map.put("age",Integer.valueOf(et_age.getText().toString()));
-                    map.put("gender",postgender);
-                    map.put("address",null);
+                    map.put("pwd", postpwd);
+                    map.put("nickname", postnickname);
+                    map.put("img", postimage);
+                    map.put("school", null);
+                    map.put("major", null);
+                    map.put("grade", postgrade);
+                    map.put("age", Integer.valueOf(et_age.getText().toString()));
+                    map.put("gender", postgender);
+                    map.put("address", null);
 
                     JSONObject params = new JSONObject(map);
 
@@ -178,7 +185,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
-                                    Log.e("register_Error",error.getMessage());
+                                    Log.e("register_Error", error.getMessage());
                                 }
                             }) {
 
@@ -195,14 +202,14 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     finish();
                 }
 
-            }});
-
+            }
+        });
 
 
     }
 
 
-    public void setSpinner(String topic){ //spinner 설정 함수
+    public void setSpinner(String topic) { //spinner 설정 함수
 
         //topic에 따른 spinner설정
         //성별
@@ -214,11 +221,16 @@ public class LoginRegisterActivity extends AppCompatActivity {
             spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) { value_gender = 0; }
-                    else if (position == 1) { value_gender = 1; }
+                    if (position == 0) {
+                        value_gender = 0;
+                    } else if (position == 1) {
+                        value_gender = 1;
+                    }
                 }
+
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) { }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
         }
         //학년
@@ -230,20 +242,26 @@ public class LoginRegisterActivity extends AppCompatActivity {
             spinner_grade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) { value_grade = 1; }
-                    else if (position == 1) { value_grade = 2; }
-                    else if (position == 2) { value_grade = 3; }
-                    else if (position == 3) { value_grade = 4; }
+                    if (position == 0) {
+                        value_grade = 1;
+                    } else if (position == 1) {
+                        value_grade = 2;
+                    } else if (position == 2) {
+                        value_grade = 3;
+                    } else if (position == 3) {
+                        value_grade = 4;
+                    }
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> parent) { }
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
             });
         }
 
     }
 
-    public void checkId(){ //아이디 중복검사
+    public void checkId() { //아이디 중복검사
 
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
@@ -251,18 +269,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
 
-        String url1 = "http://13.125.214.178:8080/personal/stringId/"+et_id.getText().toString();
+        String url1 = "http://13.125.214.178:8080/personal/stringId/" + et_id.getText().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                id_checkmes.setText("아이디 사용 가능");
+                id_checkmes.setText("사용 가능한 아이디입니다.");
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 id_checkmes.setText("이미 아이디가 존재합니다.");
-
             }
         });
         requestQueue.add(stringRequest);
@@ -273,15 +290,16 @@ public class LoginRegisterActivity extends AppCompatActivity {
         et_pwdcheck.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (et_pwdcheck.isFocusable() && s.toString().equals(et_pwd.getText().toString())) {
-                    pwd_checkmes.setText("비밀번호를 올바르게 입력했습니다");
+                    pwd_checkmes.setText("비밀번호를 올바르게 입력했습니다.");
 
                 } else {
-                    pwd_checkmes.setText("비밀번호를 다시 확입해주세요");
+                    pwd_checkmes.setText("비밀번호를 다시 확인해주세요.");
                 }
             }
 
@@ -291,48 +309,88 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void selectMyImage(){  //이미지 선택
+    public void selectMyImage() {  //이미지 선택
         r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r2.setChecked(false);r3.setChecked(false);r4.setChecked(false);r5.setChecked(false);r6.setChecked(false);
-                    imageName="profile_basic1";} }});
+                    r2.setChecked(false);
+                    r3.setChecked(false);
+                    r4.setChecked(false);
+                    r5.setChecked(false);
+                    r6.setChecked(false);
+                    imageName = "profile_basic1";
+                }
+            }
+        });
         r2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r1.setChecked(false);r3.setChecked(false);r4.setChecked(false);r5.setChecked(false);r6.setChecked(false);
-                    imageName="profile_basic2";} }});
+                    r1.setChecked(false);
+                    r3.setChecked(false);
+                    r4.setChecked(false);
+                    r5.setChecked(false);
+                    r6.setChecked(false);
+                    imageName = "profile_basic2";
+                }
+            }
+        });
         r3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r1.setChecked(false);r2.setChecked(false);r4.setChecked(false);r5.setChecked(false);r6.setChecked(false);
-                    imageName="profile_basic3";} }});
+                    r1.setChecked(false);
+                    r2.setChecked(false);
+                    r4.setChecked(false);
+                    r5.setChecked(false);
+                    r6.setChecked(false);
+                    imageName = "profile_basic3";
+                }
+            }
+        });
         r4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r1.setChecked(false);r2.setChecked(false);r3.setChecked(false);r5.setChecked(false);r6.setChecked(false);
-                    imageName="profile_basic4";} }});
+                    r1.setChecked(false);
+                    r2.setChecked(false);
+                    r3.setChecked(false);
+                    r5.setChecked(false);
+                    r6.setChecked(false);
+                    imageName = "profile_basic4";
+                }
+            }
+        });
         r5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r1.setChecked(false);r2.setChecked(false);r3.setChecked(false);r4.setChecked(false);r6.setChecked(false);
-                    imageName="profile_basic5";} }});
+                    r1.setChecked(false);
+                    r2.setChecked(false);
+                    r3.setChecked(false);
+                    r4.setChecked(false);
+                    r6.setChecked(false);
+                    imageName = "profile_basic5";
+                }
+            }
+        });
         r6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
-                    r1.setChecked(false);r2.setChecked(false);r3.setChecked(false);r4.setChecked(false);r5.setChecked(false);
-                    imageName="profile_basic6";} }});
+                    r1.setChecked(false);
+                    r2.setChecked(false);
+                    r3.setChecked(false);
+                    r4.setChecked(false);
+                    r5.setChecked(false);
+                    imageName = "profile_basic6";
+                }
+            }
+        });
 
 
     }
-
-
 
 
 }

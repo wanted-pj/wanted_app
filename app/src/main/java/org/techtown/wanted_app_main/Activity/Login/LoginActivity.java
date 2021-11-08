@@ -1,19 +1,17 @@
 package org.techtown.wanted_app_main.Activity.Login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -30,10 +28,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
-import org.techtown.wanted_app_main.Fragment.Board;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -41,10 +37,11 @@ import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
     private ArrayList<Personal> list = new ArrayList<>();
-    private EditText getId;
-    private EditText getPwd;
-    ViewGroup registerbtn;
-    ViewGroup loginbtn;
+
+    private EditText getId, getPwd;
+    private TextView btnLogin, btnRegister;
+    private Personal me;
+
     private boolean check = false;
     Dialog dialog;
 
@@ -53,13 +50,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        getId = findViewById(R.id.loginid);
-        getPwd = findViewById(R.id.loginpwd);
-        loginbtn = findViewById(R.id.loginbtn);
-        registerbtn = findViewById(R.id.goregister);
+        getId = findViewById(R.id.login_id);
+        getPwd = findViewById(R.id.login_pwd);
+        btnLogin = findViewById(R.id.login_login);
+        btnRegister = findViewById(R.id.login_register);
 
         //register 클릭시
-        registerbtn.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
@@ -68,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }});
 
         //login버튼 클릭시
-        loginbtn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String Id = getId.getText().toString();
@@ -124,9 +121,10 @@ public class LoginActivity extends AppCompatActivity {
 
 
                             for (int i = 0; i < list.size(); i++) {  //id와 pwd비교
-                                if (Id.compareTo(list.get(i).stringId) == 0) {
-                                    if (Pwd.compareTo(list.get(i).pwd) == 0) {
+                                if (Id.equals(list.get(i).stringId)) {
+                                    if (Pwd.equals(list.get(i).pwd)) {
                                         check = true;
+                                        me = list.get(i);
                                     }
                                     break;
                                 }
@@ -146,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                                 });
                             } else { //올바른 입력시 mainactivity로 이동
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                intent.putExtra("ID", Id);
+                                intent.putExtra("me", me);
                                 startActivity(intent);
                                 finish();
                             }

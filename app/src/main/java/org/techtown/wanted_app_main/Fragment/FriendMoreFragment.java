@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Personal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,6 +60,7 @@ public class FriendMoreFragment extends Fragment {
         // main에서 전달된 데이터 받기
         if (getArguments() != null) {
             friendsCategory = getArguments().getInt(argParam1);
+//            getArguments().getParcelable("me", Personal);
         }
     }
 

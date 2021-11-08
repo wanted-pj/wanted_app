@@ -14,15 +14,16 @@
 
         android:usesCleartextTraffic="true">>
         <activity android:name=".Activity.Login.LoginRegisterActivity"/>
-        <activity android:name=".Activity.MainActivity"/>
+        <activity android:name=".Activity.MainActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".Activity.Login.LoginActivity"
-            android:windowSoftInputMode="adjustPan">
+            android:name=".Activity.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.PostingWriteActivity"/>
     </application>
 
 </manifest>

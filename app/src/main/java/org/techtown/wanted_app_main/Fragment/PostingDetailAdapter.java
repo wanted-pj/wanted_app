@@ -13,7 +13,7 @@ import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;
 
-public class BoardDetailAdapter extends RecyclerView.Adapter<BoardDetailAdapter.ViewHolder> {
+public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdapter.ViewHolder> {
     static ArrayList<BoardDetail> items = new ArrayList<BoardDetail>();
 
     @NonNull

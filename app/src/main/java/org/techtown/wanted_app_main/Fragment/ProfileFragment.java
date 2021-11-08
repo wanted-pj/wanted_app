@@ -2,9 +2,12 @@ package org.techtown.wanted_app_main.Fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +56,8 @@ public class ProfileFragment extends Fragment {
     private ArrayList<ProfileTeam> profileTeamItems;
 
     public Personal personal;
+
+    public String string_career;
 
     private int id;
 
@@ -114,6 +119,13 @@ public class ProfileFragment extends Fragment {
         TextView age = view.findViewById(R.id.pf_age);
         TextView gender = view.findViewById(R.id.pf_gender);
 
+        ImageView add_career = view.findViewById(R.id.add_career);
+
+        add_career.setOnClickListener( v-> {
+            profileCareerItems.add(new ProfileCareer(null));
+            profileCareerAdapter.setProfileCareerList(profileCareerItems);
+        });
+
         //서버 호출
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -151,6 +163,8 @@ public class ProfileFragment extends Fragment {
                 } else if(personal.gender == 1) {
                     gender.setText("여");
                 }
+
+                string_career = personal.career;
 
                 List<String> carrer_list = Arrays.asList(personal.career.split(","));
                 profileCareerItems.clear();

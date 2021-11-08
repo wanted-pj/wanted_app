@@ -84,9 +84,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_register);
 
         //성별,사는곳,학교,학과,학년 spinner 지정
-        spinner_gender = findViewById(R.id.regender);
+        spinner_gender = findViewById(R.id.register_gender_spinner);
         setSpinner("gender");
-        spinner_grade = findViewById(R.id.regrade);
+        spinner_grade = findViewById(R.id.register_grade_spinner);
         setSpinner("grade");
         //학교 server데이터 가져오기
         //학과 server데이터 가져오기
@@ -94,9 +94,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
         //id
-        et_id=findViewById(R.id.resid);
-        id_checkmes = findViewById(R.id.idmessage);
-        id_dupcheck = findViewById(R.id.id_dup_test);
+        et_id=findViewById(R.id.register_id);
+        id_checkmes = findViewById(R.id.register_id_check_txt);
+        id_dupcheck = findViewById(R.id.register_id_check_btn);
         id_dupcheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,9 +105,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
         //비밀번호
-        et_pwd = findViewById(R.id.respwd);
-        et_pwdcheck = findViewById(R.id.respwd2);
-        pwd_checkmes =findViewById(R.id.pwdmessage);
+        et_pwd = findViewById(R.id.register_pwd);
+        et_pwdcheck = findViewById(R.id.register_pwdcheck);
+        pwd_checkmes =findViewById(R.id.register_pwdcheck_txt);
         et_pwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         et_pwdcheck.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         checkPwd();  //비밀번호확인: 비밀번호 재입력창 비밀번호랑 다를경우
@@ -123,9 +123,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
         imageName="profile_basic1";//이미지 기본설정
         selectMyImage(); //이미지 선택
 
-        //닉네임,나이
-        et_nickname=findViewById(R.id.rename);
-        et_age=findViewById(R.id.reage);
+        //닉네임
+        et_nickname=findViewById(R.id.register_nickname);
 
         //동록 버튼 클릭시
         post_person=findViewById(R.id.resup);
@@ -256,7 +255,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                id_checkmes.setText("아이디 사용 가능");
+                id_checkmes.setText("사용 가능한 아이디입니다.");
             }
         }, new Response.ErrorListener() {
             @Override
@@ -278,10 +277,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (et_pwdcheck.isFocusable() && s.toString().equals(et_pwd.getText().toString())) {
-                    pwd_checkmes.setText("비밀번호를 올바르게 입력했습니다");
+                    pwd_checkmes.setText("비밀번호를 올바르게 입력했습니다.");
 
                 } else {
-                    pwd_checkmes.setText("비밀번호를 다시 확입해주세요");
+                    pwd_checkmes.setText("비밀번호를 다시 확인해주세요.");
                 }
             }
 

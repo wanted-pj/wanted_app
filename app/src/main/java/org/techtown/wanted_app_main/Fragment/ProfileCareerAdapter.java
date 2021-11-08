@@ -1,8 +1,12 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.annotation.SuppressLint;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -43,14 +47,38 @@ public class ProfileCareerAdapter extends RecyclerView.Adapter<ProfileCareerAdap
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tv_career;
+        EditText et_career;
+        ImageView edit_img;
+        Boolean isEdit;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            isEdit = false;
             tv_career = itemView.findViewById(R.id.career_content);
+            et_career = itemView.findViewById(R.id.career_content_edit);
+            edit_img = itemView.findViewById(R.id.career_edit);
+            edit_img.setOnClickListener( v-> {
+                if(isEdit == false) {
+                    isEdit = true;
+                    String temp = (String)tv_career.getText();
+                    et_career.setText(temp);
+                    edit_img.setImageResource(R.drawable.ic_delete);
+                    tv_career.setVisibility(View.INVISIBLE);
+                    et_career.setVisibility(View.VISIBLE);
+                } else {
+                    isEdit = false;
+                    String temp = et_career.getText().toString();
+                    tv_career.setText(temp);
+                    edit_img.setImageResource(R.drawable.ic_edit);
+                    tv_career.setVisibility(View.VISIBLE);
+                    et_career.setVisibility(View.INVISIBLE);
+                }
+            });
         }
 
         public void setCareer(ProfileCareer profileCareer) {
             tv_career.setText(profileCareer.getContent());
+            et_career.setVisibility(View.INVISIBLE);
         }
     }
 }

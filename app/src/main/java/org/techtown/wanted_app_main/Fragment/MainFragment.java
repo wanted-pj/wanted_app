@@ -206,8 +206,20 @@ public class MainFragment extends Fragment {
         btnGoCommunity.setOnClickListener(view1 -> {
             Bundle bundle1 = new Bundle();
             bundle1.putString("btnGoCommunity", "test");
+
             navController.navigate(R.id.action_mainFragment_to_boardFragment, bundle);
         });
+
+        // 포스팅 글로 이동
+        postingAdapter.setOnItemClicklistener(new PostingAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("posting", postingItems.get(position));
+                navController.navigate(R.id.action_mainFragment_to_boardDetailFragment, bundle);
+            }
+        });
+
         return view;
     }
 

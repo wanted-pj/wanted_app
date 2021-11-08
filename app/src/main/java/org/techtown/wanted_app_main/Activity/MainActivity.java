@@ -113,5 +113,4 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navigation.getMenu().findItem(R.id.menu_home).setChecked(true);
     }
     // </----바텀 네비게이션--->
-
 }

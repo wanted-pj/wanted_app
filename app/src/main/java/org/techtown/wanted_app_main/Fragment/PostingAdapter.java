@@ -1,27 +1,33 @@
 package org.techtown.wanted_app_main.Fragment;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Posting;
 
 import java.util.ArrayList;
 
-public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> {
+public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHolder> {
 
-    static ArrayList<Board> boardList = new ArrayList<Board>();
-    static BoardAdapter.OnItemClickListener listener;
+    static ArrayList<Posting> postingList = new ArrayList<>();
+    static PostingAdapter.OnItemClickListener listener;
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(BoardAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(PostingAdapter.OnItemClickListener listener){
         this.listener = listener;
     }
 
@@ -41,18 +47,18 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Board board = boardList.get(position);
-        viewHolder.setBoard(board);
+        Posting posting = postingList.get(position);
+        viewHolder.setPosting(posting);
     }
 
-    public void setBoardList(ArrayList<Board> arrayList){
-        this.boardList = arrayList;
+    public void setPostingList(ArrayList<Posting> arrayList){
+        this.postingList = arrayList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return boardList.size();
+        return postingList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -79,11 +85,12 @@ public class BoardAdapter extends RecyclerView.Adapter<BoardAdapter.ViewHolder> 
             });
         }
 
-        public void setBoard(Board board) {
-            tv_category.setText(board.getCategory());
-            tv_title.setText(board.getTitle());
-            tv_writer.setText(String.valueOf(board.getWriter()));
-            iv.setImageResource(board.getImgRes());
+        public void setPosting(Posting posting) {
+            tv_category.setText(posting.category);
+            tv_title.setText(posting.title);
+            tv_writer.setText(String.valueOf(posting.personal.nickname));
+            int image = MainActivity.mainActivity.getResources().getIdentifier(posting.personal.img, "drawable", MainActivity.mainActivity.getPackageName());
+            iv.setImageResource(image);
         }
     }
 }

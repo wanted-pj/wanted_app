@@ -25,22 +25,26 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainFragment extends Fragment {
     // 커뮤니티의 보드
     private RecyclerView recyclerViewCommunity;
-    private BoardAdapter boardAdapter = new BoardAdapter();
-    private ArrayList<Board> boardItems = new ArrayList<>();
+    private PostingAdapter postingAdapter = new PostingAdapter();
+    private ArrayList<Posting> postingItems = new ArrayList<>();
 
     // 친구 보여주기
     private RecyclerView recyclerViewFriend;
@@ -52,7 +56,6 @@ public class MainFragment extends Fragment {
 
     // 가져온 Personal과 posting정보
     public ArrayList<Personal> personal_list;
-    public List<PostingDtoInPersonal> posting_list;
 
     // category -> 0은 school, 1은 major, 2는 address
     private int friendsCategory = 0;
@@ -69,6 +72,8 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        me = getArguments().getParcelable("me");
+        System.out.println("MainFragment onCreate 출력:" + me);
 
         //서버 호출
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -93,47 +98,30 @@ public class MainFragment extends Fragment {
 
                 List<Personal> temp = gson.fromJson(changeString, listType);
                 personal_list = new ArrayList<>(temp);
-                posting_list = new ArrayList<>();
+
+                // 사람을 통해 posting 데이터 접근
                 for (Personal personal : personal_list) {
                     if (!personal.postings.isEmpty()) {
-                        posting_list.add(personal.postings.get(0));
+                        for (PostingDtoInPersonal posting : personal.postings) {
+                            // 포스팅 넣기
+                            // 포스팅 보여주기 위한
+                            postingItems.add(new Posting(posting.id,
+                                    new PersonalDtoInPosting(posting.personalId, personal.nickname, personal.img),
+                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime));
+                        }
                     }
-                    if (posting_list.size() == 3) { // 일단 커뮤니티 글 3개만 보여줘
-                        break;
-                    }
+                }
+                if (postingItems.size() > 1) {
+                    Collections.sort(postingItems, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
                 // 예시데이터
                 me = personal_list.get(0);
 
-                // 출력 확인
-                for (Personal personal : personal_list) {
-                    System.out.println("출력: " + personal);
-                }
+                // 친구 채우기
                 setCategory(friendsCategory);
 
                 // 메인 화면에서 포스팅 설정
-                String writer = null;
-                String string_image = null;
-                for (int i = 0; i < posting_list.size(); i++) {
-                    Long writer_num = posting_list.get(i).personalId; // personal은 id임
-                    for (int j = 0; j < personal_list.size(); j++) {
-                        if (writer_num == personal_list.get(j).id) {
-                            writer = personal_list.get(i).nickname;
-                            string_image = personal_list.get(i).img;
-                        }
-                    }
-                    int image = getResources().getIdentifier(string_image, "drawable", getContext().getPackageName());
-                    boardItems.add(new Board(posting_list.get(i).category, posting_list.get(i).title, writer, image));
-                }
-                boardAdapter.setBoardList(boardItems);
-
-                boardAdapter.setOnItemClicklistener(new BoardAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        Bundle bundle = new Bundle();
-                        navController.navigate(R.id.action_mainFragment_to_boardDetailFragment, bundle);
-                    }
-                });
+                postingAdapter.setPostingList(postingItems);
 
             }
         };
@@ -147,6 +135,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
+        System.out.println("MainFragment onCreateView 출력:" + MainActivity.me);
 
         Bundle bundle = getArguments();
         //id = bundle.getInt("id");
@@ -155,10 +144,9 @@ public class MainFragment extends Fragment {
 //        Log.d("test_MainFragment", String.valueOf(me.id));
 
 
-
         // 커뮤니티 리사이 클러뷰 설정
         recyclerViewCommunity = view.findViewById(R.id.recyclerView_board);
-        recyclerViewCommunity.setAdapter(boardAdapter);
+        recyclerViewCommunity.setAdapter(postingAdapter);
         recyclerViewCommunity.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
         // 친구 리사클러뷰 설정
@@ -229,6 +217,7 @@ public class MainFragment extends Fragment {
         navController = Navigation.findNavController(view);
     }
 
+    // 카테고리 눌렀을때, 버튼 색변환
     public void onCategoryClickedChangeButtonDesign(int index) {
         List<Button> buttons = Arrays.asList(btnSchool, btnMajor, btnAddress);
 
@@ -245,6 +234,7 @@ public class MainFragment extends Fragment {
         }
     }
 
+    // 카테고리에 따라서, 나와 일치하는 정보를 가진 사람들의 데이터를 FriendAdapter에 채워줌
     public void setCategory(int friendsCategory) {
         friendItems.clear();
         for (int i = 0; i < personal_list.size(); i++) {

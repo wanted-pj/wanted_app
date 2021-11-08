@@ -1,19 +1,25 @@
 package org.techtown.wanted_app_main.Activity;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
+import org.techtown.wanted_app_main.Fragment.MainFragment;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Personal;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -21,10 +27,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private long backPressedTime = 0;
     private long FINISH_INTERVAL_TIME = 2000;
 
+    public static Personal me;
+    public static MainActivity mainActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // 본인
+        mainActivity = this;
 
         // Activity navController 찾기
         FragmentManager fragmentManager = getSupportFragmentManager();
@@ -34,6 +45,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // Activity 바텀 NavigationView 설정
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+
+        // 회원 받기
+        me = getIntent().getParcelableExtra("me");
+
+//        FragmentManager fm = getSupportFragmentManager();
+//        FragmentTransaction ft = fm.beginTransaction();
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, navHostFragment).commit();
+
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable("me", me);
+//        MainFragment mainFragment = new MainFragment();
+
+//        mainFragment.setArguments(bundle);
     }
 
     // <----바텀 네비게이션--->

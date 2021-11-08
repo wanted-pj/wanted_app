@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Fragment.BoardDetailFragment">
+    tools:context=".Fragment.PostingFragment">
 
     // 카테고리 타이틀
     <TextView

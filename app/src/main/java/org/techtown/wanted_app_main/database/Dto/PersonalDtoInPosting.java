@@ -12,9 +12,6 @@ public class PersonalDtoInPosting {
     public Long id;
     public String nickname;
     public String img;
-//    @SerializedName("postings")
-//    @Expose
-
 
     public PersonalDtoInPosting(Long id, String nickname, String img) {
         this.id = id;

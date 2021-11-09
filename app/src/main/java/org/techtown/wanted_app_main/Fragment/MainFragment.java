@@ -207,7 +207,7 @@ public class MainFragment extends Fragment {
             Bundle bundle1 = new Bundle();
             bundle1.putString("btnGoCommunity", "test");
 
-            navController.navigate(R.id.action_mainFragment_to_boardFragment, bundle);
+            navController.navigate(R.id.action_main_to_posting_list, bundle);
         });
 
         // 포스팅 글로 이동
@@ -216,7 +216,7 @@ public class MainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
-                navController.navigate(R.id.action_mainFragment_to_boardDetailFragment, bundle);
+                navController.navigate(R.id.action_main_to_posting, bundle);
             }
         });
 

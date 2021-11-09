@@ -12,8 +12,8 @@
         app:destination="@id/mainFragment"
         app:popUpTo="@id/nav_graph" />
     <action
-        android:id="@+id/action_global_boardFragment"
-        app:destination="@id/boardFragment"
+        android:id="@+id/action_global_postingListFragment"
+        app:destination="@id/postingListFragment"
         app:popUpTo="@id/mainFragment" />
     <action
         android:id="@+id/action_global_chatFragment"
@@ -30,35 +30,35 @@
         android:name="org.techtown.wanted_app_main.Fragment.MainFragment"
         tools:layout="@layout/fragment_main" >
         <action
-            android:id="@+id/action_mainFragment_to_boardFragment"
-            app:destination="@id/boardFragment" />
+            android:id="@+id/action_main_to_posting_list"
+            app:destination="@id/postingListFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_boardDetailFragment"
-            app:destination="@id/boardDetailFragment" />
+            android:id="@+id/action_main_to_posting"
+            app:destination="@id/postingFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_profileFragment"
+            android:id="@+id/action_main_to_profile"
             app:destination="@id/profileFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_friendMoreFragment"
+            android:id="@+id/action_main_to_friendMore"
             app:destination="@id/friendMoreFragment" />
     </fragment>
 
     <!--커뮤니티-->
     <fragment
-        android:id="@+id/boardFragment"
+        android:id="@+id/postingListFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingListFragment"
         tools:layout="@layout/fragment_posting_list">
         <action
-            android:id="@+id/action_board_to_board_detail"
-            app:destination="@id/boardDetailFragment" />
+            android:id="@+id/action_posting_list_to_posting"
+            app:destination="@id/postingFragment" />
         <action
-            android:id="@+id/action_board_to_board_write"
+            android:id="@+id/action_posting_list_to_posting_write"
             app:destination="@id/postingWriteActivity" />
     </fragment>
 
     <!--커뮤니티 게시글-->
     <fragment
-        android:id="@+id/boardDetailFragment"
+        android:id="@+id/postingFragment"
         android:name="org.techtown.wanted_app_main.Fragment.PostingFragment"
         tools:layout="@layout/fragment_posting">
     </fragment>

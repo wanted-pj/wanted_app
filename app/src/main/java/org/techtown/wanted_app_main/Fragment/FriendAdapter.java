@@ -105,7 +105,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             footerView.setOnClickListener(view1 -> {
                 Bundle bundle = new Bundle();
                 bundle.putInt("friendsCategory", friendsCategory);
-                navController.navigate(R.id.action_mainFragment_to_friendMoreFragment, bundle);
+                navController.navigate(R.id.action_main_to_friendMore, bundle);
             });
         }
     }

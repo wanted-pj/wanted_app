@@ -196,7 +196,7 @@ public class PostingListFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
-                navController.navigate(R.id.action_board_to_board_detail, bundle);
+                navController.navigate(R.id.action_posting_list_to_posting, bundle);
             }
         });
 
@@ -205,7 +205,7 @@ public class PostingListFragment extends Fragment {
 
         btnWrite.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            navController.navigate(R.id.action_board_to_board_write, bundle);
+            navController.navigate(R.id.action_posting_list_to_posting_write, bundle);
         });
 
         return view;

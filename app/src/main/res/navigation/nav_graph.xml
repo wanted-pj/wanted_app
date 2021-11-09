@@ -16,8 +16,8 @@
         app:destination="@id/postingListFragment"
         app:popUpTo="@id/mainFragment" />
     <action
-        android:id="@+id/action_global_chatFragment"
-        app:destination="@id/chatFragment"
+        android:id="@+id/action_global_chatListFragment"
+        app:destination="@id/chatListFragment"
         app:popUpTo="@id/mainFragment" />
     <action
         android:id="@+id/action_global_profileFragment"
@@ -82,9 +82,20 @@
 
     <!--채팅-->
     <fragment
-        android:id="@+id/chatFragment"
+        android:id="@+id/chatListFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.ChatListFragment"
+        tools:layout="@layout/fragment_chat_list">
+        <action
+            android:id="@+id/action_chat_to_chat"
+            app:destination="@id/chatActivity" />
+    </fragment>
+
+    <!--채팅방-->
+    <fragment
+        android:id="@+id/chatActivity"
         android:name="org.techtown.wanted_app_main.Fragment.ChatFragment"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat">>
+    </fragment>
 
     <!--프로필-->
     <fragment

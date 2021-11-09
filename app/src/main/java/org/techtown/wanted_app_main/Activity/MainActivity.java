@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 navController.navigate(R.id.action_global_postingListFragment);
                 break;
             case R.id.menu_chat:
-                navController.navigate(R.id.action_global_chatFragment);
+                navController.navigate(R.id.action_global_chatListFragment);
                 break;
             case R.id.menu_profile:
                 navController.navigate(R.id.action_global_profileFragment);

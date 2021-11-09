@@ -59,6 +59,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
     //학년
     Spinner spinner_grade;
     Integer value_grade;
+    //나이
+    Spinner spinner_age;
+    Integer value_age;
     //비밀번호+
     EditText et_pwd, et_pwdcheck;
     TextView pwd_checkmes;
@@ -71,8 +74,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
     String imageName;
     //닉네임
     EditText et_nickname;
-    //나이
-    EditText et_age;
+    //역량
+    EditText et_career;
     //등록
     Button post_person;
     //Dialog
@@ -88,20 +91,21 @@ public class LoginRegisterActivity extends AppCompatActivity {
         setSpinner("gender");
         spinner_grade = findViewById(R.id.register_grade_spinner);
         setSpinner("grade");
+        spinner_age = findViewById(R.id.register_age_spinner);
+        setSpinner("age");
         //학교 server데이터 가져오기
         //학과 server데이터 가져오기
         //사는곳 server데이터 가져오기
 
 
         //id
-
-        et_id=findViewById(R.id.register_id);
+        et_id = findViewById(R.id.register_id);
         id_checkmes = findViewById(R.id.register_id_check_txt);
         id_dupcheck = findViewById(R.id.register_id_check_btn);
         id_dupcheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(et_id.getText().equals("")){
+                if (et_id.getText().equals("")) {
                     id_checkmes.setText("아이디를 입력해주세요.");
                     return;
                 }
@@ -111,10 +115,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
         //비밀번호
-
         et_pwd = findViewById(R.id.register_pwd);
         et_pwdcheck = findViewById(R.id.register_pwdcheck);
-        pwd_checkmes =findViewById(R.id.register_pwdcheck_txt);
+        pwd_checkmes = findViewById(R.id.register_pwdcheck_txt);
 
         et_pwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         et_pwdcheck.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
@@ -131,9 +134,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
         imageName = "profile_basic1";//이미지 기본설정
         selectMyImage(); //이미지 선택
 
-
         //닉네임
-        et_nickname=findViewById(R.id.register_nickname);
+        et_nickname = findViewById(R.id.register_nickname);
+
+        //역량
+        et_career = findViewById(R.id.register_career);
 
         //동록 버튼 클릭시
         post_person = findViewById(R.id.resup);
@@ -143,12 +148,15 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 String postid = et_id.getText().toString();
                 String postpwd = et_pwd.getText().toString();
                 String postnickname = et_nickname.getText().toString();
+                String postcareer = et_career.getText().toString();
                 Integer postgender = value_gender;
                 Integer postgrade = value_grade;
+                Integer postage = value_age;
                 String postimage = imageName; //선택된 이미지url 가져오기
                 //Integer postage = Integer.valueOf(et_age.getText().toString());
+
                 //제대로 입력안했을 시
-                if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0) && (et_age.getText().toString().length() <= 0)) {
+                if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0)) {
                     dialog = new Dialog(LoginRegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.register_dialog);
@@ -161,6 +169,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                         }
                     });
                 } else {  //제대로 입력했을 시 서버에 post 후 LoginActivity로 이동
+
                     String url = "http://13.125.214.178:8080/personal";
                     Map map = new HashMap();
                     map.put("stringId", postid);
@@ -170,7 +179,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     map.put("school", null);
                     map.put("major", null);
                     map.put("grade", postgrade);
-                    map.put("age", Integer.valueOf(et_age.getText().toString()));
+                    map.put("career", postcareer);
+                    map.put("age", postage);
                     map.put("gender", postgender);
                     map.put("address", null);
 
@@ -221,11 +231,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
             spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        value_gender = 0;
-                    } else if (position == 1) {
-                        value_gender = 1;
-                    }
+                    value_gender = position;
                 }
 
                 @Override
@@ -242,15 +248,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
             spinner_grade.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    if (position == 0) {
-                        value_grade = 1;
-                    } else if (position == 1) {
-                        value_grade = 2;
-                    } else if (position == 2) {
-                        value_grade = 3;
-                    } else if (position == 3) {
-                        value_grade = 4;
-                    }
+                    value_grade = position + 1;
                 }
 
                 @Override
@@ -258,6 +256,22 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 }
             });
         }
+        //나이
+        else if (topic.equals("age")) {
+            ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(this, R.array.age, android.R.layout.simple_spinner_dropdown_item);
+            genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner_age.setAdapter(genderAdapter);
+
+            spinner_age.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    value_age = position + 19;
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });}
 
     }
 

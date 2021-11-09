@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -47,14 +48,14 @@ public class ProfileFragment extends Fragment {
 
     NavController navController;
 
-    private RecyclerView rvCareer;
-    private ProfileCareerAdapter profileCareerAdapter;
-    private ArrayList<ProfileCareer> profileCareerItems;
+   // private RecyclerView rvCareer;
+   // private ProfileCareerAdapter profileCareerAdapter;
+    //private ArrayList<ProfileCareer> profileCareerItems;
 
     private RecyclerView rvTeam;
     private ProfileTeamAdapter profileTeamAdapter;
     private ArrayList<ProfileTeam> profileTeamItems;
-
+    Boolean done = false;
     public Personal personal;
 
     public String string_career;
@@ -77,17 +78,17 @@ public class ProfileFragment extends Fragment {
         Log.d("test_MainFragment", String.valueOf(id));
 
         // 역량
-        profileCareerAdapter = new ProfileCareerAdapter();
+       // profileCareerAdapter = new ProfileCareerAdapter();
 
-        rvCareer = view.findViewById(R.id.recyclerView_career);
-        rvCareer.setAdapter(profileCareerAdapter);
-        rvCareer.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
+       // rvCareer = view.findViewById(R.id.recyclerView_career);
+        //rvCareer.setAdapter(profileCareerAdapter);
+       // rvCareer.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
 
-        profileCareerItems = new ArrayList<>();
-        profileCareerItems.add(new ProfileCareer("백엔드 | SpringBoot, Django, Mysql"));
-        profileCareerItems.add(new ProfileCareer("자격증 | 정보처리기사, SQLD"));
-        profileCareerItems.add(new ProfileCareer("2021 사이버보안 AI·빅데이터 활용 경진대회 (최우수상)"));
-        profileCareerAdapter.setProfileCareerList(profileCareerItems);
+       // profileCareerItems = new ArrayList<>();
+        //profileCareerItems.add(new ProfileCareer("백엔드 | SpringBoot, Django, Mysql"));
+       // profileCareerItems.add(new ProfileCareer("자격증 | 정보처리기사, SQLD"));
+        //profileCareerItems.add(new ProfileCareer("2021 사이버보안 AI·빅데이터 활용 경진대회 (최우수상)"));
+        //profileCareerAdapter.setProfileCareerList(profileCareerItems);
 
         // 소속팀
         profileTeamAdapter = new ProfileTeamAdapter();
@@ -110,21 +111,27 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //기본정보
         ImageView img = view.findViewById(R.id.pf_img);
         TextView nick = view.findViewById(R.id.pf_nickname);
-        TextView school = view.findViewById(R.id.pf_school);
-        TextView major = view.findViewById(R.id.pf_major);
-        TextView address = view.findViewById(R.id.pf_address);
-        TextView grade = view.findViewById(R.id.pf_grade);
-        TextView age = view.findViewById(R.id.pf_age);
-        TextView gender = view.findViewById(R.id.pf_gender);
+        EditText school = view.findViewById(R.id.pf_school);
+        EditText major = view.findViewById(R.id.pf_major);
+        EditText address = view.findViewById(R.id.pf_address);
+        EditText grade = view.findViewById(R.id.pf_grade);
+        EditText age = view.findViewById(R.id.pf_age);
+        EditText gender = view.findViewById(R.id.pf_gender);
+        TextView career = view.findViewById(R.id.pf_career);
 
-        ImageView add_career = view.findViewById(R.id.add_career);
+        //프로필 편집
+        ImageView btn_edit = view.findViewById(R.id.edit_btn);
+        btn_edit.setOnClickListener( v-> {
 
-        add_career.setOnClickListener( v-> {
-            profileCareerItems.add(new ProfileCareer(null));
-            profileCareerAdapter.setProfileCareerList(profileCareerItems);
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("btnGoedit", "test");
+
+            navController.navigate(R.id.action_profile_to_profile_edit, bundle);
         });
+
 
         //서버 호출
         RequestQueue requestQueue;
@@ -163,15 +170,8 @@ public class ProfileFragment extends Fragment {
                 } else if(personal.gender == 1) {
                     gender.setText("여");
                 }
+                career.setText(personal.career);
 
-                string_career = personal.career;
-
-                List<String> carrer_list = Arrays.asList(personal.career.split(","));
-                profileCareerItems.clear();
-                for(int i=0; i<carrer_list.size(); i++) {
-                    profileCareerItems.add(new ProfileCareer(carrer_list.get(i)));
-                }
-                profileCareerAdapter.setProfileCareerList(profileCareerItems);
             }
         }, new Response.ErrorListener() {
             @Override

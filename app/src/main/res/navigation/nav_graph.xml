@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_profile_to_profile_team"
             app:destination="@id/profileTeamFragment" />
+        <action
+            android:id="@+id/action_profile_to_profile_edit"
+            app:destination="@id/profileEditFragment" />
     </fragment>
 
     <!--프로필 팀-->
@@ -102,4 +105,13 @@
         android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"
         tools:layout="@layout/fragment_profile_team" />
 
+    <!--프로필 편집-->
+    <fragment
+        android:id="@+id/profileEditFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.ProfileEditFragment"
+        tools:layout="@layout/fragment_profile_edit">
+        <action
+            android:id="@+id/action_profile_edit_to_profile"
+            app:destination="@id/profileFragment" />
+    </fragment>
 </navigation>

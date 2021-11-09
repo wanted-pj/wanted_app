@@ -63,9 +63,6 @@ public class MainFragment extends Fragment {
     // category -> 0은 school, 1은 major, 2는 address
     private int friendsCategory = 0;
 
-    // 나 자신
-    private Personal me;
-
     private static NavController navController;
 
     public MainFragment() {
@@ -75,8 +72,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        me = getArguments().getParcelable("me");
-        System.out.println("MainFragment onCreate 출력:" + me);
+        System.out.println("MainFragment onCreate 출력:" + MainActivity.me);
 
         //서버 호출
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -117,9 +113,6 @@ public class MainFragment extends Fragment {
                 if (postingItems.size() > 1) {
                     Collections.sort(postingItems, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
-                // 예시데이터
-                me = personal_list.get(0);
-
                 // 친구 채우기
                 setCategory(friendsCategory);
 
@@ -258,20 +251,20 @@ public class MainFragment extends Fragment {
         friendItems.clear();
         for (int i = 0; i < personal_list.size(); i++) {
             Personal another = personal_list.get(i);
-            if (me.id != another.id) {
+            if (MainActivity.me.id != another.id) {
                 switch (friendsCategory) {
                     case 0:
-                        if (!me.school.equals(another.school)) {
+                        if (!MainActivity.me.school.equals(another.school)) {
                             continue;
                         }
                         break;
                     case 1:
-                        if (!me.major.equals(another.major)) {
+                        if (!MainActivity.me.major.equals(another.major)) {
                             continue;
                         }
                         break;
                     case 2:
-                        if (!me.address.equals(another.address)) {
+                        if (!MainActivity.me.address.equals(another.address)) {
                             continue;
                         }
                         break;

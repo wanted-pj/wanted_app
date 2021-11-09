@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 회원 받기
+        me = getIntent().getParcelableExtra("me");
         setContentView(R.layout.activity_main);
         // 본인
         mainActivity = this;
@@ -50,19 +52,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         setBtnNavIndex(0);
 
-        // 회원 받기
-        me = getIntent().getParcelableExtra("me");
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, navHostFragment).commit();
-
+        // MainFragment 에 me 뿌리기
+//        MainFragment mainFragment = new MainFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putParcelable("me", me);
-//        MainFragment mainFragment = new MainFragment();
-
 //        mainFragment.setArguments(bundle);
+//        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mainFragment).commitAllowingStateLoss();
     }
 
     // <----바텀 네비게이션--->

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,6 +41,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -95,6 +97,7 @@ public class ProfileEditFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
+        hideBottomNavigation(true);
 
        // Bundle bundle = getArguments();
         //id = bundle.getInt("id");
@@ -121,8 +124,6 @@ public class ProfileEditFragment extends Fragment {
         //버튼
         btn_edit_done = view.findViewById(R.id.profile_edit_done);
 
-
-
         //원래 저장된 정보 가져오기
         get_basic_info();
 
@@ -133,7 +134,6 @@ public class ProfileEditFragment extends Fragment {
                 put_edited_info();
             }
         });
-
 
         return view;
     }
@@ -200,7 +200,6 @@ public class ProfileEditFragment extends Fragment {
         requestQueue.add(stringRequest);
             }
 
-
     public void put_edited_info(){
 
         String url = "http://13.125.214.178:8080/personal" + "/" + id;
@@ -242,7 +241,7 @@ public class ProfileEditFragment extends Fragment {
         bundle1.putString("btnGoedit", "test");
 
         navController.navigate(R.id.action_profile_edit_to_profile, bundle1);
-            }
+    }
 
 
     public void setSpinner(String topic) { //spinner 설정 함수
@@ -299,7 +298,6 @@ public class ProfileEditFragment extends Fragment {
         }
 
     }
-
 
     public void selectMyImage() {  //이미지 선택
         r1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -380,8 +378,27 @@ public class ProfileEditFragment extends Fragment {
                 }
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        hideBottomNavigation(false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+    }
+
+    public void hideBottomNavigation(Boolean bool) {
+        BottomNavigationView bottomNavigation = getActivity().findViewById(R.id.bottomNavigation);
+        if (bool == true)
+            bottomNavigation.setVisibility(View.GONE);
+        else
+            bottomNavigation.setVisibility(View.VISIBLE);
     }
 
 }

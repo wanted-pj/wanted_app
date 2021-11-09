@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".Fragment.PostingFragment">
 
-    // 카테고리 타이틀
+    <!--카테고리 타이틀-->
     <TextView
         android:id="@+id/board_detail_category"
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    // 카테고리 구분선
+    <!--카테고리 구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
@@ -46,7 +46,7 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp">
 
-                // 작성 날짜
+                <!--작성 날짜-->
                 <TextView
                     android:id="@+id/board_detail_date"
                     android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:textColor="@color/grayDark"
                     android:textSize="12dp" />
 
-                // 제목 텍스트
+                <!--제목 텍스트-->
                 <TextView
                     android:id="@+id/board_detail_title"
                     android:layout_width="wrap_content"
@@ -67,7 +67,7 @@
                     android:textColor="@color/black"
                     android:textSize="19dp" />
 
-                // 작성자 정보
+                <!--작성자 정보-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -109,13 +109,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            // 구분선
+            <!--구분선-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
                 android:background="@color/gray" />
 
-            // 본문
+            <!--본문-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -132,13 +132,13 @@
 
             </LinearLayout>
 
-            // 구분선
+            <!--구분선-->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.8dp"
                 android:background="@color/gray" />
 
-            // 댓글
+            <!--댓글-->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_board_detail"
                 android:layout_width="match_parent"
@@ -149,7 +149,7 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp" />
 
-            // 버튼
+            <!--버튼-->
             <Button
                 android:id="@+id/board_detail_request"
                 android:layout_gravity="center_horizontal"
@@ -159,33 +159,6 @@
                 android:background="@drawable/btn_teal"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"/>
-
-            // Footer
-            <LinearLayout
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="230dp"
-                android:background="@color/gray"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginBottom="20dp"
-                    android:src="@drawable/logo" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
-                    android:text="상호명: 원티드\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @원티드 친구 추가하고 소식을 받아보세요"
-                    android:textSize="8dp"
-                    android:textColor="#ff191919"
-                    android:letterSpacing="-0.02"
-                    android:lineSpacingMultiplier="1.2" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 </LinearLayout>

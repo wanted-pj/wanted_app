@@ -367,13 +367,21 @@
                     style="@style/registerTitle"/>
 
                 <EditText
-                    android:layout_marginTop="10dp"
                     android:id="@+id/profile_edit_career_et"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_border"
+                    android:gravity="top"
+                    android:padding="10dp"
+                    android:textSize="14dp"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05"
+                    android:overScrollMode="always"
+                    android:scrollbars="vertical"
+                    android:scrollbarStyle="insideInset"
                     app:layout_constraintTop_toBottomOf="@id/profile_edit_career_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                  android:background="@drawable/btn_teal_off"
-                    android:layout_height="200dp"
-                    android:layout_width="350dp" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -387,17 +395,6 @@
                 android:text="수정완료"
                 android:textColor="@color/white"
                 app:layout_constraintTop_toBottomOf="@id/profile_edit_career_group"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-            <Button
-                style="@style/btnBasic"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_teal"
-                android:text="수정완료"
-                android:textColor="@color/white"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_done"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>

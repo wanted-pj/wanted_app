@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
@@ -43,6 +46,7 @@ public class PostingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posting, container, false);
+        hideBottomNavigation(true);
 
         // Connect 신청 Adapter 설정
         rvBoardRequest = view.findViewById(R.id.recyclerView_board_detail);
@@ -79,5 +83,19 @@ public class PostingFragment extends Fragment {
         postingDetailAdapter.setItems(boardDetailItems);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        hideBottomNavigation(false);
+    }
+
+    public void hideBottomNavigation(Boolean bool) {
+        BottomNavigationView bottomNavigation = getActivity().findViewById(R.id.bottomNavigation);
+        if (bool == true)
+            bottomNavigation.setVisibility(View.GONE);
+        else
+            bottomNavigation.setVisibility(View.VISIBLE);
     }
 }

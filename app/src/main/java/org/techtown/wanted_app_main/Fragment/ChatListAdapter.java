@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHolder> {
 
-    private ArrayList<Chat> chatList = new ArrayList<Chat>();
+    private ArrayList<ChatList> chatList = new ArrayList<ChatList>();
     static ChatListAdapter.OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -35,18 +35,18 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-        View itemView = inflater.inflate(R.layout.item_chat, viewGroup, false);
+        View itemView = inflater.inflate(R.layout.item_chat_list, viewGroup, false);
 
         return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Chat chat = chatList.get(position);
-        viewHolder.setChat(chat);
+        ChatList chatList = this.chatList.get(position);
+        viewHolder.setChatList(chatList);
     }
 
-    public void setChatList(ArrayList<Chat> arrayList){
+    public void setChatList(ArrayList<ChatList> arrayList){
         this.chatList = arrayList;
         notifyDataSetChanged();
     }
@@ -78,10 +78,10 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
             });
         }
 
-        public void setChat(Chat chat) {
-            tv_nickname.setText(chat.getNickame());
-            tv_content.setText(chat.getContent());
-            iv.setImageResource(chat.getImgRes());
+        public void setChatList(ChatList chatList) {
+            tv_nickname.setText(chatList.getNickame());
+            tv_content.setText(chatList.getContent());
+            iv.setImageResource(chatList.getImgRes());
         }
     }
 }

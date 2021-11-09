@@ -21,7 +21,7 @@ public class ChatListFragment extends Fragment {
 
     private RecyclerView rvChat;
     private ChatListAdapter chatListAdapter;
-    private ArrayList<Chat> chatItems;
+    private ArrayList<ChatList> chatListItems;
 
     NavController navController;
 
@@ -48,16 +48,16 @@ public class ChatListFragment extends Fragment {
         rvChat.setAdapter(chatListAdapter);
         rvChat.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
 
-        chatItems = new ArrayList<>();
-        chatItems.add(new Chat("피넛", "저 같이 하고 싶습니다! 이러이런거 해봤고 이러이러이런거 할 줄 알아요!", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("시미즈", "팀원 아직 구하시나요?", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("리안", "네 그럼 잘 부탁드립니다~", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("가비", "거기 조용하고 괜찮아요", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("리헤이", "모집 완료됐나요?", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("엠마", "저 같이 하고 싶습니다! 이러이런거 해봤고 이러이러이런거 할 줄 알아요!", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("제인", "테스트", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        chatItems.add(new Chat("다니엘", "테스트", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        chatListAdapter.setChatList(chatItems);
+        chatListItems = new ArrayList<>();
+        chatListItems.add(new ChatList("피넛", "저 같이 하고 싶습니다! 이러이런거 해봤고 이러이러이런거 할 줄 알아요!", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("시미즈", "팀원 아직 구하시나요?", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("리안", "네 그럼 잘 부탁드립니다~", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("가비", "거기 조용하고 괜찮아요", getResources().getIdentifier( "@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("리헤이", "모집 완료됐나요?", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("엠마", "저 같이 하고 싶습니다! 이러이런거 해봤고 이러이러이런거 할 줄 알아요!", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("제인", "테스트", getResources().getIdentifier( "@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+        chatListItems.add(new ChatList("다니엘", "테스트", getResources().getIdentifier( "@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+        chatListAdapter.setChatList(chatListItems);
 
         chatListAdapter.setOnItemClicklistener(new ChatListAdapter.OnItemClickListener() {
             @Override

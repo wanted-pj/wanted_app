@@ -1,22 +1,14 @@
 package org.techtown.wanted_app_main.Fragment;
 
 public class Chat {
-    public String nickname;
     public String content;
-    public int imgRes;
+    public String time;
+    public int type;
 
-    public Chat(String nickname, String content, int imgRes) {
-        this.nickname = nickname;
+    public Chat(String content, String time, int type) {
         this.content = content;
-        this.imgRes = imgRes;
-    }
-
-    public String getNickame() {
-        return nickname;
-    }
-
-    public void setNickame(String nickname) {
-        this.nickname = nickname;
+        this.time = time;
+        this.type = type;
     }
 
     public String getContent() {
@@ -27,11 +19,19 @@ public class Chat {
         this.content = content;
     }
 
-    public int getImgRes() {
-        return imgRes;
+    public String getTime() {
+        return time;
     }
 
-    public void setImgRes(int imgRes) {
-        this.imgRes = imgRes;
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

@@ -1,5 +1,8 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -208,6 +211,8 @@ public class MainFragment extends Fragment {
             bundle1.putString("btnGoCommunity", "test");
 
             navController.navigate(R.id.action_main_to_posting_list, bundle);
+            setBtnNavIndex(1);
+            updateBottomMenu();
         });
 
         // 포스팅 글로 이동
@@ -217,6 +222,8 @@ public class MainFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
                 navController.navigate(R.id.action_main_to_posting, bundle);
+                setBtnNavIndex(1);
+                updateBottomMenu();
             }
         });
 

@@ -55,6 +55,8 @@ public class ChatFragment extends Fragment {
         chatItems.add(new Chat("신청 수락 누를게요 잘 부탁드립니다 :)", "13:02", TYPE_RECEIVER));
         chatAdapter.setChats(chatItems);
 
+        rvChat.scrollToPosition(chatItems.size()-1);
+
         return view;
     }
 

@@ -106,7 +106,7 @@ public class MainFragment extends Fragment {
                             // 포스팅 보여주기 위한
                             postingItems.add(new Posting(posting.id,
                                     new PersonalDtoInPosting(posting.personalId, personal.nickname, personal.img),
-                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime));
+                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.teamName));
                         }
                     }
                 }

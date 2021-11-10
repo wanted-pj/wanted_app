@@ -19,7 +19,9 @@ public class PostingDtoInPersonal {
     public String content;
     public String postingTime;
     public ArrayList<Connect> connects;
-    public PostingDtoInPersonal(Long id, Long personalId, String category, String title, String content, Team team, String postingTime, ArrayList<Connect> connects) {
+    public String teamName;
+
+    public PostingDtoInPersonal(Long id, Long personalId, String category, String title, String content, String postingTime, ArrayList<Connect> connects, String teamName) {
         this.id = id;
         this.personalId = personalId;
         this.category = category;
@@ -27,6 +29,7 @@ public class PostingDtoInPersonal {
         this.content = content;
         this.postingTime = postingTime;
         this.connects = connects;
+        this.teamName = teamName;
     }
 
     @Override

@@ -20,8 +20,9 @@ public class Posting implements Parcelable {
     public String content;
     public List<Connect> connects;
     public String postingTime;
+    public String teamName;
 
-    public Posting(Long id, PersonalDtoInPosting personal, String category, String title, String content, List<Connect> connects, String postingTime) {
+    public Posting(Long id, PersonalDtoInPosting personal, String category, String title, String content, List<Connect> connects, String postingTime, String teamName) {
         this.id = id;
         this.personal = personal;
         this.category = category;
@@ -29,18 +30,20 @@ public class Posting implements Parcelable {
         this.content = content;
         this.connects = connects;
         this.postingTime = postingTime;
+        this.teamName = teamName;
     }
 
     @Override
     public String toString() {
         return "Posting{" +
-                "posting_id=" + id +
+                "id=" + id +
                 ", personal=" + personal +
                 ", category='" + category + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", connects=" + connects +
                 ", postingTime='" + postingTime + '\'' +
+                ", teamName='" + teamName + '\'' +
                 '}';
     }
 
@@ -50,6 +53,7 @@ public class Posting implements Parcelable {
         title = source.readString();
         content = source.readString();
         postingTime = source.readString();
+        teamName = source.readString();
     }
 
     public static final Creator<Posting> CREATOR = new Creator<Posting>() {
@@ -76,5 +80,6 @@ public class Posting implements Parcelable {
         dest.writeString(title);
         dest.writeString(content);
         dest.writeString(postingTime);
+        dest.writeString(teamName);
     }
 }

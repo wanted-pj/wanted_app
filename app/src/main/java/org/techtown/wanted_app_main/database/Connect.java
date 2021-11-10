@@ -9,6 +9,8 @@ public class Connect {
     @Expose
     public Long postingId;
     public Long senderId;
+    public String nickName;
+    public String img;
 
     public Connect(Long id, Long postingId, Long senderId) {
         this.id = id;

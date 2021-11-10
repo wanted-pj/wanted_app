@@ -5,25 +5,24 @@ import com.google.gson.annotations.SerializedName;
 
 public class Connect {
     public Long id;
-    @SerializedName("posting")
-    @Expose
-    public Long postingId;
     public Long senderId;
     public String nickName;
     public String img;
 
-    public Connect(Long id, Long postingId, Long senderId) {
+    public Connect(Long id, Long senderId, String nickName, String img) {
         this.id = id;
-        this.postingId = postingId;
         this.senderId = senderId;
+        this.nickName = nickName;
+        this.img = img;
     }
 
     @Override
     public String toString() {
         return "Connect{" +
                 "id=" + id +
-                ", postingId=" + postingId +
                 ", senderId=" + senderId +
+                ", nickName='" + nickName + '\'' +
+                ", img='" + img + '\'' +
                 '}';
     }
 }

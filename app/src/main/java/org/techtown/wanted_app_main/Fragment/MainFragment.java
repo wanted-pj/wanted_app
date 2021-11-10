@@ -106,9 +106,8 @@ public class MainFragment extends Fragment {
                         for (PostingDtoInPersonal posting : personal.postings) {
                             // 포스팅 넣기
                             // 포스팅 보여주기 위한
-                            postingItems.add(new Posting(posting.id,
-                                    new PersonalDtoInPosting(posting.personalId, personal.nickname, personal.img),
-                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.teamName));
+                            postingItems.add(new Posting(posting.postingId, personal.id,
+                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.teamName, personal.nickname, personal.img));
                         }
                     }
                 }
@@ -201,12 +200,8 @@ public class MainFragment extends Fragment {
 
         //커뮤니티로 이동
         Button btnGoCommunity = view.findViewById(R.id.arrow_community);
-
         btnGoCommunity.setOnClickListener(view1 -> {
-            Bundle bundle1 = new Bundle();
-            bundle1.putString("btnGoCommunity", "test");
-
-            navController.navigate(R.id.action_main_to_posting_list, bundle);
+            navController.navigate(R.id.action_main_to_posting_list);
             setBtnNavIndex(1);
             updateBottomMenu();
         });
@@ -217,7 +212,6 @@ public class MainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
-                bundle.putParcelable("me", me);
                 navController.navigate(R.id.action_main_to_posting, bundle);
                 setBtnNavIndex(1);
                 updateBottomMenu();

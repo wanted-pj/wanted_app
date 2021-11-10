@@ -114,12 +114,12 @@ public class PostingWriteActivity extends AppCompatActivity {
                 category = 0;
             } else if (posting.category.equals("스터디")){
                 category = 1;
-            } else if (posting.category.equals("스터디")) {
+            } else if (posting.category.equals("기타")) {
                 category = 2;
             }
             onCategoryClickedChangeButtonDesign(category);
             write_title.setText(posting.title);
-//            write_team_name.setText(posting.teamName);
+            write_team_name.setText(posting.teamName);
             write_content.setText(posting.content);
         }
 
@@ -158,12 +158,11 @@ public class PostingWriteActivity extends AppCompatActivity {
                         String url = "http://13.125.214.178:8080/posting/" + me.id;
 
                         Map map = new HashMap();
-                        map.put("leader_id", me.id);
                         map.put("category", str_category);
                         map.put("teamName", teamName);
                         map.put("title", title);
                         map.put("content", content);
-                        map.put("posting_time", writeTime);
+                        map.put("postingTime", writeTime);
 
                         JSONObject params = new JSONObject(map);
 

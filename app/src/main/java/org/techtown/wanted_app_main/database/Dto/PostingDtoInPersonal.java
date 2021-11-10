@@ -10,10 +10,7 @@ import java.util.ArrayList;
 
 public class PostingDtoInPersonal {
 
-    public Long id;
-    @SerializedName("personal")
-    @Expose
-    public Long personalId;
+    public Long postingId;
     public String category;
     public String title;
     public String content;
@@ -21,28 +18,14 @@ public class PostingDtoInPersonal {
     public ArrayList<Connect> connects;
     public String teamName;
 
-    public PostingDtoInPersonal(Long id, Long personalId, String category, String title, String content, String postingTime, ArrayList<Connect> connects, String teamName) {
-        this.id = id;
-        this.personalId = personalId;
+    public PostingDtoInPersonal(Long postingId, String category, String title, String content, String postingTime, ArrayList<Connect> connects, String teamName) {
+        this.postingId = postingId;
         this.category = category;
         this.title = title;
         this.content = content;
         this.postingTime = postingTime;
         this.connects = connects;
         this.teamName = teamName;
-    }
-
-    @Override
-    public String toString() {
-        return "PostingDtoInPersonal{" +
-                "id=" + id +
-                ", personal=" + personalId +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", postingTime='" + postingTime + '\'' +
-                ", connects=" + connects +
-                '}';
     }
 }
 

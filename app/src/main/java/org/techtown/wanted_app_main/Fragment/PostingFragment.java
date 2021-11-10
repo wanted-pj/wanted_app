@@ -33,8 +33,6 @@ public class PostingFragment extends Fragment {
 
     private static Posting posting;
 
-    private Personal me;
-
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
     private ImageView postingDetailImage;
@@ -43,9 +41,7 @@ public class PostingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         posting = getArguments().getParcelable("posting");
-        me = getArguments().getParcelable("me");
         System.out.println("출력: " + posting);
-        System.out.println("출력: " + me);
     }
 
     @Override
@@ -55,19 +51,17 @@ public class PostingFragment extends Fragment {
         hideBottomNavigation(true);
 
         // 자신의 글인지 확인
-        if(posting.personal.id.equals(me.id)) {
+        if(posting.personalId.equals(MainActivity.me.id)) {
             ImageView edit_img = view.findViewById(R.id.board_retouch);
             edit_img.setImageResource(R.drawable.ic_write);
             edit_img.setOnClickListener( v-> {
                 Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
-                intent.putExtra("me", me);
+                intent.putExtra("me", MainActivity.me);
                 intent.putExtra("posting", posting);
                 startActivity(intent);
                 getActivity().finish();
             });
         }
-
-
 
         // Connect 신청 Adapter 설정
         rvBoardRequest = view.findViewById(R.id.recyclerView_board_detail);
@@ -86,11 +80,11 @@ public class PostingFragment extends Fragment {
         // 데이터 채우기
         postingDetailDate.setText(posting.postingTime);
         postingDetailTitle.setText(posting.title);
-//        postingDetailTeam.setText(posting.t);
-        postingDetailName.setText(posting.personal.nickname);
+        postingDetailTeam.setText(posting.teamName);
+        postingDetailName.setText(posting.nickname);
         postingDetailContent.setText(posting.content);
         postingDetailCategory.setText(posting.category);
-        int image = getResources().getIdentifier(posting.personal.img, "drawable", MainActivity.mainActivity.getPackageName());
+        int image = getResources().getIdentifier(posting.img, "drawable", MainActivity.mainActivity.getPackageName());
         postingDetailImage.setImageResource(image);
 
 

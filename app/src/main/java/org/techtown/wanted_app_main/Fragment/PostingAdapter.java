@@ -89,8 +89,8 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
         public void setPosting(Posting posting) {
             tv_category.setText(posting.category);
             tv_title.setText(posting.title);
-            tv_writer.setText(String.valueOf(posting.personal.nickname));
-            int image = MainActivity.mainActivity.getResources().getIdentifier(posting.personal.img, "drawable", MainActivity.mainActivity.getPackageName());
+            tv_writer.setText(String.valueOf(posting.nickname));
+            int image = MainActivity.mainActivity.getResources().getIdentifier(posting.img, "drawable", MainActivity.mainActivity.getPackageName());
             iv.setImageResource(image);
         }
     }

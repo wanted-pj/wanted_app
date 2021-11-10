@@ -3,52 +3,54 @@ package org.techtown.wanted_app_main.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
-
 import java.util.List;
 
 public class Posting implements Parcelable {
-    public Long id;
-    @SerializedName("personal")
-    @Expose
-    public PersonalDtoInPosting personal;
+    public Long postingId;
+//    @SerializedName("personalId")
+//    @Expose
+    public Long personalId;
     public String category;
     public String title;
     public String content;
     public List<Connect> connects;
     public String postingTime;
     public String teamName;
+    public String nickname;
+    public String img;
 
-    public Posting(Long id, PersonalDtoInPosting personal, String category, String title, String content, List<Connect> connects, String postingTime, String teamName) {
-        this.id = id;
-        this.personal = personal;
+    public Posting(Long postingId, Long personalId, String category, String title, String content, List<Connect> connects, String postingTime, String teamName, String nickname, String img) {
+        this.postingId = postingId;
+        this.personalId = personalId;
         this.category = category;
         this.title = title;
         this.content = content;
         this.connects = connects;
         this.postingTime = postingTime;
         this.teamName = teamName;
+        this.nickname = nickname;
+        this.img = img;
     }
+
 
     @Override
     public String toString() {
         return "Posting{" +
-                "id=" + id +
-                ", personal=" + personal +
+                "postingId=" + postingId +
+                ", personalId=" + personalId +
                 ", category='" + category + '\'' +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", connects=" + connects +
                 ", postingTime='" + postingTime + '\'' +
                 ", teamName='" + teamName + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", img='" + img + '\'' +
                 '}';
     }
 
     public Posting(Parcel source) {
-        id = source.readLong();
+        postingId = source.readLong();
         category = source.readString();
         title = source.readString();
         content = source.readString();
@@ -75,7 +77,7 @@ public class Posting implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(id);
+        dest.writeLong(postingId);
         dest.writeString(category);
         dest.writeString(title);
         dest.writeString(content);

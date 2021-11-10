@@ -56,6 +56,9 @@ public class PostingFragment extends Fragment {
 
         // 자신의 글인지 확인
         if(posting.personal.id.equals(me.id)) {
+            Button request = view.findViewById(R.id.board_detail_request);
+            request.setText("모집 완료");
+
             ImageView edit_img = view.findViewById(R.id.board_retouch);
             edit_img.setImageResource(R.drawable.ic_write);
             edit_img.setOnClickListener( v-> {
@@ -65,6 +68,7 @@ public class PostingFragment extends Fragment {
                 startActivity(intent);
                 getActivity().finish();
             });
+
         }
 
 
@@ -99,9 +103,24 @@ public class PostingFragment extends Fragment {
         boardDetailItems.add(new BoardDetail("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
         boardDetailItems.add(new BoardDetail("가비" + " ", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
         boardDetailItems.add(new BoardDetail("피넛" + " ", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-        boardDetailItems.add(new BoardDetail("제인" + " ", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-        boardDetailItems.add(new BoardDetail("다니엘" + " ", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
+//        boardDetailItems.add(new BoardDetail("제인" + " ", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
+//        boardDetailItems.add(new BoardDetail("다니엘" + " ", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
         postingDetailAdapter.setItems(boardDetailItems);
+
+        Button request = view.findViewById(R.id.board_detail_request);
+        request.setOnClickListener( v->{
+//            if(request.getText().equals("참가 신청")) {
+//                int temp_image = getResources().getIdentifier(me.img, "drawable", MainActivity.mainActivity.getPackageName());
+//                boardDetailItems.add(new BoardDetail(me.nickname + " ", temp_image));
+//                postingDetailAdapter.setItems(boardDetailItems);
+//            } else if(request.getText().equals("모집 완료")) {
+//
+//            }
+            int temp_image = getResources().getIdentifier(me.img, "drawable", MainActivity.mainActivity.getPackageName());
+            boardDetailItems.add(new BoardDetail(me.nickname + " ", temp_image));
+            postingDetailAdapter.notifyDataSetChanged();
+            request.setText("신청 완료");
+        });
 
         return view;
     }

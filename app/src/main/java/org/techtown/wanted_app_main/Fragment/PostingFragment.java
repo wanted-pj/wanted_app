@@ -1,5 +1,6 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.util.ArrayList;
@@ -30,6 +33,8 @@ public class PostingFragment extends Fragment {
 
     private static Posting posting;
 
+    private Personal me;
+
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
     private ImageView postingDetailImage;
@@ -38,8 +43,9 @@ public class PostingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         posting = getArguments().getParcelable("posting");
+        me = getArguments().getParcelable("me");
         System.out.println("출력: " + posting);
-        // me = getArguments().getParcelable("posting");
+        System.out.println("출력: " + me);
     }
 
     @Override
@@ -47,6 +53,21 @@ public class PostingFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_posting, container, false);
         hideBottomNavigation(true);
+
+        // 자신의 글인지 확인
+        if(posting.personal.id.equals(me.id)) {
+            ImageView edit_img = view.findViewById(R.id.board_retouch);
+            edit_img.setImageResource(R.drawable.ic_write);
+            edit_img.setOnClickListener( v-> {
+                Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
+                intent.putExtra("me", me);
+                intent.putExtra("posting", posting);
+                startActivity(intent);
+                getActivity().finish();
+            });
+        }
+
+
 
         // Connect 신청 Adapter 설정
         rvBoardRequest = view.findViewById(R.id.recyclerView_board_detail);

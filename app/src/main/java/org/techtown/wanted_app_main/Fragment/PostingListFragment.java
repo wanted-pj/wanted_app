@@ -1,5 +1,6 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
+import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
 import org.techtown.wanted_app_main.database.Personal;
@@ -80,9 +84,12 @@ public class PostingListFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         // 이전 프래그먼트에서 전달한 args 받기
-        if (getArguments() != null) {
-//            getArguments().getParcelable("me", Personal);
-        }
+//        if (getArguments() != null) {
+//            me = getArguments().getParcelable("me");
+//        }
+
+        me = MainActivity.me;
+        System.out.println("postingListFragment >> " + me);
 
         // 카테고리의 기본값 설정은 (전체)
         communityCategory = 0;
@@ -195,6 +202,7 @@ public class PostingListFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
+                bundle.putParcelable("me", me);
                 bundle.putParcelable("posting", postingItems.get(position));
                 navController.navigate(R.id.action_posting_list_to_posting, bundle);
             }
@@ -204,8 +212,10 @@ public class PostingListFragment extends Fragment {
         btnWrite = view.findViewById(R.id.btn_write);
 
         btnWrite.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            navController.navigate(R.id.action_posting_list_to_posting_write, bundle);
+            Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
+            intent.putExtra("me", me);
+            startActivity(intent);
+            getActivity().finish();
         });
 
         return view;

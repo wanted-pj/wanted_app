@@ -137,6 +137,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_weight="1"
+                    android:singleLine="true"
                     android:background="@drawable/btn_teal"
                     android:backgroundTint="@color/ivory"
                     android:hint="검색어를 입력해주세요."

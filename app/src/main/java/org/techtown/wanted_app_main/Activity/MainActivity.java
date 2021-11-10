@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static MainActivity mainActivity;
     public static BottomNavigationView bottomNavigationView;
 
+    Bundle bundle = new Bundle();
+
     public static int btnNavIndex; // 0홈 1커뮤니티 2채팅 3프로필
 
     @Override

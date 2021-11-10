@@ -4,9 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,9 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.database.Posting;
 
 import java.util.ArrayList;
 
@@ -59,13 +55,22 @@ public class ChatFragment extends Fragment {
         chatItems.add(new Chat("신청 수락 누를게요 잘 부탁드립니다 :)", "13:02", TYPE_RECEIVER));
         chatAdapter.setChats(chatItems);
 
+        rvChat.scrollToPosition(chatItems.size()-1);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         hideBottomNavigation(false);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     public void hideBottomNavigation(Boolean bool) {

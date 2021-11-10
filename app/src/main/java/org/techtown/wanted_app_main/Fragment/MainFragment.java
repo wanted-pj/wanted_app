@@ -65,6 +65,8 @@ public class MainFragment extends Fragment {
 
     private static NavController navController;
 
+    private Personal me;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -131,6 +133,7 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
+        me = MainActivity.me;
         System.out.println("MainFragment onCreateView 출력:" + MainActivity.me);
 
         Bundle bundle = getArguments();
@@ -214,6 +217,7 @@ public class MainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
+                bundle.putParcelable("me", me);
                 navController.navigate(R.id.action_main_to_posting, bundle);
                 setBtnNavIndex(1);
                 updateBottomMenu();

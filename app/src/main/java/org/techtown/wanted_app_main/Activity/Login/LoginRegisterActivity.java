@@ -176,13 +176,13 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     map.put("pwd", postpwd);
                     map.put("nickname", postnickname);
                     map.put("img", postimage);
-                    map.put("school", null);
-                    map.put("major", null);
+                    map.put("school", "경기대"); // 바꿔야됨
+                    map.put("major", "경영"); // 바꿔야됨
                     map.put("grade", postgrade);
                     map.put("career", postcareer);
                     map.put("age", postage);
                     map.put("gender", postgender);
-                    map.put("address", null);
+                    map.put("address", "성남시"); // 바꿔야됨
 
                     JSONObject params = new JSONObject(map);
 
@@ -190,11 +190,16 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject obj) {
+                                    System.out.println("회원가입 성공");
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    System.out.println("회원가입 실패");
                                     Log.e("register_Error", error.getMessage());
                                 }
                             }) {
@@ -206,10 +211,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     };
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                     queue.add(objectRequest);
-
-                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
-                    finish();
                 }
 
             }

@@ -3,6 +3,7 @@ package org.techtown.wanted_app_main.database;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class Posting implements Parcelable {
@@ -15,11 +16,13 @@ public class Posting implements Parcelable {
     public String content;
     public List<Connect> connects;
     public String postingTime;
+    public String endTime;
     public String teamName;
     public String nickname;
     public String img;
+    public boolean checkRecruiting;
 
-    public Posting(Long postingId, Long personalId, String category, String title, String content, List<Connect> connects, String postingTime, String teamName, String nickname, String img) {
+    public Posting(Long postingId, Long personalId, String category, String title, String content, List<Connect> connects, String postingTime, String endTime, String teamName, String nickname, String img, boolean checkRecruiting) {
         this.postingId = postingId;
         this.personalId = personalId;
         this.category = category;
@@ -27,11 +30,12 @@ public class Posting implements Parcelable {
         this.content = content;
         this.connects = connects;
         this.postingTime = postingTime;
+        this.endTime = endTime;
         this.teamName = teamName;
         this.nickname = nickname;
         this.img = img;
+        this.checkRecruiting = checkRecruiting;
     }
-
 
     @Override
     public String toString() {
@@ -43,9 +47,11 @@ public class Posting implements Parcelable {
                 ", content='" + content + '\'' +
                 ", connects=" + connects +
                 ", postingTime='" + postingTime + '\'' +
+                ", endTime='" + endTime + '\'' +
                 ", teamName='" + teamName + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", img='" + img + '\'' +
+                ", checkRecruiting=" + checkRecruiting +
                 '}';
     }
 
@@ -54,7 +60,7 @@ public class Posting implements Parcelable {
         category = source.readString();
         title = source.readString();
         content = source.readString();
-        postingTime = source.readString();
+//        postingTime = source.
         teamName = source.readString();
     }
 
@@ -81,7 +87,7 @@ public class Posting implements Parcelable {
         dest.writeString(category);
         dest.writeString(title);
         dest.writeString(content);
-        dest.writeString(postingTime);
+//        dest.writeString(postingTime);
         dest.writeString(teamName);
     }
 }

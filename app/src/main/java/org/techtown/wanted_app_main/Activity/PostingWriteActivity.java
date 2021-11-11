@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
@@ -162,7 +163,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                         map.put("teamName", teamName);
                         map.put("title", title);
                         map.put("content", content);
-                        map.put("postingTime", writeTime);
+                        map.put("endTime", writeTime);
 
                         JSONObject params = new JSONObject(map);
 
@@ -195,6 +196,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                                         Log.e("register_Error", error.getMessage());
                                     }
                                 }) {
+
 
                             @Override
                             public String getBodyContentType() {

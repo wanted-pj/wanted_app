@@ -15,17 +15,21 @@ public class PostingDtoInPersonal {
     public String title;
     public String content;
     public String postingTime;
+    public String endTime;
     public ArrayList<Connect> connects;
     public String teamName;
+    public boolean checkRecruiting;
 
-    public PostingDtoInPersonal(Long postingId, String category, String title, String content, String postingTime, ArrayList<Connect> connects, String teamName) {
+    public PostingDtoInPersonal(Long postingId, String category, String title, String content, String postingTime, String endTime, ArrayList<Connect> connects, String teamName, boolean checkRecruiting) {
         this.postingId = postingId;
         this.category = category;
         this.title = title;
         this.content = content;
         this.postingTime = postingTime;
+        this.endTime = endTime;
         this.connects = connects;
         this.teamName = teamName;
+        this.checkRecruiting = checkRecruiting;
     }
 }
 

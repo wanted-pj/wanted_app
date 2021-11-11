@@ -9,8 +9,8 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
-
 import java.util.ArrayList;
+
 
 public class Personal implements Parcelable, Cloneable {
     @SerializedName("id")
@@ -122,5 +122,57 @@ public class Personal implements Parcelable, Cloneable {
         dest.writeString(career);
         dest.writeInt(gender);
         dest.writeString(img);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getStringId() {
+        return stringId;
+    }
+
+    public String getPwd() {
+        return pwd;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public Integer getGrade() {
+        return grade;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCareer() {
+        return career;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public ArrayList<PostingDtoInPersonal> getPostings() {
+        return postings;
     }
 }

@@ -9,12 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Connect;
 
 import java.util.ArrayList;
 
 public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdapter.ViewHolder> {
-    static ArrayList<BoardDetail> items = new ArrayList<BoardDetail>();
+    static ArrayList<Connect> items = new ArrayList<>();
 
     @NonNull
     @Override
@@ -27,7 +29,7 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        BoardDetail item = items.get(position);
+        Connect item = items.get(position);
         viewHolder.setItem(item);
     }
 
@@ -40,19 +42,19 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
         items.clear();
     }
 
-    public void addItem(BoardDetail item) {
+    public void addItem(Connect item) {
         items.add(item);
     }
 
-    public void setItems(ArrayList<BoardDetail> items) {
+    public void setItems(ArrayList<Connect> items) {
         this.items = items;
     }
 
-    public BoardDetail getItem(int position) {
+    public Connect getItem(int position) {
         return items.get(position);
     }
 
-    public void setItem(int position, BoardDetail item) {
+    public void setItem(int position, Connect item) {
         items.set(position, item);
     }
 
@@ -67,9 +69,10 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
             iv = itemView.findViewById(R.id.board_detail_request_image);
         }
 
-        public void setItem(BoardDetail item) {
-            tv_writer.setText(item.getWriter());
-            iv.setImageResource(item.getImgRes());
+        public void setItem(Connect item) {
+            tv_writer.setText(item.nickname);
+            int image = MainActivity.mainActivity.getResources().getIdentifier(item.img, "drawable", MainActivity.mainActivity.getPackageName());
+            iv.setImageResource(image);
         }
 
     }

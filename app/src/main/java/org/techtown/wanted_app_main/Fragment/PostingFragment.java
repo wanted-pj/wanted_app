@@ -20,18 +20,23 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Connect;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostingFragment extends Fragment {
 
+    // 이전 프래그먼트에서 Posting 객체 받기
+    private static Posting posting;
+
+    // Connect 리사이 클러뷰 설정
     private RecyclerView rvBoardRequest;
     private PostingDetailAdapter postingDetailAdapter = new PostingDetailAdapter();
-    private ArrayList<BoardDetail> boardDetailItems = new ArrayList<>();
+    private ArrayList<Connect> connectItems = new ArrayList<>();
 
-    private static Posting posting;
 
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
@@ -41,6 +46,7 @@ public class PostingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         posting = getArguments().getParcelable("posting");
+        connectItems = (ArrayList<Connect>) posting.connects;
         System.out.println("출력: " + posting);
     }
 
@@ -51,13 +57,19 @@ public class PostingFragment extends Fragment {
         hideBottomNavigation(true);
 
         // 자신의 글인지 확인
-        if(posting.personalId.equals(MainActivity.me.id)) {
+        if (posting.personalId.equals(MainActivity.me.id)) { // 내 글
+            // 뷰 컴포넌트
             Button request = view.findViewById(R.id.board_detail_request);
-            request.setText("모집 완료");
-
             ImageView edit_img = view.findViewById(R.id.board_retouch);
+
+            // 텍스트 바꾸기
+            if (posting.checkRecruiting) {
+                request.setText("모집중");
+            }
+
+            // 글 수정 버튼 뜨도록 설정, 클릭시 글 수정
             edit_img.setImageResource(R.drawable.ic_write);
-            edit_img.setOnClickListener( v-> {
+            edit_img.setOnClickListener(v -> {
                 Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
                 intent.putExtra("me", MainActivity.me);
                 intent.putExtra("posting", posting);
@@ -65,14 +77,21 @@ public class PostingFragment extends Fragment {
                 getActivity().finish();
             });
 
-        }
+            // 모집중 버튼 클릭시 -> Posting변경 (모집중 -> 모집완료)
+            request.setOnClickListener( v ->{
 
+            });
+
+        } else { // 내 글 아님
+
+        }
 
 
         // Connect 신청 Adapter 설정
         rvBoardRequest = view.findViewById(R.id.recyclerView_board_detail);
         rvBoardRequest.setAdapter(postingDetailAdapter);
         rvBoardRequest.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
+        postingDetailAdapter.setItems(connectItems);
 
         // 뷰 컴포넌트 가져오기
         postingDetailCategory = view.findViewById(R.id.board_detail_category);
@@ -94,17 +113,15 @@ public class PostingFragment extends Fragment {
         postingDetailImage.setImageResource(image);
 
 
-        boardDetailItems = new ArrayList<>();
-        boardDetailItems.add(new BoardDetail("시미즈" + " ", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        boardDetailItems.add(new BoardDetail("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        boardDetailItems.add(new BoardDetail("가비" + " ", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        boardDetailItems.add(new BoardDetail("피넛" + " ", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-//        boardDetailItems.add(new BoardDetail("제인" + " ", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-//        boardDetailItems.add(new BoardDetail("다니엘" + " ", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-        postingDetailAdapter.setItems(boardDetailItems);
+//        connectItems.add(new Connect("시미즈" + " ", profile_basic1", "drawable", getContext().getPackageName())));
+//        connectItems.add(new Connect("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+//        connectItems.add(new Connect("가비" + " ", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+//        connectItems.add(new Connect("피넛" + " ", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
 
+
+        // 참가 신청 버튼을 눌렀을 때, Connect가 생성되도록 코드 짜기 (Connect post)
         Button request = view.findViewById(R.id.board_detail_request);
-        request.setOnClickListener( v->{
+        request.setOnClickListener(v -> {
 //            if(request.getText().equals("참가 신청")) {
 //                int temp_image = getResources().getIdentifier(me.img, "drawable", MainActivity.mainActivity.getPackageName());
 //                boardDetailItems.add(new BoardDetail(me.nickname + " ", temp_image));
@@ -112,8 +129,8 @@ public class PostingFragment extends Fragment {
 //            } else if(request.getText().equals("모집 완료")) {
 //
 //            }
-            int temp_image = getResources().getIdentifier(MainActivity.me.img, "drawable", MainActivity.mainActivity.getPackageName());
-            boardDetailItems.add(new BoardDetail(MainActivity.me.nickname + " ", temp_image));
+
+//            connectItems.add(new Connect());
             postingDetailAdapter.notifyDataSetChanged();
             request.setText("신청 완료");
         });

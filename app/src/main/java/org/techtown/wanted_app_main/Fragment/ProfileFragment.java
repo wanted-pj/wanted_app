@@ -1,15 +1,21 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -60,6 +66,11 @@ public class ProfileFragment extends Fragment {
    // private ProfileCareerAdapter profileCareerAdapter;
     //private ArrayList<ProfileCareer> profileCareerItems;
     Boolean done = false;
+
+    public Personal personal;
+    public Dialog dialog;
+
+
     public String string_career;
 
     //소속팀
@@ -129,6 +140,16 @@ public class ProfileFragment extends Fragment {
             navController.navigate(R.id.action_profile_to_profile_edit, bundle);
         });
 
+        // 별점 팝업
+        dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.setContentView(R.layout.dialog_star);
+
+        LinearLayout btnStar = view.findViewById(R.id.pf_star);
+        btnStar.setOnClickListener(v -> {
+            dialog.show();
+        });
 
         //기본정보 서버 호출
         RequestQueue requestQueue;

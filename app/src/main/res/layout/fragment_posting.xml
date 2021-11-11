@@ -17,10 +17,10 @@
             android:id="@+id/board_detail_category"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginBottom="5dp"
             android:gravity="center_vertical"
             android:letterSpacing="-0.05"
-            android:paddingLeft="20dp"
             android:text="공모전"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
@@ -41,7 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <!--카테고리 구분선-->
     <View
@@ -68,6 +67,22 @@
                 android:paddingTop="15dp"
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp">
+
+                <!--모집 여부-->
+                <TextView
+                    android:id="@+id/board_detail_recruiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:background="@drawable/edit_text_border"
+                    android:letterSpacing="-0.05"
+                    android:text="모집중"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="12dp" />
 
                 <!--작성 날짜-->
                 <TextView
@@ -174,7 +189,7 @@
 
             <!--버튼-->
             <Button
-                android:id="@+id/board_detail_request"
+                android:id="@+id/posting_detail_request"
                 android:layout_gravity="center_horizontal"
                 android:text="참가 신청"
                 android:textColor="@color/white"

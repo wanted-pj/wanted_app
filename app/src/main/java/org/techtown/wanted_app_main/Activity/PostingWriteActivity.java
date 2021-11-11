@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
 import org.techtown.wanted_app_main.Activity.Login.LoginRegisterActivity;
@@ -133,8 +134,9 @@ public class PostingWriteActivity extends AppCompatActivity {
 
                 String title = write_title.getText().toString();
                 String teamName = write_team_name.getText().toString();
+                System.out.println(teamName);
                 String content = write_content.getText().toString();
-                String endDate = String.format("%s-%s-%s", write_date.getYear(), write_date.getMonth() + 1, write_date.getDayOfMonth());
+                String endDate = String.format("%s-%s-%s 00:00:00", write_date.getYear(), write_date.getMonth() + 1, write_date.getDayOfMonth());
                 LocalDateTime now = LocalDateTime.now();
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-mm-dd, HH:mm:ss");
                 String writeTime = now.format(formatter);
@@ -150,20 +152,20 @@ public class PostingWriteActivity extends AppCompatActivity {
 
                 try {
                     if (check(title, teamName, content, endDate)) {
-                        RequestQueue requestQueue;
-                        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-                        Network network = new BasicNetwork(new HurlStack());
-                        requestQueue = new RequestQueue(cache, network);
-                        requestQueue.start();
+//                        RequestQueue requestQueue;
+//                        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+//                        Network network = new BasicNetwork(new HurlStack());
+//                        requestQueue = new RequestQueue(cache, network);
+//                        requestQueue.start();
 
                         String url = "http://13.125.214.178:8080/posting/" + me.id;
 
                         Map map = new HashMap();
                         map.put("category", str_category);
-                        map.put("teamName", teamName);
+                        map.put("team_name", teamName);
                         map.put("title", title);
                         map.put("content", content);
-                        map.put("endTime", writeTime);
+                        map.put("end_time", endDate);
 
                         JSONObject params = new JSONObject(map);
 
@@ -188,12 +190,48 @@ public class PostingWriteActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         });
+
+                                        try {
+                                            System.out.println(obj);
+                                            Long posting_id = obj.getLong("id");
+
+                                            String url2 = "http://13.125.214.178:8080/team/" + posting_id;
+
+                                            Map map = new HashMap();
+                                            map.put("leader_id", me.id);
+                                            map.put("team_name", teamName);
+                                            map.put("posting_id", posting_id);
+
+                                            JSONObject params = new JSONObject(map);
+
+                                            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url2, params,
+                                                    new Response.Listener<JSONObject>() {
+                                                        @Override
+                                                        public void onResponse(JSONObject obj) {
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                        }
+                                                    }) {
+                                                @Override
+                                                public String getBodyContentType() {
+                                                    return "application/json; charset=UTF-8";
+                                                }
+                                            };
+                                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                            queue.add(objectRequest);
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 },
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Log.e("register_Error", error.getMessage());
                                     }
                                 }) {
 

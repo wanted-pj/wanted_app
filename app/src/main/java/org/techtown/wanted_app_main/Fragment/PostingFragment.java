@@ -74,7 +74,7 @@ public class PostingFragment extends Fragment {
 
         // 버튼 가져오기
         Button request = view.findViewById(R.id.posting_detail_request);
-        Button recruitingStatus = view.findViewById(R.id.board_detail_recruiting);
+        TextView recruitingStatus = view.findViewById(R.id.board_detail_recruiting);
 
         if (posting.checkRecruiting) {
             recruitingStatus.setText("모집중");

@@ -32,6 +32,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
 import org.techtown.wanted_app_main.Activity.Login.LoginRegisterActivity;
@@ -189,6 +190,43 @@ public class PostingWriteActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         });
+
+                                        try {
+                                            System.out.println(obj);
+                                            Long posting_id = obj.getLong("id");
+
+                                            String url2 = "http://13.125.214.178:8080/team/" + posting_id;
+
+                                            Map map = new HashMap();
+                                            map.put("leader_id", me.id);
+                                            map.put("team_name", teamName);
+                                            map.put("posting_id", posting_id);
+
+                                            JSONObject params = new JSONObject(map);
+
+                                            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url2, params,
+                                                    new Response.Listener<JSONObject>() {
+                                                        @Override
+                                                        public void onResponse(JSONObject obj) {
+                                                        }
+                                                    },
+                                                    new Response.ErrorListener() {
+                                                        @Override
+                                                        public void onErrorResponse(VolleyError error) {
+                                                        }
+                                                    }) {
+                                                @Override
+                                                public String getBodyContentType() {
+                                                    return "application/json; charset=UTF-8";
+                                                }
+                                            };
+                                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                            queue.add(objectRequest);
+
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 },
                                 new Response.ErrorListener() {

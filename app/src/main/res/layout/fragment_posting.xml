@@ -69,6 +69,15 @@
                 android:paddingRight="20dp"
                 android:paddingBottom="10dp">
 
+                <Button
+                    android:id="@+id/board_detail_recruiting"
+                    android:textColor="@color/white"
+                    android:layout_width="65dp"
+                    android:layout_height="35dp"
+                    android:textSize="12sp"
+                    android:text="모집중"
+                    android:background="@drawable/btn_teal"
+                    style="@style/btnBasic"/>
                 <!--작성 날짜-->
                 <TextView
                     android:id="@+id/board_detail_date"
@@ -174,7 +183,7 @@
 
             <!--버튼-->
             <Button
-                android:id="@+id/board_detail_request"
+                android:id="@+id/posting_detail_request"
                 android:layout_gravity="center_horizontal"
                 android:text="참가 신청"
                 android:textColor="@color/white"

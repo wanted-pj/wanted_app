@@ -1,10 +1,12 @@
 package org.techtown.wanted_app_main.Activity.Login;
 
-import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -18,9 +20,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -41,13 +40,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
-import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetMajorRegionSchoolRequest;
 import org.techtown.wanted_app_main.database.OuterApi.Major;
 import org.techtown.wanted_app_main.database.OuterApi.Region;
 import org.techtown.wanted_app_main.database.OuterApi.School;
-import org.techtown.wanted_app_main.database.Personal;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -89,6 +86,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
     Button post_person;
     //Dialog
     Dialog dialog;
+
+    Button btnSchoolSearch, btnMajorSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +133,27 @@ public class LoginRegisterActivity extends AppCompatActivity {
             }
         };
 
+        btnSchoolSearch = findViewById(R.id.register_school_search);
+        btnSchoolSearch.setOnClickListener(v -> {
+            AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
+            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register,null);
+            alert.setView(dialogSchool);
+
+            AlertDialog alertDialog = alert.create();
+            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            alertDialog.show();
+
+            EditText input = (EditText)dialogSchool.findViewById(R.id.search_school_edittext);
+            Button btnSearchDB = (Button)dialogSchool.findViewById(R.id.search_school_btn);
+
+            btnSearchDB.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // DB 검색작업
+                }
+            });
+        });
+
         //학과 server데이터 가져오기
         String majorURL = "http://13.125.214.178:8080/major";
         Response.Listener<String> majorResponseListener = new Response.Listener<String>() {
@@ -157,7 +177,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 }
             }
         };
-
 
         //사는곳 server데이터 가져오기
         String regionURL = "http://13.125.214.178:8080/region";
@@ -224,6 +243,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
         //닉네임
         et_nickname = findViewById(R.id.register_nickname);
+
+        //학과
+        btnMajorSearch = findViewById(R.id.profile_edit_major_search);
 
         //역량
         et_career = findViewById(R.id.register_career);

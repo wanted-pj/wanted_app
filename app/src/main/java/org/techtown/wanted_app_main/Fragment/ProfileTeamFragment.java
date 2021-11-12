@@ -106,7 +106,7 @@ public class ProfileTeamFragment extends Fragment {
 
 
         //팀해체 버튼 : 리더일시 버튼보이기-> 누르면 팀해체
-        btn_team_delete=view.findViewById(R.id.board_detail_request);
+        btn_team_delete=view.findViewById(R.id.profile_team_delete);
         if(team.leaderId==me){
             btn_team_delete.setVisibility(View.VISIBLE);
         }else{

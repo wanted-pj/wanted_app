@@ -73,6 +73,7 @@
 
             <!--버튼-->
             <Button
+                android:id="@+id/profile_team_delete"
                 android:layout_gravity="center_horizontal"
                 android:text="팀 해체"
                 android:textColor="@color/white"

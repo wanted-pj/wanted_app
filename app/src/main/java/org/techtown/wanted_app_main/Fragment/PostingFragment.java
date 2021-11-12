@@ -148,7 +148,6 @@ public class PostingFragment extends Fragment {
                 intent.putExtra("me", MainActivity.me);
                 intent.putExtra("posting", posting);
                 startActivity(intent);
-                getActivity().finish();
             });
 
         } else { // 내 글 아님

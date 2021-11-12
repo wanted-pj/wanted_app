@@ -59,7 +59,7 @@ public class ProfileTeamFragment extends Fragment {
     NavController navController;
 
     Long me;
-
+    Personal personal;
     //팀해체 버튼
     Button btn_team_delete;
 
@@ -72,6 +72,7 @@ public class ProfileTeamFragment extends Fragment {
         super.onCreate(savedInstanceState);
         team = getArguments().getParcelable("team");
         me=getArguments().getLong("me");
+        //personal=getArguments().getParcelable("pesonal");
         //connectItems = (ArrayList<Connect>) posting.connects;
        // System.out.println("출력: " + team.personals);
     }
@@ -94,7 +95,8 @@ public class ProfileTeamFragment extends Fragment {
         rvMember.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
         members = new ArrayList<>();
 
-
+        //내정보 담기
+        //members.add(new Friend(personal.nickname,personal.school, personal.major, personal.address, getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName())));
        //이전 프래그먼트에서 받은 team정보 활용
         memberInfo = new ArrayList<>(team.personals);
         for (PersonalDtoInTeam member : memberInfo) {

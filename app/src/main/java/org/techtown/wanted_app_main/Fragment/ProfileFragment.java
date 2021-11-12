@@ -56,12 +56,6 @@ public class ProfileFragment extends Fragment {
 
     NavController navController;
 
-   // private RecyclerView rvCareer;
-   // private ProfileCareerAdapter profileCareerAdapter;
-    //private ArrayList<ProfileCareer> profileCareerItems;
-    Boolean done = false;
-    public String string_career;
-
     //소속팀
     public Personal personal;
     public List<Team> team_list = new ArrayList<>();
@@ -69,7 +63,21 @@ public class ProfileFragment extends Fragment {
     private ProfileTeamAdapter profileTeamAdapter;
     private ArrayList<ProfileTeam> profileTeamItems; //프로필페이지에 팀item
     private ArrayList<Team> teamInfo=new ArrayList<>(); //팀상세페이지에 넘길때
-    private Long id;
+
+    //아이디
+    private Long getid;
+    private Long thisid;
+
+    //기본정보
+    ImageView img;
+    TextView nick;
+    EditText school;
+    EditText major;
+    EditText address;
+    EditText grade;
+    EditText age;
+    EditText gender;
+    TextView career;
 
     public ProfileFragment() {
     }
@@ -80,10 +88,42 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        ImageView btn_edit = view.findViewById(R.id.edit_btn);
+
+        //기본설정:내아이디
+       thisid=MainActivity.me.id;
 
         Bundle bundle = getArguments();
+        if(bundle != null) {
+            //이전 fragment에서 prifilefragment로 들어온 id값
+            getid=getArguments().getLong("id");
+            if(getid!=null){ //bundle로 넘긴 id값이 있을경우=타인일 경우, thisid 변경
+                thisid=getid;
+                btn_edit.setVisibility(View.GONE);}
+        }
 
-        id=MainActivity.me.id;
+        //기본정보
+        img = view.findViewById(R.id.pf_img);
+        nick = view.findViewById(R.id.pf_nickname);
+        school = view.findViewById(R.id.pf_school);
+        major = view.findViewById(R.id.pf_major);
+        address = view.findViewById(R.id.pf_address);
+        grade = view.findViewById(R.id.pf_grade);
+        age = view.findViewById(R.id.pf_age);
+        gender = view.findViewById(R.id.pf_gender);
+        career = view.findViewById(R.id.pf_career);
+
+        //기본정보 가져오기
+        getBasicInfo();
+
+        //프로필 편집 바로가기
+        btn_edit.setOnClickListener( v-> {
+
+            Bundle bundle1 = new Bundle();
+            bundle1.putString("btnGoedit", "test");
+
+            navController.navigate(R.id.action_profile_to_profile_edit, bundle1);
+        });
 
         //내가 속한 팀이름 가져오기
         getMyTeam();
@@ -100,83 +140,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("me",id);
+                bundle.putLong("me",thisid);
                 bundle.putParcelable("team", teamInfo.get(position));
+                bundle.putParcelable("personal",personal);
                 setBtnNavIndex(1);
                 updateBottomMenu();
                 navController.navigate(R.id.action_profile_to_profile_team, bundle);
             }
         });
-
-        //기본정보
-        ImageView img = view.findViewById(R.id.pf_img);
-        TextView nick = view.findViewById(R.id.pf_nickname);
-        EditText school = view.findViewById(R.id.pf_school);
-        EditText major = view.findViewById(R.id.pf_major);
-        EditText address = view.findViewById(R.id.pf_address);
-        EditText grade = view.findViewById(R.id.pf_grade);
-        EditText age = view.findViewById(R.id.pf_age);
-        EditText gender = view.findViewById(R.id.pf_gender);
-        TextView career = view.findViewById(R.id.pf_career);
-
-        //프로필 편집 바로가기
-        ImageView btn_edit = view.findViewById(R.id.edit_btn);
-        btn_edit.setOnClickListener( v-> {
-
-            Bundle bundle1 = new Bundle();
-            bundle1.putString("btnGoedit", "test");
-
-            navController.navigate(R.id.action_profile_to_profile_edit, bundle);
-        });
-
-
-        //기본정보 서버 호출
-        RequestQueue requestQueue;
-        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
-        Network network = new BasicNetwork(new HurlStack());
-        requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
-
-        String url = "http://13.125.214.178:8080/personal" + "/" + id;
-
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                // 한글깨짐 해결 코드
-                String changeString = new String();
-                try {
-                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<Personal>() {}.getType();
-
-                personal = gson.fromJson(changeString, listType);
-
-                int image = getResources().getIdentifier(personal.img , "drawable", getContext().getPackageName());
-                img.setImageResource(image);
-                nick.setText(personal.nickname);
-                school.setText(personal.school);
-                major.setText(personal.major);
-                address.setText(personal.address);
-                grade.setText(String.valueOf(personal.grade));
-                age.setText(String.valueOf(personal.age));
-                if(personal.gender == 0) {
-                    gender.setText("남");
-                } else if(personal.gender == 1) {
-                    gender.setText("여");
-                }
-                career.setText(personal.career);
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        requestQueue.add(stringRequest);
 
         return view;
     }
@@ -220,9 +191,57 @@ public class ProfileFragment extends Fragment {
                 profileTeamAdapter.setProfileTeamList(profileTeamItems);
             }
         };
-        requestQueue.add(new GetTeamsRequest(postingResponseListener,id));
+        requestQueue.add(new GetTeamsRequest(postingResponseListener,thisid));
 
 
+    }
 
+    public void getBasicInfo(){ //기본정보 서버에서 가져오기
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        String url = "http://13.125.214.178:8080/personal" + "/" + thisid;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 한글깨짐 해결 코드
+                String changeString = new String();
+                try {
+                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Type listType = new TypeToken<Personal>() {}.getType();
+
+                personal = gson.fromJson(changeString, listType);
+
+                int image = getResources().getIdentifier(personal.img , "drawable", getContext().getPackageName());
+                img.setImageResource(image);
+                nick.setText(personal.nickname);
+                school.setText(personal.school);
+                major.setText(personal.major);
+                address.setText(personal.address);
+                grade.setText(String.valueOf(personal.grade));
+                age.setText(String.valueOf(personal.age));
+                if(personal.gender == 0) {
+                    gender.setText("남");
+                } else if(personal.gender == 1) {
+                    gender.setText("여");
+                }
+                career.setText(personal.career);
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        requestQueue.add(stringRequest);
     }
 }

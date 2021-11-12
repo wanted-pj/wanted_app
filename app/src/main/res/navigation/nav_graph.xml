@@ -110,12 +110,6 @@
             app:destination="@id/profileEditFragment" />
     </fragment>
 
-    <!--프로필 팀-->
-    <fragment
-        android:id="@+id/profileTeamFragment"
-        android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"
-        tools:layout="@layout/fragment_profile_team" />
-
     <!--프로필 편집-->
     <fragment
         android:id="@+id/profileEditFragment"
@@ -125,4 +119,12 @@
             android:id="@+id/action_profile_edit_to_profile"
             app:destination="@id/profileFragment" />
     </fragment>
+
+    <!--프로필 팀-->
+    <fragment
+        android:id="@+id/profileTeamFragment"
+        android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"
+        tools:layout="@layout/fragment_profile_team">
+    </fragment>
+
 </navigation>

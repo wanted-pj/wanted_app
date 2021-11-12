@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!--팀 타이틀-->
-    <TextView
-        android:id="@+id/profile_team_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginBottom="5dp"
-        android:gravity="center_vertical"
-        android:letterSpacing="-0.05"
-        android:paddingLeft="20dp"
-        android:text="원티드 피우다팀"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/profile_team_title"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:letterSpacing="-0.05"
+            android:text="원티드 피우다팀"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!--별점 매기기-->
+        <TextView
+            android:id="@+id/profile_team_go_star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:padding="5dp"
+            android:background="@drawable/edit_text_border"
+            android:text="별점"
+            android:textSize="14dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:letterSpacing="-0.05"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
-        android:background="@color/gray" />
+        android:background="@color/gray"
+        android:layout_marginTop="5dp"/>
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollView_team_member"
@@ -49,7 +73,6 @@
 
             <!--버튼-->
             <Button
-                android:id="@+id/board_detail_request"
                 android:layout_gravity="center_horizontal"
                 android:text="팀 해체"
                 android:textColor="@color/white"

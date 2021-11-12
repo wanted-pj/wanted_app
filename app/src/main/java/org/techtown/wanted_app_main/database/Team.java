@@ -12,15 +12,15 @@ import org.techtown.wanted_app_main.database.Dto.PersonalDtoInTeam;
 import java.util.ArrayList;
 
 public class Team implements Parcelable {
-    public Long id;
+    public Long teamId;
     public String teamName;
     public Long leaderId;
     @SerializedName("personals")
     @Expose
     public ArrayList<PersonalDtoInTeam> personals;
 
-    public Team(Long id, String teamName,Long leaderId, ArrayList personals) {
-        this.id = id;
+    public Team(Long teamId, String teamName, Long leaderId, ArrayList personals) {
+        this.teamId = teamId;
         this.teamName = teamName;
         this.leaderId=leaderId;
         if (personals != null) {
@@ -31,9 +31,9 @@ public class Team implements Parcelable {
 
     protected Team(Parcel in) {
         if (in.readByte() == 0) {
-            id = null;
+            teamId = null;
         } else {
-            id = in.readLong();
+            teamId = in.readLong();
         }
         teamName = in.readString();
         if (in.readByte() == 0) {
@@ -62,11 +62,11 @@ public class Team implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
+        if (teamId == null) {
             dest.writeByte((byte) 0);
         } else {
             dest.writeByte((byte) 1);
-            dest.writeLong(id);
+            dest.writeLong(teamId);
         }
         dest.writeString(teamName);
         if (leaderId == null) {

@@ -1,12 +1,10 @@
 package org.techtown.wanted_app_main.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -31,17 +28,11 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.database.Connect;
 import org.techtown.wanted_app_main.database.Dto.PersonalDtoInTeam;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
-import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
 import org.techtown.wanted_app_main.database.Team;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ProfileTeamFragment extends Fragment {
     //팀이름
@@ -125,7 +116,7 @@ public class ProfileTeamFragment extends Fragment {
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
-        String url = "http://13.125.214.178:8080/team/"+team.id;
+        String url = "http://13.125.214.178:8080/team/"+team.teamId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override

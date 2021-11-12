@@ -62,8 +62,8 @@ public class ProfileFragment extends Fragment {
 
     NavController navController;
 
-   // private RecyclerView rvCareer;
-   // private ProfileCareerAdapter profileCareerAdapter;
+    // private RecyclerView rvCareer;
+    // private ProfileCareerAdapter profileCareerAdapter;
     //private ArrayList<ProfileCareer> profileCareerItems;
     Boolean done = false;
 
@@ -74,12 +74,11 @@ public class ProfileFragment extends Fragment {
     public String string_career;
 
     //소속팀
-    public Personal personal;
     public List<Team> team_list = new ArrayList<>();
     private RecyclerView rvTeam;
     private ProfileTeamAdapter profileTeamAdapter;
     private ArrayList<ProfileTeam> profileTeamItems; //프로필페이지에 팀item
-    private ArrayList<Team> teamInfo=new ArrayList<>(); //팀상세페이지에 넘길때
+    private ArrayList<Team> teamInfo = new ArrayList<>(); //팀상세페이지에 넘길때
     private Long id;
 
     public ProfileFragment() {
@@ -94,7 +93,7 @@ public class ProfileFragment extends Fragment {
 
         Bundle bundle = getArguments();
 
-        id=MainActivity.me.id;
+        id = MainActivity.me.id;
 
         //내가 속한 팀이름 가져오기
         getMyTeam();
@@ -104,14 +103,14 @@ public class ProfileFragment extends Fragment {
         profileTeamItems = new ArrayList<>();
         rvTeam = view.findViewById(R.id.recyclerView_team);
         rvTeam.setAdapter(profileTeamAdapter);
-        rvTeam.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
+        rvTeam.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
         //팀상세페이지로 이동
         profileTeamAdapter.setOnItemClicklistener(new ProfileTeamAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("me",id);
+                bundle.putLong("me", id);
                 bundle.putParcelable("team", teamInfo.get(position));
                 setBtnNavIndex(1);
                 updateBottomMenu();
@@ -132,7 +131,7 @@ public class ProfileFragment extends Fragment {
 
         //프로필 편집 바로가기
         ImageView btn_edit = view.findViewById(R.id.edit_btn);
-        btn_edit.setOnClickListener( v-> {
+        btn_edit.setOnClickListener(v -> {
 
             Bundle bundle1 = new Bundle();
             bundle1.putString("btnGoedit", "test");
@@ -171,11 +170,12 @@ public class ProfileFragment extends Fragment {
                     e.printStackTrace();
                 }
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<Personal>() {}.getType();
+                Type listType = new TypeToken<Personal>() {
+                }.getType();
 
                 personal = gson.fromJson(changeString, listType);
 
-                int image = getResources().getIdentifier(personal.img , "drawable", getContext().getPackageName());
+                int image = getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName());
                 img.setImageResource(image);
                 nick.setText(personal.nickname);
                 school.setText(personal.school);
@@ -183,9 +183,9 @@ public class ProfileFragment extends Fragment {
                 address.setText(personal.address);
                 grade.setText(String.valueOf(personal.grade));
                 age.setText(String.valueOf(personal.age));
-                if(personal.gender == 0) {
+                if (personal.gender == 0) {
                     gender.setText("남");
-                } else if(personal.gender == 1) {
+                } else if (personal.gender == 1) {
                     gender.setText("여");
                 }
                 career.setText(personal.career);
@@ -209,7 +209,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    public void getMyTeam(){ //소속팀 서버에서 정보가져오기
+    public void getMyTeam() { //소속팀 서버에서 정보가져오기
 
         //서버 호출
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -234,15 +234,14 @@ public class ProfileFragment extends Fragment {
 
                 List<Team> temp = gson.fromJson(changeString, listType);
                 team_list = new ArrayList<>(temp);
-                for (Team team :  team_list) {
+                for (Team team : team_list) {
                     profileTeamItems.add(new ProfileTeam(team.teamName));
                     teamInfo.add(team);
                 }
                 profileTeamAdapter.setProfileTeamList(profileTeamItems);
             }
         };
-        requestQueue.add(new GetTeamsRequest(postingResponseListener,id));
-
+        requestQueue.add(new GetTeamsRequest(postingResponseListener, id));
 
 
     }

@@ -175,7 +175,6 @@ public class PostingFragment extends Fragment {
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject obj) {
-                                    System.out.println("여기2");
                                     try {
                                         Long id = obj.getLong("id");
                                         Long senderId = obj.getLong("senderId");

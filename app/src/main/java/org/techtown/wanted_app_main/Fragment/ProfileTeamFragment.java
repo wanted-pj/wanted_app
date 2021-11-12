@@ -45,7 +45,7 @@ public class ProfileTeamFragment extends Fragment {
 
     // 이전 프래그먼트에서 team 객체 받기
     private static Team team;
-    private ArrayList<PersonalDtoInTeam> memberInfo =new ArrayList<>();
+    private ArrayList<PersonalDtoInTeam> memberInfo = new ArrayList<>();
 
     NavController navController;
 
@@ -62,9 +62,9 @@ public class ProfileTeamFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         team = getArguments().getParcelable("team");
-        me=getArguments().getLong("me");
+        me = getArguments().getLong("me");
         //connectItems = (ArrayList<Connect>) posting.connects;
-       // System.out.println("출력: " + team.personals);
+        // System.out.println("출력: " + team.personals);
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ProfileTeamFragment extends Fragment {
         hideBottomNavigation(true);
 
         //팀이름 설정
-        team_title= view.findViewById(R.id.profile_team_title);
+        team_title = view.findViewById(R.id.profile_team_title);
         team_title.setText(team.teamName);
 
 
@@ -86,7 +86,7 @@ public class ProfileTeamFragment extends Fragment {
         members = new ArrayList<>();
 
 
-       //이전 프래그먼트에서 받은 team정보 활용
+        //이전 프래그먼트에서 받은 team정보 활용
         memberInfo = new ArrayList<>(team.personals);
         for (PersonalDtoInTeam member : memberInfo) {
             members.add(new Friend(member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
@@ -95,28 +95,28 @@ public class ProfileTeamFragment extends Fragment {
 
 
         //팀해체 버튼 : 리더일시 버튼보이기-> 누르면 팀해체
-        btn_team_delete=view.findViewById(R.id.board_detail_request);
-        if(team.leaderId==me){
+        btn_team_delete = view.findViewById(R.id.board_detail_request);
+        if (team.leaderId == me) {
             btn_team_delete.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             btn_team_delete.setVisibility(View.GONE);
         }
         //팀해제하기 버튼 클릭하면 팀삭제
         btn_team_delete.setOnClickListener(v -> {
-          deleteTeam();
+            deleteTeam();
         });
 
 
         return view;
     }
 
-    public void deleteTeam(){
+    public void deleteTeam() {
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getContext().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
-        String url = "http://13.125.214.178:8080/team/"+team.teamId;
+        String url = "http://13.125.214.178:8080/team/" + team.teamId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override

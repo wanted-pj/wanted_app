@@ -70,7 +70,6 @@ public class ProfileFragment extends Fragment {
     public Personal personal;
     public Dialog dialog;
 
-
     public String string_career;
 
     //소속팀
@@ -78,7 +77,6 @@ public class ProfileFragment extends Fragment {
     private RecyclerView rvTeam;
     private ProfileTeamAdapter profileTeamAdapter;
     private ArrayList<ProfileTeam> profileTeamItems; //프로필페이지에 팀item
-    private ArrayList<Team> teamInfo = new ArrayList<>(); //팀상세페이지에 넘길때
     private Long id;
 
     public ProfileFragment() {
@@ -111,7 +109,7 @@ public class ProfileFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putLong("me", id);
-                bundle.putParcelable("team", teamInfo.get(position));
+                bundle.putParcelable("team", team_list.get(position));
                 setBtnNavIndex(1);
                 updateBottomMenu();
                 navController.navigate(R.id.action_profile_to_profile_team, bundle);
@@ -236,7 +234,6 @@ public class ProfileFragment extends Fragment {
                 team_list = new ArrayList<>(temp);
                 for (Team team : team_list) {
                     profileTeamItems.add(new ProfileTeam(team.teamName));
-                    teamInfo.add(team);
                 }
                 profileTeamAdapter.setProfileTeamList(profileTeamItems);
             }

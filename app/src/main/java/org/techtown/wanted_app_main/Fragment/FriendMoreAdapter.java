@@ -16,7 +16,21 @@ import java.util.ArrayList;
 public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.ViewHolder> {
 
     private ArrayList<Friend> friendList = new ArrayList<Friend>();
+    static FriendMoreAdapter.OnItemClickListener listener;
+static Boolean can=false;
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
 
+    public void setOnItemClicklistener(FriendMoreAdapter.OnItemClickListener listener){
+        this.listener = listener;
+
+    }
+
+    public void onItemClick(View view, int position) {
+        if(listener != null)
+            listener.onItemClick(view, position);
+    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -57,6 +71,24 @@ public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.Vi
             tv_major = itemView.findViewById(R.id.tv_major);
             tv_address = itemView.findViewById(R.id.tv_address);
             iv = itemView.findViewById(R.id.iv);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener != null)
+                        listener.onItemClick(v, position);
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                public boolean onLongClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener != null)
+                        listener.onItemClick(v, position);
+                    return false;
+                }
+            });
         }
 
         public void setFriend(Friend friend) {

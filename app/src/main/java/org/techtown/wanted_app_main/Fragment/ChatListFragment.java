@@ -112,7 +112,12 @@ public class ChatListFragment extends Fragment {
                 for(int i=0; i<temp.participants.size(); i++) {
                     int image = getResources().getIdentifier(temp.participants.get(i).img, "drawable", getContext().getPackageName());
                     int messages_size = temp.participants.get(i).room.messages.size();
-                    String lastMessage = temp.participants.get(i).room.messages.get(messages_size-1).content;
+                    String lastMessage;
+                    if(messages_size != 0) {
+                        lastMessage = temp.participants.get(i).room.messages.get(messages_size-1).content;
+                    } else {
+                        lastMessage = "";
+                    }
                     chatListItems.add(new ChatList(temp.participants.get(i).nickname, lastMessage, image));
                 }
 

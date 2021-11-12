@@ -34,11 +34,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
@@ -52,7 +56,9 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
 import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
@@ -74,7 +80,7 @@ public class ProfileFragment extends Fragment {
     private Long thisid;
 
     //기본정보
-    ImageView img;
+    ImageView img, img_message;
     TextView nick;
     EditText school;
     EditText major;
@@ -105,7 +111,7 @@ public class ProfileFragment extends Fragment {
         ImageView btn_edit = view.findViewById(R.id.edit_btn);
 
         //기본설정:내아이디
-       thisid=MainActivity.me.id;
+       thisid = MainActivity.me.id;
 
         Bundle bundle = getArguments();
         if(bundle != null) {
@@ -118,6 +124,7 @@ public class ProfileFragment extends Fragment {
 
         //기본정보
         img = view.findViewById(R.id.pf_img);
+        img_message = view.findViewById(R.id.message);
         nick = view.findViewById(R.id.pf_nickname);
         school = view.findViewById(R.id.pf_school);
         major = view.findViewById(R.id.pf_major);
@@ -138,6 +145,40 @@ public class ProfileFragment extends Fragment {
 
             navController.navigate(R.id.action_profile_to_profile_edit, bundle1);
         });
+
+        //쪽지하기
+        if(MainActivity.me.id != thisid) {
+            img_message.setOnClickListener(v->{
+                String url = "http://13.125.214.178:8080/room?senderId=" + MainActivity.me.id + "&receiverId=" + thisid;
+
+                Map map = new HashMap();
+
+                JSONObject params = new JSONObject(map);
+
+                JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject obj) {
+                                System.out.println("success");
+                                // 해당 채팅방으로 화면 이동
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                            }
+                        }) {
+
+
+                    @Override
+                    public String getBodyContentType() {
+                        return "application/json; charset=UTF-8";
+                    }
+                };
+                RequestQueue queue = Volley.newRequestQueue(getContext().getApplicationContext());
+                queue.add(objectRequest);
+            });
+        }
 
         //내가 속한 팀이름 가져오기
         getMyTeam();
@@ -247,8 +288,6 @@ public class ProfileFragment extends Fragment {
             }
         };
         requestQueue.add(new GetTeamsRequest(postingResponseListener,thisid));
-
-
     }
 
     public void getBasicInfo(){ //기본정보 서버에서 가져오기

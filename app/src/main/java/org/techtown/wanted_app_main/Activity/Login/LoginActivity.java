@@ -61,7 +61,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoginRegisterActivity.class);
                 startActivity(intent);
-                finish();
             }});
 
         //login버튼 클릭시

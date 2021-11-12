@@ -31,6 +31,7 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Connect;
@@ -43,7 +44,10 @@ import org.techtown.wanted_app_main.database.Team;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ProfileTeamFragment extends Fragment {
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
+public class  ProfileTeamFragment extends Fragment {
     //팀이름
     TextView team_title;
 
@@ -57,7 +61,7 @@ public class ProfileTeamFragment extends Fragment {
     private ArrayList<PersonalDtoInTeam> memberInfo =new ArrayList<>();
 
     NavController navController;
-
+ Boolean canevaluate=false;
     Long me;
     Personal personal;
     //팀해체 버튼
@@ -112,6 +116,7 @@ public class ProfileTeamFragment extends Fragment {
         }else{
             btn_team_delete.setVisibility(View.GONE);
         }
+
         //팀해제하기 버튼 클릭하면 팀삭제
         btn_team_delete.setOnClickListener(v -> {
           deleteTeam();
@@ -119,14 +124,30 @@ public class ProfileTeamFragment extends Fragment {
 
         // 별점 매기는 페이지로 이동
         TextView goStar = view.findViewById(R.id.profile_team_go_star);
+        if(me== MainActivity.me.id){
+            goStar.setText("별점을 매기려면 잠시동안 친구를 꾹 누르세요.");
+            memberAdapter.setOnItemClicklistener(new FriendMoreAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    ProfileTeamStarFragment dialog = new ProfileTeamStarFragment(memberInfo.get(position));
+                    dialog.show(getActivity().getSupportFragmentManager(), "star_dialog");
+                }
+            });
+        }else{
+            goStar.setVisibility(View.GONE);
+        }
+
         goStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ProfileTeamStarFragment dialog = new ProfileTeamStarFragment();
-                dialog.show(getActivity().getSupportFragmentManager(),"star_dialog");
             }
         });
+
+
+
+
+
 
         return view;
     }

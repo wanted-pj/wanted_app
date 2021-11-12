@@ -78,6 +78,7 @@ public class PostingWriteActivity extends AppCompatActivity {
 
         me = getIntent().getParcelableExtra("me");
         posting = getIntent().getParcelableExtra("posting");
+
         System.out.println("postingWriteActivity >> " + me);
 
         // 카테고리 설정 (기본값 : null)
@@ -152,97 +153,131 @@ public class PostingWriteActivity extends AppCompatActivity {
 
                 try {
                     if (check(title, teamName, content, endDate)) {
-//                        RequestQueue requestQueue;
-//                        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
-//                        Network network = new BasicNetwork(new HurlStack());
-//                        requestQueue = new RequestQueue(cache, network);
-//                        requestQueue.start();
-
-                        String url = "http://13.125.214.178:8080/posting/" + me.id;
-
                         Map map = new HashMap();
                         map.put("category", str_category);
                         map.put("team_name", teamName);
                         map.put("title", title);
                         map.put("content", content);
                         map.put("end_time", endDate);
-
                         JSONObject params = new JSONObject(map);
 
-                        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                                new Response.Listener<JSONObject>() {
-                                    @Override
-                                    public void onResponse(JSONObject obj) {
-                                        dialog = new Dialog(PostingWriteActivity.this);
-                                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                        dialog.setContentView(R.layout.register_dialog);
-                                        TextView dialogText = dialog.findViewById(R.id.text);
-                                        dialogText.setText("글이 등록되었습니다!");
-                                        dialog.show();
-                                        Button cancel = dialog.findViewById(R.id.btnCancel5);
-                                        cancel.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View view) {
-                                                dialog.dismiss();
-                                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                                intent.putExtra("me", me);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-                                        });
-
-                                        try {
-                                            System.out.println(obj);
-                                            Long posting_id = obj.getLong("id");
-
-                                            String url2 = "http://13.125.214.178:8080/team/" + posting_id;
-
-                                            Map map = new HashMap();
-//                                            map.put("leader_id", me.id);
-//                                            map.put("team_name", teamName);
-//                                            map.put("posting_id", posting_id);
-
-                                            JSONObject params = new JSONObject(map);
-
-                                            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url2, params,
-                                                    new Response.Listener<JSONObject>() {
-                                                        @Override
-                                                        public void onResponse(JSONObject obj) {
-                                                        }
-                                                    },
-                                                    new Response.ErrorListener() {
-                                                        @Override
-                                                        public void onErrorResponse(VolleyError error) {
-                                                        }
-                                                    }) {
+                        if (posting != null) { // 수정
+                            String url = "http://13.125.214.178:8080/posting/" + posting.postingId;
+                            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, params,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject obj) {
+                                            System.out.println("글이 수정됨");
+                                            dialog = new Dialog(PostingWriteActivity.this);
+                                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            dialog.setContentView(R.layout.register_dialog);
+                                            TextView dialogText = dialog.findViewById(R.id.text);
+                                            dialogText.setText("글이 수정되었습니다!");
+                                            dialog.show();
+                                            Button cancel = dialog.findViewById(R.id.btnCancel5);
+                                            cancel.setOnClickListener(new View.OnClickListener() {
                                                 @Override
-                                                public String getBodyContentType() {
-                                                    return "application/json; charset=UTF-8";
+                                                public void onClick(View view) {
+                                                    dialog.dismiss();
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.putExtra("me", me);
+                                                    startActivity(intent);
+                                                    finish();
                                                 }
-                                            };
-                                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                                            queue.add(objectRequest);
-
-
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
+                                            });
                                         }
-                                    }
-                                },
-                                new Response.ErrorListener() {
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                    }
-                                }) {
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                        }
+                                    }) {
+                                @Override
+                                public String getBodyContentType() {
+                                    return "application/json; charset=UTF-8";
+                                }
+                            };
+                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                            queue.add(objectRequest);
+                        } else {
+                            // 생성
+                            String url = "http://13.125.214.178:8080/posting/" + me.id;
+                            JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+                                    new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject obj) {
+                                            dialog = new Dialog(PostingWriteActivity.this);
+                                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                            dialog.setContentView(R.layout.register_dialog);
+                                            TextView dialogText = dialog.findViewById(R.id.text);
+                                            dialogText.setText("글이 등록되었습니다!");
+                                            dialog.show();
+                                            Button cancel = dialog.findViewById(R.id.btnCancel5);
+                                            cancel.setOnClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View view) {
+                                                    dialog.dismiss();
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.putExtra("me", me);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            });
+
+                                            try {
+                                                System.out.println(obj);
+                                                Long posting_id = obj.getLong("id");
+
+                                                String url2 = "http://13.125.214.178:8080/team/" + posting_id;
+
+                                                Map map = new HashMap();
+                                                map.put("leader_id", me.id);
+                                                map.put("team_name", teamName);
+                                                map.put("posting_id", posting_id);
+
+                                                JSONObject params = new JSONObject(map);
+
+                                                JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url2, params,
+                                                        new Response.Listener<JSONObject>() {
+                                                            @Override
+                                                            public void onResponse(JSONObject obj) {
+                                                            }
+                                                        },
+                                                        new Response.ErrorListener() {
+                                                            @Override
+                                                            public void onErrorResponse(VolleyError error) {
+                                                            }
+                                                        }) {
+                                                    @Override
+                                                    public String getBodyContentType() {
+                                                        return "application/json; charset=UTF-8";
+                                                    }
+                                                };
+                                                RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                                                queue.add(objectRequest);
 
 
-                            @Override
-                            public String getBodyContentType() {
-                                return "application/json; charset=UTF-8";
-                            }
-                        };
-                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                        queue.add(objectRequest);
+                                            } catch (JSONException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    },
+                                    new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                        }
+                                    }) {
+
+
+                                @Override
+                                public String getBodyContentType() {
+                                    return "application/json; charset=UTF-8";
+                                }
+                            };
+                            RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                            queue.add(objectRequest);
+                        }
+
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();

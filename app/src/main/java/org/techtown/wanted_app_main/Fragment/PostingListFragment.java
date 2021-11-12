@@ -216,7 +216,6 @@ public class PostingListFragment extends Fragment {
             Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
             intent.putExtra("me", me);
             startActivity(intent);
-            getActivity().finish();
         });
 
         return view;

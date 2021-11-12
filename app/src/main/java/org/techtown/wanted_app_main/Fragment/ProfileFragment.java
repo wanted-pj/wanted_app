@@ -84,7 +84,15 @@ public class ProfileFragment extends Fragment {
     EditText gender;
     TextView career;
 
+    //별점
+    Double getearnest;
+    Double getteamwork;
+    Double getcontribution;
+
     public Dialog dialog;
+    TextView my_earnest;
+    TextView my_teamwork;
+    TextView my_contribution;
     public ProfileFragment() {
     }
 
@@ -164,8 +172,38 @@ public class ProfileFragment extends Fragment {
         LinearLayout btnStar = view.findViewById(R.id.pf_star);
         btnStar.setOnClickListener(v -> {
             dialog.show();
-        });
+            my_earnest = dialog.findViewById(R.id.my_earnest);
+            my_teamwork = dialog.findViewById(R.id.my_teamwork);
+            my_contribution = dialog.findViewById(R.id.my_contribution);
+            if(personal.evaluation!=null){
+                getearnest = personal.evaluation.earnest;
+                my_earnest.setText(getearnest.toString());
 
+                getteamwork = personal.evaluation.teamwork;
+                my_teamwork.setText(getteamwork.toString());
+
+                getcontribution = personal.evaluation.contribution;
+                my_contribution.setText(getcontribution.toString());
+            } else {
+                my_earnest.setText("0.0");
+                my_teamwork.setText("0.0");
+                my_contribution.setText("0.0");
+            }
+        });
+        //평균 계산해서 별그림바꾸기
+        //Double average = (getearnest+getcontribution+getteamwork)/personal.evaluation.count;
+        //int star_value = average.intValue();
+      /*  switch (star_value){
+            case 1:
+
+            case 2:
+
+                case3:
+
+                case4
+
+                        case5
+        }*/
         return view;
     }
 

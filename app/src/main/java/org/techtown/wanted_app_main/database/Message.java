@@ -12,11 +12,13 @@ public class Message {
     public Long senderId;
     public String content;
     public boolean readCheck;
+    public String messagingTime;
 
-    public Message(Long messageId, Long senderId, String content, boolean readCheck) {
+    public Message(Long messageId, Long senderId, String content, boolean readCheck, String messagingTime) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.content = content;
         this.readCheck = readCheck;
+        this.messagingTime = messagingTime;
     }
 }

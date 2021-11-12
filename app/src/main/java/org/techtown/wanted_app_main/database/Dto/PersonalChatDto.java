@@ -17,4 +17,13 @@ public class PersonalChatDto {
         this.personalId = id;
         this.participants = participants;
     }
+
+    @Override
+    public String toString() {
+        return "PersonalChatDto{" +
+                "id=" + personalId + '\'' +
+                ", participants='" + participants +
+                '}';
+    }
+
 }

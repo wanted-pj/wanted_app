@@ -37,6 +37,7 @@ import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
+import org.techtown.wanted_app_main.database.Team;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;

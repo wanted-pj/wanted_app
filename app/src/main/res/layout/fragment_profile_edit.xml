@@ -7,7 +7,6 @@
     android:orientation="vertical"
     tools:context=".Fragment.ProfileEditFragment">
 
-
     <!--프로필 편집 타이틀-->
     <TextView
         android:layout_width="match_parent"
@@ -194,16 +193,14 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <!--학교-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_edit_school_group"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
                 app:layout_constraintTop_toBottomOf="@id/profile_edit_image_group"
-                app:layout_constraintEnd_toStartOf="@id/profile_edit_major_group"
                 app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
@@ -213,24 +210,37 @@
                     app:layout_constraintTop_toTopOf="parent"
                     style="@style/registerTitle" />
 
-                <Spinner
-                    android:id="@+id/profile_edit_school_spinner"
+                <EditText
+                    android:id="@+id/profile_edit_school"
+                    android:layout_width="0dp"
+                    android:hint="학교명을 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/profile_edit_school_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/registerSpinner" />
+                    app:layout_constraintEnd_toStartOf="@id/profile_edit_school_search"
+                    style="@style/registerEditText"/>
+
+                <Button
+                    android:id="@+id/profile_edit_school_search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_search"
+                    app:layout_constraintTop_toBottomOf="@id/profile_edit_school_title"
+                    app:layout_constraintStart_toEndOf="@id/profile_edit_school"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--학과-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/profile_edit_major_group"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_image_group"
-                app:layout_constraintStart_toEndOf="@id/profile_edit_school_group"
-                app:layout_constraintEnd_toStartOf="@id/profile_edit_grade_group">
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_school_group"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <TextView
                     android:id="@+id/profile_edit_major_title"
@@ -239,11 +249,25 @@
                     app:layout_constraintTop_toTopOf="parent"
                     style="@style/registerTitle" />
 
-                <Spinner
-                    android:id="@+id/profile_edit_major_spinner"
+                <EditText
+                    android:id="@+id/profile_edit_major"
+                    android:layout_width="0dp"
+                    android:hint="학과명을 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/profile_edit_major_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/registerSpinner" />
+                    app:layout_constraintEnd_toStartOf="@id/profile_edit_major_search"
+                    style="@style/registerEditText"/>
+
+                <Button
+                    android:id="@+id/profile_edit_major_search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_search"
+                    app:layout_constraintTop_toBottomOf="@id/profile_edit_major_title"
+                    app:layout_constraintStart_toEndOf="@id/profile_edit_major"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -254,9 +278,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_image_group"
-                app:layout_constraintStart_toEndOf="@id/profile_edit_major_group"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_major_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/profile_edit_age_group">
 
                 <TextView
                     android:id="@+id/profile_edit_grade_title"
@@ -280,9 +304,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_school_group"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/profile_edit_gender_group">
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_major_group"
+                app:layout_constraintStart_toEndOf="@id/profile_edit_grade_group"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
                     android:id="@+id/profile_edit_age_title"
@@ -306,8 +330,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_major_group"
-                app:layout_constraintStart_toEndOf="@id/profile_edit_age_group"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_grade_group"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/profile_edit_address_group">
 
                 <TextView
@@ -332,7 +356,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/profile_edit_grade_group"
+                app:layout_constraintTop_toBottomOf="@id/profile_edit_age_group"
                 app:layout_constraintStart_toEndOf="@id/profile_edit_gender_group"
                 app:layout_constraintEnd_toEndOf="parent">
 

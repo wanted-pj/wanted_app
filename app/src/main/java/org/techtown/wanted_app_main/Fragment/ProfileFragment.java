@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.FocusFinder;
 import android.view.LayoutInflater;
@@ -42,35 +41,50 @@ import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
+import org.techtown.wanted_app_main.ServerRequest.GetTeamsRequest;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
+import org.techtown.wanted_app_main.database.Team;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
 
 public class ProfileFragment extends Fragment {
 
     NavController navController;
 
-   // private RecyclerView rvCareer;
-   // private ProfileCareerAdapter profileCareerAdapter;
-    //private ArrayList<ProfileCareer> profileCareerItems;
-
+    //소속팀
+    public Personal personal;
+    public List<Team> team_list = new ArrayList<>();
     private RecyclerView rvTeam;
     private ProfileTeamAdapter profileTeamAdapter;
-    private ArrayList<ProfileTeam> profileTeamItems;
-    Boolean done = false;
-    public Personal personal;
+    private ArrayList<ProfileTeam> profileTeamItems; //프로필페이지에 팀item
+    private ArrayList<Team> teamInfo=new ArrayList<>(); //팀상세페이지에 넘길때
+
+    //아이디
+    private Long getid;
+    private Long thisid;
+
+    //기본정보
+    ImageView img;
+    TextView nick;
+    EditText school;
+    EditText major;
+    EditText address;
+    EditText grade;
+    EditText age;
+    EditText gender;
+    TextView career;
+
     public Dialog dialog;
-
-    public String string_career;
-
-    private Personal me;
-    private int id;
-
     public ProfileFragment() {
     }
 
@@ -80,85 +94,133 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        ImageView btn_edit = view.findViewById(R.id.edit_btn);
+
+        //기본설정:내아이디
+       thisid=MainActivity.me.id;
 
         Bundle bundle = getArguments();
-        me = MainActivity.me;
-        id = me.id.intValue();
-
-        // 역량
-       // profileCareerAdapter = new ProfileCareerAdapter();
-
-       // rvCareer = view.findViewById(R.id.recyclerView_career);
-        //rvCareer.setAdapter(profileCareerAdapter);
-       // rvCareer.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
-
-       // profileCareerItems = new ArrayList<>();
-        //profileCareerItems.add(new ProfileCareer("백엔드 | SpringBoot, Django, Mysql"));
-       // profileCareerItems.add(new ProfileCareer("자격증 | 정보처리기사, SQLD"));
-        //profileCareerItems.add(new ProfileCareer("2021 사이버보안 AI·빅데이터 활용 경진대회 (최우수상)"));
-        //profileCareerAdapter.setProfileCareerList(profileCareerItems);
-
-        // 소속팀
-        profileTeamAdapter = new ProfileTeamAdapter();
-
-        rvTeam = view.findViewById(R.id.recyclerView_team);
-        rvTeam.setAdapter(profileTeamAdapter);
-        rvTeam.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
-
-        profileTeamItems = new ArrayList<>();
-        profileTeamItems.add(new ProfileTeam("원티드 피우다팀"));
-        profileTeamItems.add(new ProfileTeam("신림 모각코"));
-        profileTeamAdapter.setProfileTeamList(profileTeamItems);
-
-        profileTeamAdapter.setOnItemClicklistener(new ProfileTeamAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Bundle bundle = new Bundle();
-                bundle.putString("test", "testmessage");
-                navController.navigate(R.id.action_profile_to_profile_team, bundle);
-            }
-        });
+        if(bundle != null) {
+            //이전 fragment에서 prifilefragment로 들어온 id값
+            getid=getArguments().getLong("id");
+            if(getid!=null){ //bundle로 넘긴 id값이 있을경우=타인일 경우, thisid 변경
+                thisid=getid;
+                btn_edit.setVisibility(View.GONE);}
+        }
 
         //기본정보
-        ImageView img = view.findViewById(R.id.pf_img);
-        TextView nick = view.findViewById(R.id.pf_nickname);
-        EditText school = view.findViewById(R.id.pf_school);
-        EditText major = view.findViewById(R.id.pf_major);
-        EditText address = view.findViewById(R.id.pf_address);
-        EditText grade = view.findViewById(R.id.pf_grade);
-        EditText age = view.findViewById(R.id.pf_age);
-        EditText gender = view.findViewById(R.id.pf_gender);
-        TextView career = view.findViewById(R.id.pf_career);
+        img = view.findViewById(R.id.pf_img);
+        nick = view.findViewById(R.id.pf_nickname);
+        school = view.findViewById(R.id.pf_school);
+        major = view.findViewById(R.id.pf_major);
+        address = view.findViewById(R.id.pf_address);
+        grade = view.findViewById(R.id.pf_grade);
+        age = view.findViewById(R.id.pf_age);
+        gender = view.findViewById(R.id.pf_gender);
+        career = view.findViewById(R.id.pf_career);
 
-        //프로필 편집
-        ImageView btn_edit = view.findViewById(R.id.edit_btn);
+        //기본정보 가져오기
+        getBasicInfo();
+
+        //프로필 편집 바로가기
         btn_edit.setOnClickListener( v-> {
 
             Bundle bundle1 = new Bundle();
             bundle1.putString("btnGoedit", "test");
 
-            navController.navigate(R.id.action_profile_to_profile_edit, bundle);
+            navController.navigate(R.id.action_profile_to_profile_edit, bundle1);
         });
+
+        //내가 속한 팀이름 가져오기
+        getMyTeam();
+
+        //팀 어탭터 설정
+        profileTeamAdapter = new ProfileTeamAdapter();
+        profileTeamItems = new ArrayList<>();
+        rvTeam = view.findViewById(R.id.recyclerView_team);
+        rvTeam.setAdapter(profileTeamAdapter);
+        rvTeam.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
+
+        //팀상세페이지로 이동
+        profileTeamAdapter.setOnItemClicklistener(new ProfileTeamAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("me",thisid);
+                bundle.putParcelable("team", teamInfo.get(position));
+                bundle.putParcelable("personal",personal);
+                setBtnNavIndex(1);
+                updateBottomMenu();
+                navController.navigate(R.id.action_profile_to_profile_team, bundle);
+            }
+        });
+
 
         // 별점 팝업
         dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setContentView(R.layout.dialog_star);
-
         LinearLayout btnStar = view.findViewById(R.id.pf_star);
         btnStar.setOnClickListener(v -> {
             dialog.show();
         });
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+    }
+
+
+    public void getMyTeam(){ //소속팀 서버에서 정보가져오기
+
         //서버 호출
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        // 모든 team 조회
+        Response.Listener<String> postingResponseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                // 한글깨짐 해결 코드
+                String changeString = new String();
+                try {
+                    changeString = new String(response.getBytes("8859_1"), "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                Type listType = new TypeToken<ArrayList<Team>>() {
+                }.getType();
+
+                List<Team> temp = gson.fromJson(changeString, listType);
+                team_list = new ArrayList<>(temp);
+                for (Team team :  team_list) {
+                    profileTeamItems.add(new ProfileTeam(team.teamName));
+                    teamInfo.add(team);
+                }
+                profileTeamAdapter.setProfileTeamList(profileTeamItems);
+            }
+        };
+        requestQueue.add(new GetTeamsRequest(postingResponseListener,thisid));
+
+
+    }
+
+    public void getBasicInfo(){ //기본정보 서버에서 가져오기
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
 
-        String url = "http://13.125.214.178:8080/personal" + "/" + id;
+        String url = "http://13.125.214.178:8080/personal" + "/" + thisid;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
@@ -194,16 +256,9 @@ public class ProfileFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+
             }
         });
         requestQueue.add(stringRequest);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
     }
 }

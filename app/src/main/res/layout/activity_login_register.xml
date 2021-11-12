@@ -86,6 +86,7 @@
                 <EditText
                     android:id="@+id/register_id"
                     android:layout_width="0dp"
+                    android:layout_marginRight="10dp"
                     android:hint="아이디를 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/register_id_title"
                     app:layout_constraintStart_toStartOf="parent"
@@ -186,63 +187,101 @@
 
                 <EditText
                     android:id="@+id/register_nickname"
+                    android:layout_width="0dp"
+                    android:layout_marginRight="10dp"
                     android:hint="닉네임을 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/register_nickname_title"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/register_nickname_check_btn"
                     style="@style/registerEditText"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <Button
+                    android:id="@+id/register_nickname_check_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/btn_teal"
+                    android:text="중복확인"
+                    android:textSize="14dp"
+                    android:textColor="@color/white"
+                    android:letterSpacing="-0.05"
+                    app:layout_constraintTop_toBottomOf="@id/register_nickname_title"
+                    app:layout_constraintStart_toEndOf="@id/register_nickname"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--학교-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/register_school_group"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_nickname_group"
-                app:layout_constraintEnd_toStartOf="@id/register_major_group"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/register_nickname_group">
 
                 <TextView
                     android:id="@+id/register_school_title"
                     android:text="학교 *"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    style="@style/registerTitle" />
+                    style="@style/registerTitle"/>
 
-                <Spinner
-                    android:id="@+id/register_school_spinner"
+                <EditText
+                    android:id="@+id/register_school"
+                    android:layout_width="0dp"
+                    android:hint="학교명을 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/register_school_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/registerSpinner" />
+                    app:layout_constraintEnd_toStartOf="@id/register_school_search"
+                    style="@style/registerEditText"/>
+
+                <Button
+                    android:id="@+id/register_school_search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_search"
+                    app:layout_constraintTop_toBottomOf="@id/register_school_title"
+                    app:layout_constraintStart_toEndOf="@id/register_school"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <!--학과-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/register_major_group"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_nickname_group"
-                app:layout_constraintStart_toEndOf="@id/register_school_group"
-                app:layout_constraintEnd_toStartOf="@id/register_grade_group">
+                app:layout_constraintTop_toBottomOf="@id/register_school_group">
 
                 <TextView
                     android:id="@+id/register_major_title"
                     android:text="학과 *"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    style="@style/registerTitle" />
+                    style="@style/registerTitle"/>
 
-                <Spinner
-                    android:id="@+id/register_major_spinner"
+                <EditText
+                    android:id="@+id/register_major"
+                    android:layout_width="0dp"
+                    android:hint="학과명을 입력해주세요."
                     app:layout_constraintTop_toBottomOf="@id/register_major_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/registerSpinner" />
+                    app:layout_constraintEnd_toStartOf="@id/register_major_search"
+                    style="@style/registerEditText"/>
+
+                <Button
+                    android:id="@+id/register_major_search"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/ic_search"
+                    app:layout_constraintTop_toBottomOf="@id/register_major_title"
+                    app:layout_constraintStart_toEndOf="@id/register_major"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -253,9 +292,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_nickname_group"
-                app:layout_constraintStart_toEndOf="@id/register_major_group"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/register_major_group"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/register_age_group">
 
                 <TextView
                     android:id="@+id/register_grade_title"
@@ -279,9 +318,9 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_school_group"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/register_gender_group">
+                app:layout_constraintTop_toBottomOf="@id/register_major_group"
+                app:layout_constraintStart_toEndOf="@id/register_grade_group"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
                     android:id="@+id/register_age_title"
@@ -305,8 +344,8 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_major_group"
-                app:layout_constraintStart_toEndOf="@id/register_age_group"
+                app:layout_constraintTop_toBottomOf="@id/register_grade_group"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/register_address_group">
 
                 <TextView
@@ -331,7 +370,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_grade_group"
+                app:layout_constraintTop_toBottomOf="@id/register_age_group"
                 app:layout_constraintStart_toEndOf="@id/register_gender_group"
                 app:layout_constraintEnd_toEndOf="parent">
 

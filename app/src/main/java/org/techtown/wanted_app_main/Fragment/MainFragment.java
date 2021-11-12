@@ -53,7 +53,8 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerViewFriend;
     private FriendAdapter friendAdapter = new FriendAdapter();
     private ArrayList<Friend> friendItems = new ArrayList<>();
-
+    Personal another;
+    private ArrayList<Long> friendIds =new ArrayList<>();
     // layout
     private Button btnSchool, btnMajor, btnAddress;
 
@@ -217,7 +218,18 @@ public class MainFragment extends Fragment {
                 updateBottomMenu();
             }
         });
+        //프로필페이지로 이동
+        friendAdapter.setOnItemClicklistener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
 
+                Bundle bundle = new Bundle();
+                bundle.putLong("id",friendIds.get(position));
+                navController.navigate(R.id.action_main_to_profile, bundle);
+            }
+        });
+        
+        
         return view;
     }
 
@@ -248,7 +260,7 @@ public class MainFragment extends Fragment {
     public void setCategory(int friendsCategory) {
         friendItems.clear();
         for (int i = 0; i < personal_list.size(); i++) {
-            Personal another = personal_list.get(i);
+            another = personal_list.get(i);
             if (MainActivity.me.id != another.id) {
                 switch (friendsCategory) {
                     case 0:
@@ -269,6 +281,7 @@ public class MainFragment extends Fragment {
                 }
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
                 friendItems.add(new Friend(another.nickname, another.school, another.major, another.address, image));
+                friendIds.add(another.id);
             }
         }
         friendAdapter.setFriendList(friendItems);

@@ -26,6 +26,25 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private ArrayList<Friend> friendList = new ArrayList<>();
     private int friendsCategory = 0; // 0은 school 1은 major 2는 address
 
+
+    static FriendAdapter.OnItemClickListener listener;
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClicklistener(FriendAdapter.OnItemClickListener listener){
+        this.listener = listener;
+
+    }
+
+    public void onItemClick(View view, int position) {
+        if(listener != null)
+            listener.onItemClick(view, position);
+    }
+
+
+
+
     // 뷰타입에 따라 사용할 뷰홀더 리턴
     @NonNull
     @Override
@@ -127,13 +146,17 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             tv_address = itemView.findViewById(R.id.tv_address);
             iv = itemView.findViewById(R.id.iv);
 
-            // item 클릭이벤트
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // Go Profile
+                    int position = getAdapterPosition();
+                    if(listener != null)
+                        listener.onItemClick(v, position);
                 }
             });
+
+
+
         }
 
         public void setFriend(Friend friend) {

@@ -198,9 +198,9 @@ public class PostingWriteActivity extends AppCompatActivity {
                                             String url2 = "http://13.125.214.178:8080/team/" + posting_id;
 
                                             Map map = new HashMap();
-                                            map.put("leader_id", me.id);
-                                            map.put("team_name", teamName);
-                                            map.put("posting_id", posting_id);
+//                                            map.put("leader_id", me.id);
+//                                            map.put("team_name", teamName);
+//                                            map.put("posting_id", posting_id);
 
                                             JSONObject params = new JSONObject(map);
 

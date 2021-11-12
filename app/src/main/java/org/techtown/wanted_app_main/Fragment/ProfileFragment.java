@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment {
 
     public String string_career;
 
+    private Personal me;
     private int id;
 
     public ProfileFragment() {
@@ -81,9 +82,8 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         Bundle bundle = getArguments();
-        //id = bundle.getInt("id");
-        id = 1;
-        Log.d("test_MainFragment", String.valueOf(id));
+        me = MainActivity.me;
+        id = me.id.intValue();
 
         // 역량
        // profileCareerAdapter = new ProfileCareerAdapter();

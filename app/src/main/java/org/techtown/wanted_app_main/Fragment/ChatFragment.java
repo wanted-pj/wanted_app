@@ -11,11 +11,33 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONObject;
+import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.Dto.PersonalChatDto;
+import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.Personal;
+import org.techtown.wanted_app_main.database.Posting;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChatFragment extends Fragment {
 
@@ -25,6 +47,8 @@ public class ChatFragment extends Fragment {
 
     public final int TYPE_SENDER = 0;
     public final int TYPE_RECEIVER = 1;
+
+    private Personal me;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +60,8 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         hideBottomNavigation(true);
+
+        me = MainActivity.me;
 
         chatAdapter = new ChatAdapter();
 

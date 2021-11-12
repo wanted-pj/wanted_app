@@ -36,11 +36,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (viewType == TYPE_FOOTER) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend_footer, parent, false);
             return new FooterViewHolder(view);
-        } else if (viewType == TYPE_ITEM){
+        } else if (viewType == TYPE_ITEM) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend, parent, false);
             return new ItemViewHolder(view);
-        }
-        else
+        } else
             return null;
     }
 
@@ -49,17 +48,16 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-        }
-        else {
+        } else {
             // item을 하나하나 보여줌 (bind 시킴)
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
-            Log.d("test_List" , String.valueOf(friendList.size()));
+            Log.d("test_List", String.valueOf(friendList.size()));
             Friend item = friendList.get(position);
             itemViewHolder.setFriend(item);
         }
     }
 
-    public void setFriendList(ArrayList<Friend> arrayList){
+    public void setFriendList(ArrayList<Friend> arrayList) {
         this.friendList = arrayList;
         notifyDataSetChanged();
     }
@@ -85,8 +83,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 return TYPE_FOOTER;
             else
                 return TYPE_ITEM;
-        }
-        else {
+        } else {
             if (position == limit)
                 return TYPE_FOOTER;
             else if (position < limit)

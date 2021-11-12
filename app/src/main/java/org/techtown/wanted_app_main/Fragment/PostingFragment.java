@@ -48,15 +48,17 @@ public class PostingFragment extends Fragment {
     // 이전 프래그먼트에서 Posting 객체 받기
     private static Posting posting;
 
+    // 이글이 내 글인가
+    boolean itsMe;
+
     // Connect 리사이 클러뷰 설정
     private RecyclerView rvBoardRequest;
-    private PostingDetailAdapter postingDetailAdapter = new PostingDetailAdapter();
+    private PostingDetailAdapter postingDetailAdapter;
     private ArrayList<Connect> connectItems = new ArrayList<>();
-
 
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
-    private ImageView postingDetailImage;
+    private ImageView postingDetailImage, edit_img;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class PostingFragment extends Fragment {
         posting = getArguments().getParcelable("posting");
         connectItems = (ArrayList<Connect>) posting.connects;
         System.out.println("출력: " + posting);
+        itsMe = (posting.personalId == MainActivity.me.getId());
+        postingDetailAdapter = new PostingDetailAdapter(itsMe, posting.postingId, MainActivity.me.getId());
     }
 
     @Override
@@ -83,7 +87,7 @@ public class PostingFragment extends Fragment {
         }
 
         // 내 글
-        if (posting.personalId.equals(MainActivity.me.id)) {
+        if (itsMe) {
             // 버튼 텍스트 설정
             if (posting.checkRecruiting) {
                 request.setText("모집중");
@@ -92,7 +96,7 @@ public class PostingFragment extends Fragment {
             }
 
             // 뷰 컴포넌트
-            ImageView edit_img = view.findViewById(R.id.board_retouch);
+            edit_img = view.findViewById(R.id.board_retouch);
 
             // 모집완료 or 모집중 버튼 클릭
             request.setOnClickListener(v -> {
@@ -180,10 +184,10 @@ public class PostingFragment extends Fragment {
                                         Long senderId = obj.getLong("senderId");
                                         String nickname = obj.getString("nickname");
                                         String img = obj.getString("img");
-                                        Connect connect = new Connect(id, senderId, nickname, img);
+                                        Boolean result = obj.getBoolean("result");
+                                        Connect connect = new Connect(id, senderId, nickname, img, result);
                                         connectItems.add(connect);
                                         postingDetailAdapter.setItems(connectItems);
-                                        postingDetailAdapter.notifyDataSetChanged();
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }

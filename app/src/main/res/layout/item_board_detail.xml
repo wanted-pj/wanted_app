@@ -46,7 +46,7 @@
 
     <Button
         android:id="@+id/board_detail_request_btn"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="35dp"
         style="@style/btnBasic"
         android:text="수락"

@@ -122,7 +122,7 @@ public class ProfileTeamFragment extends Fragment {
     }
 
     public void deleteTeam(){
-        RequestQueue requestQueue;
+      /*  RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getContext().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
@@ -142,7 +142,7 @@ public class ProfileTeamFragment extends Fragment {
             }
         });
 
-        requestQueue.add(stringRequest);
+        requestQueue.add(stringRequest);*/
     }
 
     @Override

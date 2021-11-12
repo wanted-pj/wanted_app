@@ -218,7 +218,8 @@ public class MainFragment extends Fragment {
                 updateBottomMenu();
             }
         });
-        //프로필페이지로 이동
+
+        //친구 눌렀을 시 프로필페이지로 이동
         friendAdapter.setOnItemClicklistener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

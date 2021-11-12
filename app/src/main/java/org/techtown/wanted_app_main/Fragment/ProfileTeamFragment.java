@@ -137,18 +137,16 @@ public class  ProfileTeamFragment extends Fragment {
             goStar.setVisibility(View.GONE);
         }
 
-        goStar.setOnClickListener(new View.OnClickListener() {
+        //친구 눌렀을 시 프로필페이지로 이동
+        memberAdapter.setOnfriendClicklistener(new FriendMoreAdapter.OnfriendClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onfriendClick(View view, int position) {
 
+                Bundle bundle = new Bundle();
+                bundle.putLong("id",memberInfo.get(position).personalId);
+                navController.navigate(R.id.action_profile_team_to_profile, bundle);
             }
         });
-
-
-
-
-
-
         return view;
     }
 

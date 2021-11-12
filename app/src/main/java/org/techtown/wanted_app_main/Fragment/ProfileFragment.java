@@ -88,11 +88,17 @@ public class ProfileFragment extends Fragment {
     Double getearnest;
     Double getteamwork;
     Double getcontribution;
+    ImageView pf_star1;
+    ImageView pf_star2;
+    ImageView pf_star3;
+    ImageView pf_star4;
+    ImageView pf_star5;
 
     public Dialog dialog;
     TextView my_earnest;
     TextView my_teamwork;
     TextView my_contribution;
+
     public ProfileFragment() {
     }
 
@@ -163,8 +169,16 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //별점이미지
+        pf_star1 = view.findViewById(R.id.pf_star1);
+        pf_star2 = view.findViewById(R.id.pf_star2);
+        pf_star3 = view.findViewById(R.id.pf_star3);
+        pf_star4 = view.findViewById(R.id.pf_star4);
+        pf_star5 = view.findViewById(R.id.pf_star5);
 
-        // 별점 팝업
+
+
+        // 별점 팝업창
         dialog = new Dialog(getContext());
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -175,35 +189,13 @@ public class ProfileFragment extends Fragment {
             my_earnest = dialog.findViewById(R.id.my_earnest);
             my_teamwork = dialog.findViewById(R.id.my_teamwork);
             my_contribution = dialog.findViewById(R.id.my_contribution);
-            if(personal.evaluation!=null){
-                getearnest = personal.evaluation.earnest;
-                my_earnest.setText(getearnest.toString());
-
-                getteamwork = personal.evaluation.teamwork;
-                my_teamwork.setText(getteamwork.toString());
-
-                getcontribution = personal.evaluation.contribution;
-                my_contribution.setText(getcontribution.toString());
-            } else {
-                my_earnest.setText("0.0");
-                my_teamwork.setText("0.0");
-                my_contribution.setText("0.0");
-            }
+            my_earnest.setText(getearnest.toString());
+            my_teamwork.setText(getteamwork.toString());
+            my_contribution.setText(getcontribution.toString());
         });
-        //평균 계산해서 별그림바꾸기
-        //Double average = (getearnest+getcontribution+getteamwork)/personal.evaluation.count;
-        //int star_value = average.intValue();
-      /*  switch (star_value){
-            case 1:
 
-            case 2:
 
-                case3:
 
-                case4
-
-                        case5
-        }*/
         return view;
     }
 
@@ -289,7 +281,20 @@ public class ProfileFragment extends Fragment {
                     gender.setText("여");
                 }
                 career.setText(personal.career);
+                if (personal.evaluation != null) {
+                    getearnest = personal.evaluation.earnest;
+                    getteamwork = personal.evaluation.teamwork;
+                    getcontribution = personal.evaluation.contribution;
+                    //평균 계산해서 별그림바꾸기
+                    changeStarImage();
 
+                } else {
+                    getearnest = 0.0;
+                    getteamwork = 0.0;
+                    getcontribution = 0.0;
+                    //평균 계산해서 별그림바꾸기
+                    changeStarImage();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -298,5 +303,50 @@ public class ProfileFragment extends Fragment {
             }
         });
         requestQueue.add(stringRequest);
+    }
+
+    public void changeStarImage(){ //별점이미지 변경
+
+        Double average = (getearnest + getteamwork + getcontribution) / 3;
+        int star_value = average.intValue();
+
+        if (star_value == 0) {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+        } else if (star_value == 1) {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+        } else if (star_value == 2) {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+        } else if (star_value == 3) {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+        } else if (star_value == 4) {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star_gray", "drawable", getContext().getPackageName()));
+        } else {
+            pf_star1.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star2.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star3.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star4.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+            pf_star5.setImageResource(getResources().getIdentifier("profile_star", "drawable", getContext().getPackageName()));
+        }
+
     }
 }

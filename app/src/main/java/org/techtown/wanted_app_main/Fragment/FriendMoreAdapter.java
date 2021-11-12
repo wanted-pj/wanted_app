@@ -17,6 +17,7 @@ public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.Vi
 
     private ArrayList<Friend> friendList = new ArrayList<Friend>();
     static FriendMoreAdapter.OnItemClickListener listener;
+    static FriendMoreAdapter.OnfriendClickListener listener1;
 static Boolean can=false;
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
@@ -30,6 +31,20 @@ static Boolean can=false;
     public void onItemClick(View view, int position) {
         if(listener != null)
             listener.onItemClick(view, position);
+    }
+
+    public interface OnfriendClickListener {
+        void onfriendClick(View view, int position);
+    }
+
+    public void setOnfriendClicklistener(FriendMoreAdapter.OnfriendClickListener listener1){
+        this.listener1 = listener1;
+
+    }
+
+    public void onfriendClick(View view, int position) {
+        if(listener1 != null)
+            listener1.onfriendClick(view, position);
     }
     @NonNull
     @Override
@@ -76,8 +91,8 @@ static Boolean can=false;
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
-                        listener.onItemClick(v, position);
+                    if(listener1 != null)
+                        listener1.onfriendClick(v, position);
                 }
             });
 

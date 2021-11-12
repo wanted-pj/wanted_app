@@ -10,7 +10,7 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    // 프로필탭 타이틀
+    <!--프로필탭 타이틀-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -25,7 +25,7 @@
         android:focusable="true"
         android:focusableInTouchMode="true"/>
 
-    // 프로필탭 구분선
+    <!--프로필탭 구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
@@ -41,8 +41,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            //편집버튼
-
+            <!--편집버튼-->
             <ImageView
                 android:id="@+id/edit_btn"
                 android:layout_width="15dp"
@@ -53,7 +52,8 @@
                 android:layout_marginLeft="10dp"
                 app:srcCompat="@drawable/ic_edit"
                 app:tint="@color/grayDark" />
-            // 프로필
+
+            <!--프로필-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -93,8 +93,9 @@
 
                 </LinearLayout>
 
-                // 별점
+                <!--별점-->
                 <LinearLayout
+                    android:id="@+id/pf_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
@@ -129,18 +130,25 @@
                         android:layout_height="25dp"
                         android:src="@drawable/profile_star_gray"/>
 
+                    <Button
+                        android:id="@+id/pf_star_arrow"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/ic_arrow"/>
+
                 </LinearLayout>
 
             </LinearLayout>
 
-            // 기본정보
+            <!--기본정보-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@color/colorPrimary"
                 android:padding="30dp">
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -156,7 +164,6 @@
                         android:textColor="@color/white"
                         android:textSize="20dp" />
 
-
                 </LinearLayout>
 
                 <LinearLayout
@@ -165,7 +172,7 @@
                     android:orientation="horizontal"
                     android:layout_marginBottom="5dp">
 
-                    // 왼쪽
+                    <!--왼쪽-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -173,7 +180,7 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
 
-                        // 학교
+                        <!--학교-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -205,7 +212,7 @@
 
                         </LinearLayout>
 
-                        // 전공
+                        <!--전공-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -237,7 +244,7 @@
 
                         </LinearLayout>
 
-                        // 지역
+                        <!--지역-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -270,14 +277,14 @@
 
                     </LinearLayout>
 
-                    // 오른쪽
+                    <!--오른쪽-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        // 학년
+                        <!--학년-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -309,7 +316,7 @@
 
                         </LinearLayout>
 
-                        // 나이
+                        <!--나이-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -341,7 +348,7 @@
 
                         </LinearLayout>
 
-                        // 성별
+                        <!--성별-->
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -375,7 +382,7 @@
                 </LinearLayout>
             </LinearLayout>
 
-            // 역량
+            <!--역량-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -383,31 +390,27 @@
                 android:background="@color/ivory"
                 android:padding="30dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="20dp">
+                    android:layout_marginBottom="20dp"
+                    android:text="역량"
+                    android:textSize="20dp"
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="역량"
-                        android:textSize="20dp"
-                        android:textColor="@color/black"
-                        android:letterSpacing="-0.05" />
-                </LinearLayout>
-                    <TextView
-                        android:id="@+id/pf_career"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:letterSpacing="-0.05" />
+                <TextView
+                    android:id="@+id/pf_career"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:letterSpacing="-0.05" />
 
             </LinearLayout>
-            // 팀 정보
+
+            <!--팀 정보-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -434,7 +437,7 @@
 
             </LinearLayout>
 
-            // Footer
+            <!--Footer-->
             <LinearLayout
                 android:id="@+id/footer"
                 android:layout_width="match_parent"

@@ -125,6 +125,9 @@
         android:id="@+id/profileTeamFragment"
         android:name="org.techtown.wanted_app_main.Fragment.ProfileTeamFragment"
         tools:layout="@layout/fragment_profile_team">
+        <action
+            android:id="@+id/action_profile_team_to_profile"
+            app:destination="@id/profileFragment" />
     </fragment>
 
 </navigation>

@@ -229,7 +229,8 @@
                 <EditText
                     android:id="@+id/register_school"
                     android:layout_width="0dp"
-                    android:hint="학교명을 입력해주세요."
+                    android:hint="우측 검색버튼을 눌러 검색해주세요."
+                    android:enabled="false"
                     app:layout_constraintTop_toBottomOf="@id/register_school_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/register_school_search"
@@ -266,7 +267,8 @@
                 <EditText
                     android:id="@+id/register_major"
                     android:layout_width="0dp"
-                    android:hint="학과명을 입력해주세요."
+                    android:hint="우측 검색버튼을 눌러 검색해주세요."
+                    android:enabled="false"
                     app:layout_constraintTop_toBottomOf="@id/register_major_title"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/register_major_search"

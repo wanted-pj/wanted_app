@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.techtown.wanted_app_main.database.Dto.EvaluateDtoInPersonal;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import java.util.ArrayList;
 
@@ -31,8 +32,11 @@ public class Personal implements Parcelable, Cloneable {
     @Expose
     public ArrayList<PostingDtoInPersonal> postings;
 
+    @SerializedName("evaluation")
+    @Expose
+    public EvaluateDtoInPersonal evaluation;
     public Personal(Long id, String stringId, String pwd, String nickname, String school, String major, Integer grade, Integer age,
-                    String address, String career, Integer gender, String img, ArrayList postings) {
+                    String address, String career, Integer gender, String img, ArrayList postings,EvaluateDtoInPersonal evaluation ) {
         this.id = id;
         this.stringId = stringId;
         this.pwd = pwd;
@@ -47,6 +51,9 @@ public class Personal implements Parcelable, Cloneable {
         this.img = img;
         if (postings != null) {
             this.postings = postings;
+        }
+        if (evaluation != null) {
+            this.evaluation = evaluation;
         }
     }
 

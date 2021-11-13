@@ -225,9 +225,8 @@ public class MainFragment extends Fragment {
         friendAdapter.setOnItemClicklistener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
                 Bundle bundle = new Bundle();
-                bundle.putLong("id",friendIds.get(position));
+                bundle.putLong("profileId", friendIds.get(position));
                 navController.navigate(R.id.action_main_to_profile, bundle);
             }
         });
@@ -262,6 +261,7 @@ public class MainFragment extends Fragment {
     // 카테고리에 따라서, 나와 일치하는 정보를 가진 사람들의 데이터를 FriendAdapter에 채워줌
     public void setCategory(int friendsCategory) {
         friendItems.clear();
+        friendIds.clear();
         for (int i = 0; i < personal_list.size(); i++) {
             another = personal_list.get(i);
             if (MainActivity.me.id != another.id) {

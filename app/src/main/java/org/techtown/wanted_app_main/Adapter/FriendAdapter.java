@@ -13,6 +13,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.techtown.wanted_app_main.Fragment.MainFragment;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Friend;
 
@@ -121,6 +122,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             footerView.setOnClickListener(view1 -> {
                 Bundle bundle = new Bundle();
                 bundle.putInt("friendsCategory", friendsCategory);
+                bundle.putParcelableArrayList("personal_list", MainFragment.personal_list);
                 navController.navigate(R.id.action_main_to_friendMore, bundle);
             });
         }

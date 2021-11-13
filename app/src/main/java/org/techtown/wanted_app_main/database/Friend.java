@@ -1,13 +1,15 @@
 package org.techtown.wanted_app_main.database;
 
 public class Friend {
+    public Long id;
     public String name;
     public String school;
     public String major;
     public String address;
     public int imgRes;
 
-    public Friend(String name, String school, String major, String address, int imgRes) {
+    public Friend(Long id, String name, String school, String major, String address, int imgRes) {
+        this.id = id;
         this.name = name;
         this.school = school;
         this.major = major;

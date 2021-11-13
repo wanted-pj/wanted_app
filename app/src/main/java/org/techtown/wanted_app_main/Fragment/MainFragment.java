@@ -33,9 +33,9 @@ import org.techtown.wanted_app_main.Adapter.FriendAdapter;
 import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.Friend;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
@@ -56,12 +56,12 @@ public class MainFragment extends Fragment {
     private FriendAdapter friendAdapter = new FriendAdapter();
     private ArrayList<Friend> friendItems = new ArrayList<>();
     Personal another;
-    private ArrayList<Long> friendIds =new ArrayList<>();
+    private ArrayList<Long> friendIds = new ArrayList<>();
     // layout
     private Button btnSchool, btnMajor, btnAddress;
 
     // 가져온 Personal과 posting정보
-    public ArrayList<Personal> personal_list;
+    public static ArrayList<Personal> personal_list;
 
     // category -> 0은 school, 1은 major, 2는 address
     private int friendsCategory = 0;
@@ -283,7 +283,7 @@ public class MainFragment extends Fragment {
                         break;
                 }
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
-                friendItems.add(new Friend(another.nickname, another.school, another.major, another.address, image));
+                friendItems.add(new Friend(another.getId(), another.nickname, another.school, another.major, another.address, image));
                 friendIds.add(another.id);
             }
         }

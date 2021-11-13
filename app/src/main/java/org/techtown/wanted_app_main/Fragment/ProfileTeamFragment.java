@@ -95,7 +95,7 @@ public class  ProfileTeamFragment extends Fragment {
        //이전 프래그먼트에서 받은 team정보 활용
         memberInfo = new ArrayList<>(team.personals);
         for (PersonalDtoInTeam member : memberInfo) {
-            members.add(new Friend(member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
+            members.add(new Friend(member.personalId, member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
         }
         memberAdapter.setFriendList(members);
 

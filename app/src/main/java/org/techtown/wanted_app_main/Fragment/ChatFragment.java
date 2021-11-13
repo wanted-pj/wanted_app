@@ -1,12 +1,9 @@
 package org.techtown.wanted_app_main.Fragment;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,23 +35,18 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.MainActivity;
-import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
+import org.techtown.wanted_app_main.Adapter.ChatAdapter;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.Chat;
 import org.techtown.wanted_app_main.database.Dto.ParticipantInPersonalDto;
 import org.techtown.wanted_app_main.database.Dto.PersonalChatDto;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.Message;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
-import org.techtown.wanted_app_main.database.Room;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChatFragment extends Fragment {

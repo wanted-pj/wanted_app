@@ -1,7 +1,5 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
-import android.annotation.SuppressLint;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.ProfileCareer;
 
 import java.util.ArrayList;
 

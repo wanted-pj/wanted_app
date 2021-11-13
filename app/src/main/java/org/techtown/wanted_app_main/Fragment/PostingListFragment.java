@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -30,14 +29,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
-import org.techtown.wanted_app_main.database.Team;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;

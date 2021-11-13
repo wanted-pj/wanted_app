@@ -1,14 +1,16 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.ChatList;
 
 import java.util.ArrayList;
 
@@ -21,13 +23,13 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(ChatListAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(ChatListAdapter.OnItemClickListener listener) {
         this.listener = listener;
 
     }
 
     public void onItemClick(View view, int position) {
-        if(listener != null)
+        if (listener != null)
             listener.onItemClick(view, position);
     }
 
@@ -46,7 +48,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
         viewHolder.setChatList(chatList);
     }
 
-    public void setChatList(ArrayList<ChatList> arrayList){
+    public void setChatList(ArrayList<ChatList> arrayList) {
         this.chatList = arrayList;
         notifyDataSetChanged();
     }
@@ -72,7 +74,7 @@ public class ChatListAdapter extends RecyclerView.Adapter<ChatListAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
+                    if (listener != null)
                         listener.onItemClick(v, position);
                 }
             });

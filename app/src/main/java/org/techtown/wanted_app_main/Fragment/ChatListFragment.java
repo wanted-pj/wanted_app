@@ -10,7 +10,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,24 +24,21 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.ChatListAdapter;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.ChatList;
 import org.techtown.wanted_app_main.database.Dto.ParticipantInPersonalDto;
 import org.techtown.wanted_app_main.database.Dto.PersonalChatDto;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChatListFragment extends Fragment {
 

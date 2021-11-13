@@ -29,9 +29,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.FriendAdapter;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
-import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
+import org.techtown.wanted_app_main.database.Friend;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.Posting;

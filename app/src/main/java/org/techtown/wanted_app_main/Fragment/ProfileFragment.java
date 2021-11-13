@@ -4,14 +4,10 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.FocusFinder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,21 +37,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.ProfileTeamAdapter;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
 import org.techtown.wanted_app_main.ServerRequest.GetTeamsRequest;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
+import org.techtown.wanted_app_main.database.ProfileTeam;
 import org.techtown.wanted_app_main.database.Team;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -230,9 +223,9 @@ public class ProfileFragment extends Fragment {
             my_earnest = dialog.findViewById(R.id.my_earnest);
             my_teamwork = dialog.findViewById(R.id.my_teamwork);
             my_contribution = dialog.findViewById(R.id.my_contribution);
-            my_earnest.setText(getearnest.toString());
-            my_teamwork.setText(getteamwork.toString());
-            my_contribution.setText(getcontribution.toString());
+            my_earnest.setText(String.format("%.2f", getearnest));
+            my_teamwork.setText(String.format("%.2f", getteamwork));
+            my_contribution.setText(String.format("%.2f", getcontribution));
         });
 
 
@@ -320,6 +313,7 @@ public class ProfileFragment extends Fragment {
                     gender.setText("여");
                 }
                 career.setText(personal.career);
+
                 if (personal.evaluation != null) {
                     getearnest = personal.evaluation.earnest;
                     getteamwork = personal.evaluation.teamwork;

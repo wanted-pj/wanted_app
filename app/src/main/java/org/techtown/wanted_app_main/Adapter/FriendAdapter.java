@@ -1,4 +1,4 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Friend;
 
 import java.util.ArrayList;
 
@@ -28,21 +29,20 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     static FriendAdapter.OnItemClickListener listener;
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(FriendAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(FriendAdapter.OnItemClickListener listener) {
         this.listener = listener;
 
     }
 
     public void onItemClick(View view, int position) {
-        if(listener != null)
+        if (listener != null)
             listener.onItemClick(view, position);
     }
-
-
 
 
     // 뷰타입에 따라 사용할 뷰홀더 리턴
@@ -147,11 +147,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
+                    if (listener != null)
                         listener.onItemClick(v, position);
                 }
             });
-
 
 
         }

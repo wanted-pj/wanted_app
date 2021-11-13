@@ -20,9 +20,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.FriendAdapter;
 import org.techtown.wanted_app_main.Adapter.FriendMoreAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Friend;
+import org.techtown.wanted_app_main.database.OuterApi.OuterData;
+import org.techtown.wanted_app_main.database.Personal;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +40,10 @@ public class FriendMoreFragment extends Fragment {
     private static NavController navController;
     private RecyclerView recyclerViewSchool;
     private FriendMoreAdapter friendMoreAdapter;
+
+    public ArrayList<Personal> personal_list;
     private ArrayList<Friend> allFriends, filteredFriends;
+    private ArrayList<Long> friendIds = new ArrayList<>();
 
     private Button btnSchool, btnMajor, btnAddress;
     private String spinnerString;
@@ -46,9 +53,6 @@ public class FriendMoreFragment extends Fragment {
     private String mySchool;
     private String myMajor;
     private String myAddress;
-
-    // 임시데이터 -> API 오면 지워도 됨
-    private ArrayList<String> allSchool, allMajor, allAddress;
 
     public FriendMoreFragment() {
         // Required empty public constructor
@@ -60,7 +64,15 @@ public class FriendMoreFragment extends Fragment {
         // main에서 전달된 데이터 받기
         if (getArguments() != null) {
             friendsCategory = getArguments().getInt(argParam1);
-//            getArguments().getParcelable("me", Personal);
+            personal_list = getArguments().getParcelableArrayList("personal_list");
+            allFriends = new ArrayList<>();
+            for (Personal personal : personal_list) {
+                if (personal.id == MainActivity.me.id) {
+                    continue;
+                }
+                int image = MainActivity.mainActivity.getResources().getIdentifier(personal.img, "drawable", MainActivity.mainActivity.getPackageName());
+                allFriends.add(new Friend(personal.id, personal.nickname, personal.school, personal.major, personal.address, image));
+            }
         }
     }
 
@@ -70,40 +82,17 @@ public class FriendMoreFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friend_more, container, false);
 
         // 방문한 나 자신 예시 데이터
-        mySchool = "홍익대학교";
-        myMajor = "컴퓨터공학과";
-        myAddress = "시흥시";
-
-        // 학교 예시 데이터
-        allSchool = new ArrayList<>();
-        allSchool.add("수원대학교");
-        allSchool.add("홍익대학교");
-        allSchool.add("덕성여대학교");
-        allSchool.add("경기대학교");
-
-        // 학과 예시 데이터
-        allMajor = new ArrayList<>();
-        allMajor.add("컴퓨터공학과");
-        allMajor.add("경제학과");
-        allMajor.add("경영학과");
-        allMajor.add("수학교육과");
-
-        // 동네 예시 데이터
-        allAddress = new ArrayList<>();
-        allAddress.add("김포시");
-        allAddress.add("수원시");
-        allAddress.add("성남시");
-        allAddress.add("진주시");
-        allAddress.add("시흥시");
+        mySchool = MainActivity.me.school;
+        myMajor = MainActivity.me.major;
+        myAddress = MainActivity.me.address;
 
         // 친구 예시 데이터 -> server에서 모든 Personal DB를 받아야함
-        allFriends = new ArrayList<>();
-        allFriends.add(new Friend("가비", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        allFriends.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        allFriends.add(new Friend("시미즈", "서강대학교", "수학교육과", "김포시", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-        allFriends.add(new Friend("리안", "덕성여자대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-        allFriends.add(new Friend("다니엘", "경기대학교", "경영학과", "청주시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-        allFriends.add(new Friend("스콧", "수원대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("가비", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("시미즈", "서강대학교", "수학교육과", "김포시", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("리안", "덕성여자대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("다니엘", "경기대학교", "경영학과", "청주시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
+//        allFriends.add(new Friend("스콧", "수원대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
 
 
         // 클릭되어진 친구버튼 설정
@@ -185,6 +174,16 @@ public class FriendMoreFragment extends Fragment {
         recyclerViewSchool.setLayoutManager(new GridLayoutManager(getActivity().getApplicationContext(), 2));
         friendMoreAdapter.setFriendList(allFriends);
 
+        //친구 눌렀을 시 프로필페이지로 이동
+        friendMoreAdapter.setOnfriendClicklistener(new FriendMoreAdapter.OnfriendClickListener() {
+            @Override
+            public void onfriendClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("profileId", friendMoreAdapter.friendList.get(position).id);
+                navController.navigate(R.id.action_friend_to_profile, bundle);
+            }
+        });
+
         return view;
     }
 
@@ -210,13 +209,13 @@ public class FriendMoreFragment extends Fragment {
 
         switch (index) {
             case 0:
-                spinnerArrayList = allSchool;
+                spinnerArrayList = (ArrayList<String>) OuterData.schoolList;
                 break;
             case 1:
-                spinnerArrayList = allMajor;
+                spinnerArrayList = (ArrayList<String>) OuterData.majorList;
                 break;
             case 2:
-                spinnerArrayList = allAddress;
+                spinnerArrayList = (ArrayList<String>) OuterData.regionList;
                 break;
         }
 
@@ -233,13 +232,13 @@ public class FriendMoreFragment extends Fragment {
         int index = 0;
         switch (friendsCategory) {
             case 0:
-                index = allSchool.indexOf(mySchool);
+                index = OuterData.schoolList.indexOf(mySchool);
                 break;
             case 1:
-                index = allMajor.indexOf(myMajor);
+                index = OuterData.majorList.indexOf(myMajor);
                 break;
             case 2:
-                index = allAddress.indexOf(myAddress);
+                index = OuterData.regionList.indexOf(myAddress);
                 break;
         }
         friendsSpinner.setSelection(index);

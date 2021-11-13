@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.ViewHolder> {
 
-    private ArrayList<Friend> friendList = new ArrayList<Friend>();
+    public ArrayList<Friend> friendList = new ArrayList<Friend>();
     static FriendMoreAdapter.OnItemClickListener listener;
     static FriendMoreAdapter.OnfriendClickListener listener1;
     static Boolean can = false;

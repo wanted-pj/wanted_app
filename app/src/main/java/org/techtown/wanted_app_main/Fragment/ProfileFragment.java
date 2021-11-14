@@ -325,8 +325,8 @@ public class ProfileFragment extends Fragment {
 
                 personal = gson.fromJson(changeString, listType);
 
-                int image = getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName());
-                img.setImageResource(image);
+               int image = getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName());
+               img.setImageResource(image);
                 nick.setText(personal.nickname);
                 school.setText(personal.school);
                 major.setText(personal.major);

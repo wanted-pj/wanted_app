@@ -134,7 +134,7 @@ public class  ProfileTeamFragment extends Fragment {
             public void onfriendClick(View view, int position) {
 
                 Bundle bundle = new Bundle();
-                bundle.putLong("id",memberInfo.get(position).personalId);
+                bundle.putLong("profileId",memberInfo.get(position).personalId);
                 navController.navigate(R.id.action_profile_team_to_profile, bundle);
             }
         });

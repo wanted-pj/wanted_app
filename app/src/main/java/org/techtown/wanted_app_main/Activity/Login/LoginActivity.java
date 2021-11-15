@@ -1,14 +1,10 @@
 package org.techtown.wanted_app_main.Activity.Login;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -168,7 +164,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (Id.length() <= 0) { //아이디 미입력시
                     dialog = new Dialog(LoginActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.id_dialog);
+                    dialog.setContentView(R.layout.dialog_id);
                     dialog.show();
                     Button cancel1 = dialog.findViewById(R.id.btnCancel5);
                     cancel1.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (Pwd.length() <= 0) { //비번 미입력시
                     dialog = new Dialog(LoginActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.pwd_dialog);
+                    dialog.setContentView(R.layout.dialog_pwd);
                     dialog.show();
                     Button cancel = dialog.findViewById(R.id.btnCancel5);
                     cancel.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +223,7 @@ public class LoginActivity extends AppCompatActivity {
                             if (check == false) { //아이디 비번 정확히 입력x ->재입력하라는 dialog 창이 뜸
                                 dialog = new Dialog(LoginActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog.setContentView(R.layout.incorrect_id_pwd_dialog);
+                                dialog.setContentView(R.layout.dialog_incorrect);
                                 dialog.show();
                                 Button cancel = dialog.findViewById(R.id.btnCancel4);
                                 cancel.setOnClickListener(new View.OnClickListener() {

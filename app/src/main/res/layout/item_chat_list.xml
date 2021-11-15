@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    // 챗
+    <!--챗-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sender"
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        // 이미지
+        <!--이미지-->
         <ImageView
             android:id="@+id/sender_img"
             android:layout_width="50dp"
@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toStartOf="@id/sender_txt"
             android:layout_marginRight="10dp"/>
 
-        // 텍스트
+        <!--텍스트-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/sender_txt"
             android:layout_width="0dp"
@@ -37,7 +37,7 @@
             app:layout_constraintStart_toEndOf="@id/sender_img"
             app:layout_constraintEnd_toEndOf="parent">
 
-            // 닉네임
+            <!--닉네임-->
             <TextView
                 android:id="@+id/sender_txt_nickname"
                 android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/sender_txt_content"/>
 
-            // 내용
+            <!--내용-->
             <TextView
                 android:id="@+id/sender_txt_content"
                 android:layout_width="wrap_content"
@@ -69,7 +69,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    // 챗 구분선
+    <!--챗 구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"

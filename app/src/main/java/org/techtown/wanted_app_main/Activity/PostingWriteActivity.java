@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -15,42 +14,23 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
-import org.techtown.wanted_app_main.Activity.Login.LoginRegisterActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,7 +150,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                                             System.out.println("글이 수정됨");
                                             dialog = new Dialog(PostingWriteActivity.this);
                                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                            dialog.setContentView(R.layout.register_dialog);
+                                            dialog.setContentView(R.layout.dialog_register);
                                             TextView dialogText = dialog.findViewById(R.id.text);
                                             dialogText.setText("글이 수정되었습니다!");
                                             dialog.show();
@@ -208,7 +188,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                                         public void onResponse(JSONObject obj) {
                                             dialog = new Dialog(PostingWriteActivity.this);
                                             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                            dialog.setContentView(R.layout.register_dialog);
+                                            dialog.setContentView(R.layout.dialog_register);
                                             TextView dialogText = dialog.findViewById(R.id.text);
                                             dialogText.setText("글이 등록되었습니다!");
                                             dialog.show();
@@ -305,7 +285,7 @@ public class PostingWriteActivity extends AppCompatActivity {
     public void showCategoryWithChangeText(String text) {
         dialog = new Dialog(PostingWriteActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.register_dialog);
+        dialog.setContentView(R.layout.dialog_register);
         TextView dialogText = dialog.findViewById(R.id.text);
         dialogText.setText(text);
         dialog.show();

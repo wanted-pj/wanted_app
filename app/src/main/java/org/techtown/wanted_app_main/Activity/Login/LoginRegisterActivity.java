@@ -35,22 +35,11 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetMajorRegionSchoolRequest;
-import org.techtown.wanted_app_main.database.OuterApi.Major;
-import org.techtown.wanted_app_main.database.OuterApi.Region;
-import org.techtown.wanted_app_main.database.OuterApi.School;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LoginRegisterActivity extends AppCompatActivity {
@@ -102,7 +91,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         btnSchoolSearch = findViewById(R.id.register_school_search);
         btnSchoolSearch.setOnClickListener(v -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
-            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register,null);
+            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search,null);
             alert.setView(dialogSchool);
 
             AlertDialog alertDialog = alert.create();
@@ -185,7 +174,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0)) {
                     dialog = new Dialog(LoginRegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.register_dialog);
+                    dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
                     Button cancel1 = dialog.findViewById(R.id.btnCancel5);
                     cancel1.setOnClickListener(new View.OnClickListener() {

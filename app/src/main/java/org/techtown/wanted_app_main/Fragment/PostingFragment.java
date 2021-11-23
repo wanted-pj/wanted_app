@@ -10,8 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +41,8 @@ import java.util.Map;
 
 public class PostingFragment extends Fragment {
 
+    private static NavController navController;
+
     // 이전 프래그먼트에서 Posting 객체 받기
     private static Posting posting;
 
@@ -61,6 +66,12 @@ public class PostingFragment extends Fragment {
         System.out.println("출력: " + posting);
         itsMe = (posting.personalId == MainActivity.me.getId());
         postingDetailAdapter = new PostingDetailAdapter(itsMe, posting.postingId, MainActivity.me.getId());
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
     }
 
     @Override
@@ -235,6 +246,19 @@ public class PostingFragment extends Fragment {
         postingDetailCategory.setText(posting.category);
         int image = getResources().getIdentifier(posting.img, "drawable", MainActivity.mainActivity.getPackageName());
         postingDetailImage.setImageResource(image);
+
+
+        Button.OnClickListener onClickListener = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("profileId", posting.personalId);
+                navController.navigate(R.id.action_posting_to_profile, bundle);
+            }
+        };
+
+        postingDetailImage.setOnClickListener(onClickListener);
+        postingDetailName.setOnClickListener(onClickListener);
 
 
 //        connectItems.add(new Connect("시미즈" + " ", profile_basic1", "drawable", getContext().getPackageName())));

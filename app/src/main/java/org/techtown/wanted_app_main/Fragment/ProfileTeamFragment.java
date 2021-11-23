@@ -114,9 +114,8 @@ public class  ProfileTeamFragment extends Fragment {
         });
 
         // 별점 매기는 페이지로 이동
-        TextView goStar = view.findViewById(R.id.profile_team_go_star);
+        TextView startext = view.findViewById(R.id.profile_team_startext);
         if(me== MainActivity.me.id){
-            goStar.setText("별점을 매기려면 잠시동안 친구를 꾹 누르세요.");
             memberAdapter.setOnItemClicklistener(new FriendMoreAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -125,7 +124,7 @@ public class  ProfileTeamFragment extends Fragment {
                 }
             });
         }else{
-            goStar.setVisibility(View.GONE);
+            startext.setVisibility(View.GONE);
         }
 
         //친구 눌렀을 시 프로필페이지로 이동

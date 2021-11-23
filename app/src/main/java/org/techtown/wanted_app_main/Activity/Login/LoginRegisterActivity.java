@@ -217,7 +217,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
-                    Button cancel1 = dialog.findViewById(R.id.btnCancel5);
+                    Button cancel1 = dialog.findViewById(R.id.btnCancel);
                     cancel1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {

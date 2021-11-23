@@ -1,6 +1,7 @@
 package org.techtown.wanted_app_main.Adapter;
 //
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,11 +25,25 @@ import org.techtown.wanted_app_main.database.Connect;
 import java.util.ArrayList;
 
 public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdapter.ViewHolder> {
-    static ArrayList<Connect> items = new ArrayList<>();
-
     static boolean itsMe; // 게시글 주인과 지금 로그인한 사람이 일치하는지
     static Long postingId;
     static Long loginMe;
+
+    static ArrayList<Connect> items = new ArrayList<>();
+    static PostingDetailAdapter.OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClicklistener(PostingDetailAdapter.OnItemClickListener listener){
+        this.listener = listener;
+    }
+
+    public void onItemClick(View view, int position) {
+        if(listener != null)
+            listener.onItemClick(view, position);
+    }
 
     public PostingDetailAdapter(boolean itsMe, Long postingId, Long loginMe) {
         this.itsMe = itsMe;
@@ -44,7 +59,6 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
 
         return new ViewHolder(itemView);
     }
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
@@ -81,7 +95,6 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
             queue.add(new PutConnectResultRequest(connect.id, connectResponseListener));
 
         });
-
         viewHolder.setItem(connect);
     }
 
@@ -121,6 +134,26 @@ public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdap
             tv_writer = itemView.findViewById(R.id.board_detail_request_writer);
             iv = itemView.findViewById(R.id.board_detail_request_image);
             accept_button = itemView.findViewById(R.id.board_detail_request_btn);
+
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if (listener != null)
+                        listener.onItemClick(v, position);
+                }
+            };
+
+            tv_writer.setOnClickListener(onClickListener);
+            iv.setOnClickListener(onClickListener);
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int position = getAdapterPosition();
+//                    if (listener != null)
+//                        listener.onItemClick(v, position);
+//                }
+//            });
         }
 
         public void setItem(Connect connect) {

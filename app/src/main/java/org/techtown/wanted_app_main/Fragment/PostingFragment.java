@@ -2,6 +2,7 @@ package org.techtown.wanted_app_main.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +58,7 @@ public class PostingFragment extends Fragment {
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
     private ImageView postingDetailImage, edit_img;
+    private View writer_layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -248,18 +250,25 @@ public class PostingFragment extends Fragment {
         postingDetailImage.setImageResource(image);
 
 
-        Button.OnClickListener onClickListener = new Button.OnClickListener() {
+        writer_layout = view.findViewById(R.id.writer_layout);
+        writer_layout.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Bundle bundle = new Bundle();
+                     bundle.putLong("profileId", posting.personalId);
+                     navController.navigate(R.id.action_posting_to_profile, bundle);
+                 }
+            }
+        );
+
+        postingDetailAdapter.setOnItemClicklistener(new PostingDetailAdapter.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("profileId", posting.personalId);
+                bundle.putLong("profileId", connectItems.get(position).senderId);
                 navController.navigate(R.id.action_posting_to_profile, bundle);
             }
-        };
-
-        postingDetailImage.setOnClickListener(onClickListener);
-        postingDetailName.setOnClickListener(onClickListener);
-
+        });
 
 //        connectItems.add(new Connect("시미즈" + " ", profile_basic1", "drawable", getContext().getPackageName())));
 //        connectItems.add(new Connect("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));

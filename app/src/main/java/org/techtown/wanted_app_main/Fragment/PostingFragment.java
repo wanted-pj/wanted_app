@@ -105,7 +105,6 @@ public class PostingFragment extends Fragment {
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject obj) {
-                                System.out.println("여기2");
                                 posting.checkRecruiting = !posting.checkRecruiting;
                                 if (posting.checkRecruiting) {
                                     request.setText("모집중");
@@ -157,52 +156,57 @@ public class PostingFragment extends Fragment {
                 request.setText("신청완료");
                 request.setEnabled(false);
             } else {
-                request.setText("참가신청");
-                // 참가 신청 버튼 클릭, Connect 생성되야함
-                request.setOnClickListener(v -> {
-                    // 서버 호출
-                    String url = "http://13.125.214.178:8080/connect/" + posting.postingId + "/" + MainActivity.me.id;
+                if (!posting.checkRecruiting) { // 모집중이 아니면
+                    request.setText("모집중이 아닙니다");
+                    request.setEnabled(false);
+                } else{
+                    request.setText("참가신청");
+                    // 참가 신청 버튼 클릭, Connect 생성되야함
+                    request.setOnClickListener(v -> {
+                        // 서버 호출
+                        String url = "http://13.125.214.178:8080/connect/" + posting.postingId + "/" + MainActivity.me.id;
 
-                    Map map = new HashMap();
-                    JSONObject params = new JSONObject(map);
+                        Map map = new HashMap();
+                        JSONObject params = new JSONObject(map);
 
-                    System.out.println("여기1");
-                    JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject obj) {
-                                    try {
-                                        Long id = obj.getLong("id");
-                                        Long senderId = obj.getLong("senderId");
-                                        String nickname = obj.getString("nickname");
-                                        String img = obj.getString("img");
-                                        Boolean result = obj.getBoolean("result");
-                                        Connect connect = new Connect(id, senderId, nickname, img, result);
-                                        connectItems.add(connect);
-                                        postingDetailAdapter.setItems(connectItems);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                        System.out.println("여기1");
+                        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject obj) {
+                                        try {
+                                            Long id = obj.getLong("id");
+                                            Long senderId = obj.getLong("senderId");
+                                            String nickname = obj.getString("nickname");
+                                            String img = obj.getString("img");
+                                            Boolean result = obj.getBoolean("result");
+                                            Connect connect = new Connect(id, senderId, nickname, img, result);
+                                            connectItems.add(connect);
+                                            postingDetailAdapter.setItems(connectItems);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        System.out.println("커넥트 성공");
+                                        request.setText("신청완료");
+                                        request.setEnabled(false);
                                     }
-                                    System.out.println("커넥트 성공");
-                                    request.setText("신청완료");
-                                    request.setEnabled(false);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    System.out.println("실패");
-                                    Log.e("posting_fix_Error", error.getMessage());
-                                }
-                            }) {
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=UTF-8";
-                        }
-                    };
-                    RequestQueue queue = Volley.newRequestQueue(getContext());
-                    queue.add(objectRequest);
-                });
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        System.out.println("실패");
+                                        Log.e("posting_fix_Error", error.getMessage());
+                                    }
+                                }) {
+                            @Override
+                            public String getBodyContentType() {
+                                return "application/json; charset=UTF-8";
+                            }
+                        };
+                        RequestQueue queue = Volley.newRequestQueue(getContext());
+                        queue.add(objectRequest);
+                    });
+                }
             }
         }
 

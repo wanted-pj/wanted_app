@@ -226,7 +226,8 @@ public class PostingFragment extends Fragment {
         postingDetailImage = view.findViewById(R.id.board_detail_image);
 
         // 데이터 채우기
-        postingDetailDate.setText(posting.postingTime);
+        String date = posting.postingTime.substring(0, 10) + " " + posting.postingTime.substring(11,19);
+        postingDetailDate.setText(date);
         postingDetailTitle.setText(posting.title);
         postingDetailTeam.setText(posting.teamName);
         postingDetailName.setText(posting.nickname);

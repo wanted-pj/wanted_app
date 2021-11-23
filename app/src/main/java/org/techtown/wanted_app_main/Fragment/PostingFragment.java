@@ -2,6 +2,7 @@ package org.techtown.wanted_app_main.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,6 +42,8 @@ import java.util.Map;
 
 public class PostingFragment extends Fragment {
 
+    private static NavController navController;
+
     // 이전 프래그먼트에서 Posting 객체 받기
     private static Posting posting;
 
@@ -52,6 +58,7 @@ public class PostingFragment extends Fragment {
     // 뷰
     private TextView postingDetailDate, postingDetailTitle, postingDetailTeam, postingDetailName, postingDetailContent, postingDetailCategory;
     private ImageView postingDetailImage, edit_img;
+    private View writer_layout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +68,12 @@ public class PostingFragment extends Fragment {
         System.out.println("출력: " + posting);
         itsMe = (posting.personalId == MainActivity.me.getId());
         postingDetailAdapter = new PostingDetailAdapter(itsMe, posting.postingId, MainActivity.me.getId());
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
     }
 
     @Override
@@ -226,7 +239,8 @@ public class PostingFragment extends Fragment {
         postingDetailImage = view.findViewById(R.id.board_detail_image);
 
         // 데이터 채우기
-        postingDetailDate.setText(posting.postingTime);
+        String date = posting.postingTime.substring(0, 10) + " " + posting.postingTime.substring(11,19);
+        postingDetailDate.setText(date);
         postingDetailTitle.setText(posting.title);
         postingDetailTeam.setText(posting.teamName);
         postingDetailName.setText(posting.nickname);
@@ -235,6 +249,26 @@ public class PostingFragment extends Fragment {
         int image = getResources().getIdentifier(posting.img, "drawable", MainActivity.mainActivity.getPackageName());
         postingDetailImage.setImageResource(image);
 
+
+        writer_layout = view.findViewById(R.id.writer_layout);
+        writer_layout.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Bundle bundle = new Bundle();
+                     bundle.putLong("profileId", posting.personalId);
+                     navController.navigate(R.id.action_posting_to_profile, bundle);
+                 }
+            }
+        );
+
+        postingDetailAdapter.setOnItemClicklistener(new PostingDetailAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("profileId", connectItems.get(position).senderId);
+                navController.navigate(R.id.action_posting_to_profile, bundle);
+            }
+        });
 
 //        connectItems.add(new Connect("시미즈" + " ", profile_basic1", "drawable", getContext().getPackageName())));
 //        connectItems.add(new Connect("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));

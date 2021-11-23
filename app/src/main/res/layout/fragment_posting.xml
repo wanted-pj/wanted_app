@@ -121,29 +121,14 @@
                         android:layout_marginRight="10dp"
                         android:src="@drawable/profile_basic3" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/board_detail_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/board_detail_team"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:letterSpacing="-0.05"
-                            android:text="원티드 피우다팀"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-
-                        <TextView
-                            android:id="@+id/board_detail_name"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:letterSpacing="-0.05"
-                            android:text="시미즈"
-                            android:textColor="@color/black"
-                            android:textSize="12dp" />
-                    </LinearLayout>
+                        android:letterSpacing="-0.05"
+                        android:text="시미즈"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -157,16 +142,57 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/board_detail_content"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:letterSpacing="-0.05"
-                    android:text="안녕하세요~ 2021년 12월에 하는 앱 아이디어 공모전에 참여하실 안드로이드 개발자 구합니다. 현재 서버개발자 2명있고, 프로젝트 경험있으면 좋겠지만 없어도 같이 만들어가실 분이면 좋겠습니다! 자세한 사항은 쪽지 부탁드립니다."
-                    android:textColor="@color/black"
-                    android:textSize="14dp" />
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="팀명"
+                        android:textSize="14dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:letterSpacing="-0.05"/>
+
+                    <TextView
+                        android:id="@+id/board_detail_team"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="-0.05"
+                        android:text="원티드 피우다팀"
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:text="내용"
+                        android:textSize="14dp"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:letterSpacing="-0.05"/>
+
+                    <TextView
+                        android:id="@+id/board_detail_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:letterSpacing="-0.05"
+                        android:text="안녕하세요~ 2021년 12월에 하는 앱 아이디어 공모전에 참여하실 안드로이드 개발자 구합니다. 현재 서버개발자 2명있고, 프로젝트 경험있으면 좋겠지만 없어도 같이 만들어가실 분이면 좋겠습니다! 자세한 사항은 쪽지 부탁드립니다."
+                        android:textColor="@color/black"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

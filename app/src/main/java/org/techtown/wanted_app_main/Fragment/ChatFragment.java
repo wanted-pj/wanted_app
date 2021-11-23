@@ -10,8 +10,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,6 +54,8 @@ import java.util.Map;
 
 public class ChatFragment extends Fragment {
 
+    private static NavController navController;
+
     private RecyclerView rvChat;
     private ChatAdapter chatAdapter;
     private ArrayList<Chat> chatItems;
@@ -63,9 +68,16 @@ public class ChatFragment extends Fragment {
     private ArrayList<ParticipantInPersonalDto> participants;
 
     private TextView chat_sender;
+    private Button chat_arrow;
     private EditText chat_edit;
     private Button chat_btn;
     private ImageView refresh;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,11 +98,24 @@ public class ChatFragment extends Fragment {
         }
 
         chat_sender = view.findViewById(R.id.chat_sender);
+        chat_arrow = view.findViewById(R.id.chat_arrow);
         chat_edit = view.findViewById(R.id.chat_edit);
         chat_btn = view.findViewById(R.id.chat_btn);
         refresh = view.findViewById(R.id.refresh);
 
         chat_sender.setText(dto.nickname);
+
+        Button.OnClickListener onClickListener = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("profileId", dto.theOtherPersonalId);
+                navController.navigate(R.id.action_chat_to_profile, bundle);
+            }
+        };
+
+        chat_sender.setOnClickListener(onClickListener);
+        chat_arrow.setOnClickListener(onClickListener);
 
         chatAdapter = new ChatAdapter();
 

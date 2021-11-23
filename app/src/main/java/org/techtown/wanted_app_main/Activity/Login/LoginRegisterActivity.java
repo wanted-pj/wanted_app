@@ -1,6 +1,8 @@
 package org.techtown.wanted_app_main.Activity.Login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -35,11 +37,26 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
+import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.OuterApi.OuterData;
+import org.techtown.wanted_app_main.database.OuterApi.School;
+import org.techtown.wanted_app_main.database.Personal;
+import org.techtown.wanted_app_main.database.Posting;
 
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginRegisterActivity extends AppCompatActivity {
@@ -71,6 +88,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
     Button post_person;
     //Dialog
     Dialog dialog;
+    //학교
+    EditText et_school;
+    //학과
+    EditText et_major;
 
     Button btnSchoolSearch, btnMajorSearch;
 
@@ -87,15 +108,27 @@ public class LoginRegisterActivity extends AppCompatActivity {
         spinner_age = findViewById(R.id.register_age_spinner);
         setSpinner("age");
 
+        et_school = findViewById(R.id.register_school);
 
         btnSchoolSearch = findViewById(R.id.register_school_search);
         btnSchoolSearch.setOnClickListener(v -> {
+
             AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
             View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search,null);
             alert.setView(dialogSchool);
 
             AlertDialog alertDialog = alert.create();
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            RecyclerView recyclerView = alertDialog.findViewById(R.id.recyclerView_search);
+
+//            PostingAdapter postingAdapter = new PostingAdapter();
+//            recyclerView.setAdapter(postingAdapter);
+//            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+
+//            for(String school : OuterData.schoolList) {
+//                Items.add();
+//            }
+
             alertDialog.show();
 
             EditText input = (EditText)dialogSchool.findViewById(R.id.search_school_edittext);
@@ -104,9 +137,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
             btnSearchDB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // DB 검색작업
+//                    Items.clear();  //기존 리싸이클러뷰 초기화
+                    String temp = input.getText().toString();
+                    for(String school : OuterData.schoolList) {
+                      if(school.contains(temp)) {
+//                            Items.add();
+                      }
+                    }
                 }
             });
+
+            // + 리싸이클러뷰에서 하나의 뷰 클릭 시 해당 정보를 기존 LoginRegisterActicity -> (et_school) 칸 변경
         });
 
 
@@ -176,7 +217,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
-                    Button cancel1 = dialog.findViewById(R.id.btnCancel5);
+                    Button cancel1 = dialog.findViewById(R.id.btnCancel);
                     cancel1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -417,9 +458,5 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
-
-
 }

@@ -164,10 +164,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (Id.length() <= 0) { //아이디 미입력시
                     dialog = new Dialog(LoginActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_id);
+                    dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
-                    Button cancel1 = dialog.findViewById(R.id.btnCancel5);
-                    cancel1.setOnClickListener(new View.OnClickListener() {
+                    TextView textView = dialog.findViewById(R.id.text);
+                    textView.setText("아이디를 입력해주세요.");
+                    Button cancel = dialog.findViewById(R.id.btnCancel);
+                    cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
@@ -176,9 +178,11 @@ public class LoginActivity extends AppCompatActivity {
                 } else if (Pwd.length() <= 0) { //비번 미입력시
                     dialog = new Dialog(LoginActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_pwd);
+                    dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
-                    Button cancel = dialog.findViewById(R.id.btnCancel5);
+                    TextView textView = dialog.findViewById(R.id.text);
+                    textView.setText("비밀번호를 입력해주세요.");
+                    Button cancel = dialog.findViewById(R.id.btnCancel);
                     cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -223,9 +227,11 @@ public class LoginActivity extends AppCompatActivity {
                             if (check == false) { //아이디 비번 정확히 입력x ->재입력하라는 dialog 창이 뜸
                                 dialog = new Dialog(LoginActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog.setContentView(R.layout.dialog_incorrect);
+                                dialog.setContentView(R.layout.dialog_register);
                                 dialog.show();
-                                Button cancel = dialog.findViewById(R.id.btnCancel4);
+                                TextView textView = dialog.findViewById(R.id.text);
+                                textView.setText("아이디나 비밀번호를\n정확히 입력해주세요.");
+                                Button cancel = dialog.findViewById(R.id.btnCancel);
                                 cancel.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

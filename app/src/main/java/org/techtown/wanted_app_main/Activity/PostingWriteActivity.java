@@ -154,7 +154,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                                             TextView dialogText = dialog.findViewById(R.id.text);
                                             dialogText.setText("글이 수정되었습니다!");
                                             dialog.show();
-                                            Button cancel = dialog.findViewById(R.id.btnCancel5);
+                                            Button cancel = dialog.findViewById(R.id.btnCancel);
                                             cancel.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
@@ -192,7 +192,7 @@ public class PostingWriteActivity extends AppCompatActivity {
                                             TextView dialogText = dialog.findViewById(R.id.text);
                                             dialogText.setText("글이 등록되었습니다!");
                                             dialog.show();
-                                            Button cancel = dialog.findViewById(R.id.btnCancel5);
+                                            Button cancel = dialog.findViewById(R.id.btnCancel);
                                             cancel.setOnClickListener(new View.OnClickListener() {
                                                 @Override
                                                 public void onClick(View view) {
@@ -289,7 +289,7 @@ public class PostingWriteActivity extends AppCompatActivity {
         TextView dialogText = dialog.findViewById(R.id.text);
         dialogText.setText(text);
         dialog.show();
-        Button cancel = dialog.findViewById(R.id.btnCancel5);
+        Button cancel = dialog.findViewById(R.id.btnCancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

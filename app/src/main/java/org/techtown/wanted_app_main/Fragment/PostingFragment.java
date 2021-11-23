@@ -107,12 +107,10 @@ public class PostingFragment extends Fragment {
                 Map map = new HashMap();
                 map.put("checkRecruiting", !posting.checkRecruiting);
                 JSONObject params = new JSONObject(map);
-                System.out.println("여기1");
                 JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, params,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject obj) {
-                                System.out.println("여기2");
                                 posting.checkRecruiting = !posting.checkRecruiting;
                                 if (posting.checkRecruiting) {
                                     request.setText("모집중");
@@ -173,7 +171,6 @@ public class PostingFragment extends Fragment {
                     Map map = new HashMap();
                     JSONObject params = new JSONObject(map);
 
-                    System.out.println("여기1");
                     JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -229,7 +226,8 @@ public class PostingFragment extends Fragment {
         postingDetailImage = view.findViewById(R.id.board_detail_image);
 
         // 데이터 채우기
-        postingDetailDate.setText(posting.postingTime);
+        String date = posting.postingTime.substring(0, 10) + " " + posting.postingTime.substring(11,19);
+        postingDetailDate.setText(date);
         postingDetailTitle.setText(posting.title);
         postingDetailTeam.setText(posting.teamName);
         postingDetailName.setText(posting.nickname);

@@ -1,4 +1,4 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,26 +10,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Friend;
 
 import java.util.ArrayList;
 
 public class FriendMoreAdapter extends RecyclerView.Adapter<FriendMoreAdapter.ViewHolder> {
 
-    private ArrayList<Friend> friendList = new ArrayList<Friend>();
+    public ArrayList<Friend> friendList = new ArrayList<Friend>();
     static FriendMoreAdapter.OnItemClickListener listener;
     static FriendMoreAdapter.OnfriendClickListener listener1;
-static Boolean can=false;
+    static Boolean can = false;
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(FriendMoreAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(FriendMoreAdapter.OnItemClickListener listener) {
         this.listener = listener;
 
     }
 
     public void onItemClick(View view, int position) {
-        if(listener != null)
+        if (listener != null)
             listener.onItemClick(view, position);
     }
 
@@ -37,15 +39,16 @@ static Boolean can=false;
         void onfriendClick(View view, int position);
     }
 
-    public void setOnfriendClicklistener(FriendMoreAdapter.OnfriendClickListener listener1){
+    public void setOnfriendClicklistener(FriendMoreAdapter.OnfriendClickListener listener1) {
         this.listener1 = listener1;
 
     }
 
     public void onfriendClick(View view, int position) {
-        if(listener1 != null)
+        if (listener1 != null)
             listener1.onfriendClick(view, position);
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -61,7 +64,7 @@ static Boolean can=false;
         viewHolder.setFriend(friend);
     }
 
-    public void setFriendList(ArrayList<Friend> arrayList){
+    public void setFriendList(ArrayList<Friend> arrayList) {
         this.friendList = arrayList;
         notifyDataSetChanged();
     }
@@ -91,7 +94,7 @@ static Boolean can=false;
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener1 != null)
+                    if (listener1 != null)
                         listener1.onfriendClick(v, position);
                 }
             });
@@ -99,7 +102,7 @@ static Boolean can=false;
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 public boolean onLongClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
+                    if (listener != null)
                         listener.onItemClick(v, position);
                     return false;
                 }

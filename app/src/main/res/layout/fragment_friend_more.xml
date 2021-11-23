@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".Fragment.MainFragment">
 
-    // 친구탭 타이틀
+    <!--친구탭 타이틀-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -20,7 +20,7 @@
         android:layout_marginBottom="5dp"
         android:paddingLeft="20dp"/>
 
-    // 친구탭 구분선
+    <!--친구탭 구분선-->
     <View
         android:layout_width="match_parent"
         android:layout_height="0.8dp"
@@ -91,8 +91,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp" />
 
-            // Footer
-
+            <!--Footer-->
             <LinearLayout
                 android:id="@+id/footer"
                 android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +13,9 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.techtown.wanted_app_main.Fragment.MainFragment;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Friend;
 
 import java.util.ArrayList;
 
@@ -28,21 +30,20 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
 
     static FriendAdapter.OnItemClickListener listener;
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(FriendAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(FriendAdapter.OnItemClickListener listener) {
         this.listener = listener;
 
     }
 
     public void onItemClick(View view, int position) {
-        if(listener != null)
+        if (listener != null)
             listener.onItemClick(view, position);
     }
-
-
 
 
     // 뷰타입에 따라 사용할 뷰홀더 리턴
@@ -121,6 +122,7 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             footerView.setOnClickListener(view1 -> {
                 Bundle bundle = new Bundle();
                 bundle.putInt("friendsCategory", friendsCategory);
+                bundle.putParcelableArrayList("personal_list", MainFragment.personal_list);
                 navController.navigate(R.id.action_main_to_friendMore, bundle);
             });
         }
@@ -147,11 +149,10 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
+                    if (listener != null)
                         listener.onItemClick(v, position);
                 }
             });
-
 
 
         }

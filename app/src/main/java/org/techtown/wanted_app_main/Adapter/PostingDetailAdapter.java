@@ -1,4 +1,4 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 //
 
 import android.view.LayoutInflater;
@@ -11,30 +11,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.PostMakeTeamRequest;
 import org.techtown.wanted_app_main.ServerRequest.PutConnectResultRequest;
 import org.techtown.wanted_app_main.ServerRequest.PutJoinTeamRequest;
 import org.techtown.wanted_app_main.database.Connect;
-import org.techtown.wanted_app_main.database.OuterApi.School;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 public class PostingDetailAdapter extends RecyclerView.Adapter<PostingDetailAdapter.ViewHolder> {
     static ArrayList<Connect> items = new ArrayList<>();

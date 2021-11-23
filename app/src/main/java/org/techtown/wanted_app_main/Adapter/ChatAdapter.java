@@ -1,6 +1,5 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Chat;
 
 import java.util.ArrayList;
 
-public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public final int TYPE_SENDER = 0;
     public final int TYPE_RECEIVER = 1;
@@ -27,17 +27,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         if (viewType == TYPE_SENDER) {
             View view = inflater.inflate(R.layout.item_chat_sender, parent, false);
             return new SenderViewHolder(view);
-        } else if (viewType == TYPE_RECEIVER){
+        } else if (viewType == TYPE_RECEIVER) {
             View view = inflater.inflate(R.layout.item_chat_receiver, parent, false);
             return new ReceiverViewHolder(view);
-        }
-        else
+        } else
             return null;
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof SenderViewHolder){
+        if (holder instanceof SenderViewHolder) {
             SenderViewHolder itemViewHolder = (SenderViewHolder) holder;
             Chat chat = chats.get(position);
             itemViewHolder.setChat(chat);
@@ -48,7 +47,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    public void setChats(ArrayList<Chat> arrayList){
+    public void setChats(ArrayList<Chat> arrayList) {
         this.chats = arrayList;
         notifyDataSetChanged();
     }
@@ -63,7 +62,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return chats.get(position).getType();
     }
 
-    public class SenderViewHolder extends RecyclerView.ViewHolder{
+    public class SenderViewHolder extends RecyclerView.ViewHolder {
         TextView tv_content;
         TextView tv_time;
 
@@ -79,7 +78,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         }
     }
 
-    public class ReceiverViewHolder extends RecyclerView.ViewHolder{
+    public class ReceiverViewHolder extends RecyclerView.ViewHolder {
         TextView tv_content;
         TextView tv_time;
 

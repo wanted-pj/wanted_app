@@ -1,12 +1,10 @@
 package org.techtown.wanted_app_main.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -32,20 +29,14 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
-import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
+import org.techtown.wanted_app_main.Adapter.FriendMoreAdapter;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.database.Connect;
 import org.techtown.wanted_app_main.database.Dto.PersonalDtoInTeam;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.Friend;
 import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
 import org.techtown.wanted_app_main.database.Team;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
-import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
-import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
 
 public class  ProfileTeamFragment extends Fragment {
     //팀이름
@@ -104,7 +95,7 @@ public class  ProfileTeamFragment extends Fragment {
        //이전 프래그먼트에서 받은 team정보 활용
         memberInfo = new ArrayList<>(team.personals);
         for (PersonalDtoInTeam member : memberInfo) {
-            members.add(new Friend(member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
+            members.add(new Friend(member.personalId, member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
         }
         memberAdapter.setFriendList(members);
 
@@ -143,7 +134,7 @@ public class  ProfileTeamFragment extends Fragment {
             public void onfriendClick(View view, int position) {
 
                 Bundle bundle = new Bundle();
-                bundle.putLong("id",memberInfo.get(position).personalId);
+                bundle.putLong("profileId",memberInfo.get(position).personalId);
                 navController.navigate(R.id.action_profile_team_to_profile, bundle);
             }
         });
@@ -151,19 +142,18 @@ public class  ProfileTeamFragment extends Fragment {
     }
 
     public void deleteTeam(){
-      /*  RequestQueue requestQueue;
+        RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getContext().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
-        String url = "http://13.125.214.178:8080/team/"+team.id;
+
+        String url = "http://13.125.214.178:8080/team/"+team.teamId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Bundle bundle1 = new Bundle();
-                bundle1.putString("btngoProfile", "test");
-                navController.navigate(R.id.action_profile_team_to_profile, bundle1);
+                navController.navigate(R.id.action_profile_team_to_profile);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -171,7 +161,7 @@ public class  ProfileTeamFragment extends Fragment {
             }
         });
 
-        requestQueue.add(stringRequest);*/
+        requestQueue.add(stringRequest);
     }
 
     @Override

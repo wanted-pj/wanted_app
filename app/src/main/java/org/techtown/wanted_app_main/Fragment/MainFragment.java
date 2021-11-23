@@ -29,11 +29,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.FriendAdapter;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
-import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
-import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.Friend;
+import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
@@ -54,12 +56,12 @@ public class MainFragment extends Fragment {
     private FriendAdapter friendAdapter = new FriendAdapter();
     private ArrayList<Friend> friendItems = new ArrayList<>();
     Personal another;
-    private ArrayList<Long> friendIds =new ArrayList<>();
+    private ArrayList<Long> friendIds = new ArrayList<>();
     // layout
     private Button btnSchool, btnMajor, btnAddress;
 
     // 가져온 Personal과 posting정보
-    public ArrayList<Personal> personal_list;
+    public static ArrayList<Personal> personal_list;
 
     // category -> 0은 school, 1은 major, 2는 address
     private int friendsCategory = 0;
@@ -223,9 +225,8 @@ public class MainFragment extends Fragment {
         friendAdapter.setOnItemClicklistener(new FriendAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
                 Bundle bundle = new Bundle();
-                bundle.putLong("id",friendIds.get(position));
+                bundle.putLong("profileId", friendIds.get(position));
                 navController.navigate(R.id.action_main_to_profile, bundle);
             }
         });
@@ -260,6 +261,7 @@ public class MainFragment extends Fragment {
     // 카테고리에 따라서, 나와 일치하는 정보를 가진 사람들의 데이터를 FriendAdapter에 채워줌
     public void setCategory(int friendsCategory) {
         friendItems.clear();
+        friendIds.clear();
         for (int i = 0; i < personal_list.size(); i++) {
             another = personal_list.get(i);
             if (MainActivity.me.id != another.id) {
@@ -281,7 +283,7 @@ public class MainFragment extends Fragment {
                         break;
                 }
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
-                friendItems.add(new Friend(another.nickname, another.school, another.major, another.address, image));
+                friendItems.add(new Friend(another.getId(), another.nickname, another.school, another.major, another.address, image));
                 friendIds.add(another.id);
             }
         }

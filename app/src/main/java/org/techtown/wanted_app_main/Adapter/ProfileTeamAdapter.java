@@ -1,4 +1,4 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.techtown.wanted_app_main.database.ProfileTeam;
 import org.techtown.wanted_app_main.R;
 
 import java.util.ArrayList;

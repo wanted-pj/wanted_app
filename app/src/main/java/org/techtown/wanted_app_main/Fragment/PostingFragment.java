@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,15 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.Cache;
-import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.BasicNetwork;
-import com.android.volley.toolbox.DiskBasedCache;
-import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,14 +27,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
+import org.techtown.wanted_app_main.Adapter.PostingDetailAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Connect;
-import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PostingFragment extends Fragment {
@@ -107,6 +100,7 @@ public class PostingFragment extends Fragment {
                 Map map = new HashMap();
                 map.put("checkRecruiting", !posting.checkRecruiting);
                 JSONObject params = new JSONObject(map);
+                System.out.println("여기1");
                 JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, params,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -162,51 +156,57 @@ public class PostingFragment extends Fragment {
                 request.setText("신청완료");
                 request.setEnabled(false);
             } else {
-                request.setText("참가신청");
-                // 참가 신청 버튼 클릭, Connect 생성되야함
-                request.setOnClickListener(v -> {
-                    // 서버 호출
-                    String url = "http://13.125.214.178:8080/connect/" + posting.postingId + "/" + MainActivity.me.id;
+                if (!posting.checkRecruiting) { // 모집중이 아니면
+                    request.setText("모집중이 아닙니다");
+                    request.setEnabled(false);
+                } else{
+                    request.setText("참가신청");
+                    // 참가 신청 버튼 클릭, Connect 생성되야함
+                    request.setOnClickListener(v -> {
+                        // 서버 호출
+                        String url = "http://13.125.214.178:8080/connect/" + posting.postingId + "/" + MainActivity.me.id;
 
-                    Map map = new HashMap();
-                    JSONObject params = new JSONObject(map);
+                        Map map = new HashMap();
+                        JSONObject params = new JSONObject(map);
 
-                    JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
-                            new Response.Listener<JSONObject>() {
-                                @Override
-                                public void onResponse(JSONObject obj) {
-                                    try {
-                                        Long id = obj.getLong("id");
-                                        Long senderId = obj.getLong("senderId");
-                                        String nickname = obj.getString("nickname");
-                                        String img = obj.getString("img");
-                                        Boolean result = obj.getBoolean("result");
-                                        Connect connect = new Connect(id, senderId, nickname, img, result);
-                                        connectItems.add(connect);
-                                        postingDetailAdapter.setItems(connectItems);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                        System.out.println("여기1");
+                        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.POST, url, params,
+                                new Response.Listener<JSONObject>() {
+                                    @Override
+                                    public void onResponse(JSONObject obj) {
+                                        try {
+                                            Long id = obj.getLong("id");
+                                            Long senderId = obj.getLong("senderId");
+                                            String nickname = obj.getString("nickname");
+                                            String img = obj.getString("img");
+                                            Boolean result = obj.getBoolean("result");
+                                            Connect connect = new Connect(id, senderId, nickname, img, result);
+                                            connectItems.add(connect);
+                                            postingDetailAdapter.setItems(connectItems);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        System.out.println("커넥트 성공");
+                                        request.setText("신청완료");
+                                        request.setEnabled(false);
                                     }
-                                    System.out.println("커넥트 성공");
-                                    request.setText("신청완료");
-                                    request.setEnabled(false);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    System.out.println("실패");
-                                    Log.e("posting_fix_Error", error.getMessage());
-                                }
-                            }) {
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset=UTF-8";
-                        }
-                    };
-                    RequestQueue queue = Volley.newRequestQueue(getContext());
-                    queue.add(objectRequest);
-                });
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        System.out.println("실패");
+                                        Log.e("posting_fix_Error", error.getMessage());
+                                    }
+                                }) {
+                            @Override
+                            public String getBodyContentType() {
+                                return "application/json; charset=UTF-8";
+                            }
+                        };
+                        RequestQueue queue = Volley.newRequestQueue(getContext());
+                        queue.add(objectRequest);
+                    });
+                }
             }
         }
 

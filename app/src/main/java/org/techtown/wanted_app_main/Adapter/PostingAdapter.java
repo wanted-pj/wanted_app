@@ -1,16 +1,13 @@
-package org.techtown.wanted_app_main.Fragment;
+package org.techtown.wanted_app_main.Adapter;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
 import org.techtown.wanted_app_main.R;
@@ -27,13 +24,13 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
         void onItemClick(View view, int position);
     }
 
-    public void setOnItemClicklistener(PostingAdapter.OnItemClickListener listener){
+    public void setOnItemClicklistener(PostingAdapter.OnItemClickListener listener) {
         this.listener = listener;
 
     }
 
     public void onItemClick(View view, int position) {
-        if(listener != null)
+        if (listener != null)
             listener.onItemClick(view, position);
     }
 
@@ -52,7 +49,7 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
         viewHolder.setPosting(posting);
     }
 
-    public void setPostingList(ArrayList<Posting> arrayList){
+    public void setPostingList(ArrayList<Posting> arrayList) {
         this.postingList = arrayList;
         notifyDataSetChanged();
     }
@@ -80,7 +77,7 @@ public class PostingAdapter extends RecyclerView.Adapter<PostingAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener != null)
+                    if (listener != null)
                         listener.onItemClick(v, position);
                 }
             });

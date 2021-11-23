@@ -35,29 +35,14 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetMajorRegionSchoolRequest;
-import org.techtown.wanted_app_main.database.OuterApi.Major;
-import org.techtown.wanted_app_main.database.OuterApi.Region;
-import org.techtown.wanted_app_main.database.OuterApi.School;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class LoginRegisterActivity extends AppCompatActivity {
-
-    private static List<String> schoolList;
-    private static List<String> regionList;
-    private static List<String> majorList;
 
     //성별
     Spinner spinner_gender;
@@ -102,41 +87,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
         spinner_age = findViewById(R.id.register_age_spinner);
         setSpinner("age");
 
-        // 서버 호출
-        Cache cache = new DiskBasedCache(getApplicationContext().getCacheDir(), 1024 * 1024); // 1MB cap
-        Network network = new BasicNetwork(new HurlStack());
-        RequestQueue requestQueue = new RequestQueue(cache, network);
-        requestQueue.start();
-
-        //학교 server데이터 가져오기
-        String schoolURL = "http://13.125.214.178:8080/school";
-        Response.Listener<String> schoolResponseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                String changeString = new String();
-                try {
-                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<School>>() {
-                }.getType();
-
-                List<School> temp = gson.fromJson(changeString, listType);
-                schoolList = new ArrayList<>();
-                for (School school : temp) {
-                    schoolList.add(school.getSchool_name());
-                    System.out.println("학교: " + school.getSchool_name());
-                }
-
-            }
-        };
 
         btnSchoolSearch = findViewById(R.id.register_school_search);
         btnSchoolSearch.setOnClickListener(v -> {
             AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
-            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register,null);
+            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search,null);
             alert.setView(dialogSchool);
 
             AlertDialog alertDialog = alert.create();
@@ -154,56 +109,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
             });
         });
 
-        //학과 server데이터 가져오기
-        String majorURL = "http://13.125.214.178:8080/major";
-        Response.Listener<String> majorResponseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                String changeString = new String();
-                try {
-                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<Major>>() {
-                }.getType();
-
-                List<Major> temp = gson.fromJson(changeString, listType);
-                majorList = new ArrayList<>();
-                for (Major major : temp) {
-                    majorList.add(major.getMajor_name());
-                    System.out.println("전공: " + major.getMajor_name());
-                }
-            }
-        };
-
-        //사는곳 server데이터 가져오기
-        String regionURL = "http://13.125.214.178:8080/region";
-        Response.Listener<String> regionResponseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                String changeString = new String();
-                try {
-                    changeString = new String(response.getBytes("8859_1"), "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                Type listType = new TypeToken<ArrayList<Region>>() {
-                }.getType();
-
-                List<Region> temp = gson.fromJson(changeString, listType);
-                regionList = new ArrayList<>();
-                for (Region region : temp) {
-                    regionList.add(region.getRegion_name());
-                    System.out.println("지역: " + region.getRegion_name());
-                }
-            }
-        };
-        requestQueue.add(new GetMajorRegionSchoolRequest(regionURL, regionResponseListener));
-        requestQueue.add(new GetMajorRegionSchoolRequest(majorURL, majorResponseListener));
-        requestQueue.add(new GetMajorRegionSchoolRequest(schoolURL, schoolResponseListener));
 
         //id
         et_id = findViewById(R.id.register_id);
@@ -269,7 +174,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0)) {
                     dialog = new Dialog(LoginRegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.register_dialog);
+                    dialog.setContentView(R.layout.dialog_register);
                     dialog.show();
                     Button cancel1 = dialog.findViewById(R.id.btnCancel5);
                     cancel1.setOnClickListener(new View.OnClickListener() {

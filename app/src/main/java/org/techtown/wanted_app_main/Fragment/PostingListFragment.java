@@ -64,6 +64,9 @@ public class PostingListFragment extends Fragment {
     // communityCategory => 0전체, 1공모전 2스터디, 3기타
     int communityCategory;
 
+    // 내글 보기 토큰
+    boolean myPostingCheck = false;
+
     public PostingListFragment() {
         // Required empty public constructor
     }
@@ -116,16 +119,16 @@ public class PostingListFragment extends Fragment {
 
                 List<Posting> temp = gson.fromJson(changeString, listType);
                 posting_list = new ArrayList<>(temp);
-                for (Posting posting : posting_list) {
-                    System.out.println(posting);
-                }
+//                for (Posting posting : posting_list) {
+//                    System.out.println(posting);
+//                }
                 if (posting_list.size() > 2) {
                     Collections.sort(posting_list, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
 
                 // 카테고리에 따라 boadItem채우기
+                postingItems = new ArrayList<>(posting_list);
                 setCommunityCategory(communityCategory, "");
-                postingAdapter.setPostingList(postingItems);
             }
         };
         requestQueue.add(new GetPostingsRequest(postingResponseListener));
@@ -196,6 +199,23 @@ public class PostingListFragment extends Fragment {
         btnStudy.setOnClickListener(onClickListener);
         btnEtc.setOnClickListener(onClickListener);
 
+        // 내 글 보기 버튼 눌렀을 때
+        btnMyPosting = view.findViewById(R.id.btn_myposting);
+        btnMyPosting.setOnClickListener(v -> {
+            if (myPostingCheck) {
+                myPostingCheck = false;
+                String findingText = searchText.getText().toString();
+                postingItems = new ArrayList<>(posting_list);
+                setCommunityCategory(communityCategory, findingText);
+                // 아이콘 변경
+            } else {
+                myPostingCheck = true;
+                String findingText = searchText.getText().toString();
+                setFindMyPosting(communityCategory, findingText);
+            }
+        });
+
+
         // 포스팅 하나 클릭했을떄, [포스팅]으로 가는 코드
         postingAdapter.setOnItemClicklistener(new PostingAdapter.OnItemClickListener() {
             @Override
@@ -244,8 +264,8 @@ public class PostingListFragment extends Fragment {
 
     // 커뮤니티의 카테고리에 따라서, 카테고리가 일치하는 포스팅정보만 화면에 보여지게 설정
     public void setCommunityCategory(int communityCategory, String searchText) {
-        postingItems.clear();
-        for (Posting posting : posting_list) {
+        ArrayList<Posting> tempList = new ArrayList<>();
+        for (Posting posting : postingItems) {
             boolean check = false;
             if (communityCategory == 0 && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
@@ -257,9 +277,21 @@ public class PostingListFragment extends Fragment {
                 check = true;
             }
             if (check) {
+                tempList.add(posting);
+            }
+        }
+        postingAdapter.setPostingList(tempList);
+    }
+
+    // 내글 보기 버튼을 눌렀을 때 내 글만 화면에 보여지게 설정
+    public void setFindMyPosting(int communityCategory, String searchText) {
+        postingItems.clear();
+        for (Posting posting : posting_list) {
+            if (me.id == posting.personalId) {
                 postingItems.add(posting);
             }
         }
         postingAdapter.setPostingList(postingItems);
+        setCommunityCategory(communityCategory, searchText);
     }
 }

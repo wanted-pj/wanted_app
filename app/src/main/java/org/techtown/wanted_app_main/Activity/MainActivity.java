@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         // 회원 받기
         me = getIntent().getParcelableExtra("me");
         setContentView(R.layout.activity_main);
+
         // 본인
         mainActivity = this;
 

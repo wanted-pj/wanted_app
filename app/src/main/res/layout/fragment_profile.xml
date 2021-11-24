@@ -72,8 +72,7 @@
                 <ImageView
                     android:id="@+id/pf_img"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/profile_basic1" />
+                    android:layout_height="70dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -88,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:letterSpacing="-0.05"
-                        android:text="시미즈"
+                        android:text=""
                         android:textSize="20dp"
                         android:textColor="@color/black" />
 
@@ -118,19 +117,19 @@
                         android:id="@+id/pf_star2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star3"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star4"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star5"
@@ -213,7 +212,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="홍익대학교"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -245,7 +244,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="컴퓨터공학과"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -276,7 +275,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="수원시"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -317,7 +316,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="2"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -349,7 +348,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="21"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -380,7 +379,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="여"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />

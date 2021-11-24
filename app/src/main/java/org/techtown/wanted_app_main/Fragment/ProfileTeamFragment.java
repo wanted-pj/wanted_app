@@ -38,10 +38,11 @@ import org.techtown.wanted_app_main.database.Team;
 
 import java.util.ArrayList;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.me;
 import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
 import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
 
-public class  ProfileTeamFragment extends Fragment {
+public class ProfileTeamFragment extends Fragment {
     //팀이름
     TextView team_title;
 
@@ -52,11 +53,10 @@ public class  ProfileTeamFragment extends Fragment {
 
     // 이전 프래그먼트에서 team 객체 받기
     private static Team team;
-    private ArrayList<PersonalDtoInTeam> memberInfo =new ArrayList<>();
+    private ArrayList<PersonalDtoInTeam> memberInfo = new ArrayList<>();
 
     NavController navController;
- Boolean canevaluate=false;
-    Long me;
+    Boolean canevaluate = false;
     Personal personal;
     //팀해체 버튼
     Button btn_team_delete;
@@ -69,10 +69,9 @@ public class  ProfileTeamFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         team = getArguments().getParcelable("team");
-        me=getArguments().getLong("me");
-        //personal=getArguments().getParcelable("pesonal");
+        personal = getArguments().getParcelable("personal");
         //connectItems = (ArrayList<Connect>) posting.connects;
-       // System.out.println("출력: " + team.personals);
+        // System.out.println("출력: " + team.personals);
     }
 
     @Override
@@ -82,9 +81,8 @@ public class  ProfileTeamFragment extends Fragment {
         hideBottomNavigation(true);
 
         //팀이름 설정
-        team_title= view.findViewById(R.id.profile_team_title);
+        team_title = view.findViewById(R.id.profile_team_title);
         team_title.setText(team.teamName);
-
 
         //팀멤버 설정
         memberAdapter = new FriendMoreAdapter();
@@ -95,7 +93,7 @@ public class  ProfileTeamFragment extends Fragment {
 
         //내정보 담기
         //members.add(new Friend(personal.nickname,personal.school, personal.major, personal.address, getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName())));
-       //이전 프래그먼트에서 받은 team정보 활용
+        //이전 프래그먼트에서 받은 team정보 활용
         memberInfo = new ArrayList<>(team.personals);
         for (PersonalDtoInTeam member : memberInfo) {
             members.add(new Friend(member.personalId, member.nickname, member.school, member.major, member.address, getResources().getIdentifier(member.img, "drawable", getContext().getPackageName())));
@@ -103,22 +101,22 @@ public class  ProfileTeamFragment extends Fragment {
         memberAdapter.setFriendList(members);
 
 
-        //팀해체 버튼 : 리더일시 버튼보이기-> 누르면 팀해체
-        btn_team_delete=view.findViewById(R.id.profile_team_delete);
-        if(team.leaderId==me){
+        // 팀해체 버튼 : 리더일시 버튼보이기-> 누르면 팀해체
+        btn_team_delete = view.findViewById(R.id.profile_team_delete);
+        if (team.leaderId == me.id) {
             btn_team_delete.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             btn_team_delete.setVisibility(View.GONE);
         }
 
         //팀해제하기 버튼 클릭하면 팀삭제
         btn_team_delete.setOnClickListener(v -> {
-          deleteTeam();
+            deleteTeam();
         });
 
         // 별점 매기는 페이지로 이동
         TextView startext = view.findViewById(R.id.profile_team_startext);
-        if(me== MainActivity.me.id){
+        if (me.id == personal.id) {
             memberAdapter.setOnItemClicklistener(new FriendMoreAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -126,17 +124,22 @@ public class  ProfileTeamFragment extends Fragment {
                     dialog.show(getActivity().getSupportFragmentManager(), "star_dialog");
                 }
             });
-        }else{
+        } else {
             startext.setVisibility(View.GONE);
+            memberAdapter.setOnItemClicklistener(new FriendMoreAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    System.out.println("작동되면 안됨");
+                }
+            });
         }
 
         //친구 눌렀을 시 프로필페이지로 이동
         memberAdapter.setOnfriendClicklistener(new FriendMoreAdapter.OnfriendClickListener() {
             @Override
             public void onfriendClick(View view, int position) {
-
                 Bundle bundle = new Bundle();
-                bundle.putLong("profileId",memberInfo.get(position).personalId);
+                bundle.putLong("profileId", memberInfo.get(position).personalId);
                 navController.navigate(R.id.action_profile_team_to_profile, bundle);
                 setBtnNavIndex(3);
                 updateBottomMenu();
@@ -145,14 +148,14 @@ public class  ProfileTeamFragment extends Fragment {
         return view;
     }
 
-    public void deleteTeam(){
+    public void deleteTeam() {
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getContext().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
         requestQueue = new RequestQueue(cache, network);
         requestQueue.start();
 
-        String url = "http://13.125.214.178:8080/team/"+team.teamId;
+        String url = "http://13.125.214.178:8080/team/" + team.teamId;
 
         StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url, new Response.Listener<String>() {
             @Override

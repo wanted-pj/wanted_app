@@ -74,22 +74,12 @@ public class PostingListFragment extends Fragment {
     // test
     public static PostingListFragment newInstance(String param1, String param2) {
         PostingListFragment fragment = new PostingListFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // 이전 프래그먼트에서 전달한 args 받기
-//        if (getArguments() != null) {
-//            me = getArguments().getParcelable("me");
-//        }
-
         me = MainActivity.me;
         System.out.println("postingListFragment >> " + me);
 
@@ -119,9 +109,6 @@ public class PostingListFragment extends Fragment {
 
                 List<Posting> temp = gson.fromJson(changeString, listType);
                 posting_list = new ArrayList<>(temp);
-//                for (Posting posting : posting_list) {
-//                    System.out.println(posting);
-//                }
                 if (posting_list.size() > 2) {
                     Collections.sort(posting_list, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
@@ -153,16 +140,6 @@ public class PostingListFragment extends Fragment {
                     setCommunityCategory(communityCategory, findingText);
                 }
         );
-
-
-        // 임시데이터 받기
-//        postingItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("기타", "광명에서 카공하실 분!", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("공모전", "DND 해커톤 디자이너 구합니다", "엠마", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("공모전", "KBSC 소프트웨어 공모전 같이 준비하실 분?", "다니엘", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("스터디", "PSAT 스터디 인원 구해요~", "스콧", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-//        postingAdapter.(postingItems);
 
         // 버튼
         // 버튼 뷰 컴포넌트 받기

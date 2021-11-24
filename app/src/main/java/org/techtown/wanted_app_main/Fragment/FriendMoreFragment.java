@@ -89,15 +89,6 @@ public class FriendMoreFragment extends Fragment {
         myMajor = MainActivity.me.major;
         myAddress = MainActivity.me.address;
 
-        // 친구 예시 데이터 -> server에서 모든 Personal DB를 받아야함
-//        allFriends.add(new Friend("가비", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-//        allFriends.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        allFriends.add(new Friend("시미즈", "서강대학교", "수학교육과", "김포시", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-//        allFriends.add(new Friend("리안", "덕성여자대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-//        allFriends.add(new Friend("다니엘", "경기대학교", "경영학과", "청주시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-//        allFriends.add(new Friend("스콧", "수원대학교", "컴퓨터공학과", "시흥시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-
-
         // 클릭되어진 친구버튼 설정
 
         // 초기 카테고리 버튼 설정

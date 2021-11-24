@@ -103,14 +103,17 @@ public class MainFragment extends Fragment {
                 List<Personal> temp = gson.fromJson(changeString, listType);
                 personal_list = new ArrayList<>(temp);
 
+                int count = 0;
                 // 사람을 통해 posting 데이터 접근
                 for (Personal personal : personal_list) {
                     if (!personal.postings.isEmpty()) {
                         for (PostingDtoInPersonal posting : personal.postings) {
                             // 포스팅 넣기
-                            // 포스팅 보여주기 위한
-                            postingItems.add(new Posting(posting.postingId, personal.id,
-                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.endTime, posting.teamName, personal.nickname, personal.img, posting.checkRecruiting));
+                            if (count < 4) {
+                                postingItems.add(new Posting(posting.postingId, personal.id,
+                                        posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.endTime, posting.teamName, personal.nickname, personal.img, posting.checkRecruiting));
+                                count += 1;
+                            }
                         }
                     }
                 }
@@ -131,19 +134,11 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
         me = MainActivity.me;
         System.out.println("MainFragment onCreateView 출력:" + MainActivity.me);
-
-        Bundle bundle = getArguments();
-        //id = bundle.getInt("id");
-//        Personal me = bundle.getParcelable("me");
-//        id = 1;
-//        Log.d("test_MainFragment", String.valueOf(me.id));
-
 
         // 커뮤니티 리사이 클러뷰 설정
         recyclerViewCommunity = view.findViewById(R.id.recyclerView_board);
@@ -154,25 +149,6 @@ public class MainFragment extends Fragment {
         recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);
         recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
         recyclerViewFriend.setAdapter(friendAdapter);
-
-
-        /*
-        friendItems = new ArrayList<>();
-        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        // 아래 두개는 display 안 됨 (item display 갯수제한 테스트용 -> DB 연동하고 필요 없어지면 지워주세요)
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-
-        friendAdapter.setFriendList(friendItems); */
-
-        //        boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-//        boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        boardItems.add(new Board("기타", "광명에서 카공하실 분!", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-
 
         // btn 클릭 이벤트
         btnSchool = view.findViewById(R.id.btn_school);

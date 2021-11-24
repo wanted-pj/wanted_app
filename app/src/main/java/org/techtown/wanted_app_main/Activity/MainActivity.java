@@ -110,8 +110,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         NavDestination currentDestination = navController.getCurrentDestination();
         NavDestination main = navController.getGraph().findNode(R.id.mainFragment);
         NavDestination friendMore = navController.getGraph().findNode(R.id.friendMoreFragment);
+        NavDestination community = navController.getGraph().findNode(R.id.postingListFragment);
+
         if (currentDestination == main || currentDestination == friendMore) {
             setBtnNavIndex(0);
+            updateBottomMenu();
+        } else if (currentDestination == community) {
+            setBtnNavIndex(1);
             updateBottomMenu();
         }
     }

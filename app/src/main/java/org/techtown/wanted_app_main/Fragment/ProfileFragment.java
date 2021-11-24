@@ -80,7 +80,7 @@ public class ProfileFragment extends Fragment {
 
     //기본정보
     ImageView img, img_message, btn_edit;
-    TextView nick;
+    TextView nick, profile_title;
     EditText school;
     EditText major;
     EditText address;
@@ -133,8 +133,12 @@ public class ProfileFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        //기본정보 가져오기
+        getBasicInfo();
+
         btn_edit = view.findViewById(R.id.edit_btn);
         img_message = view.findViewById(R.id.message);
+        profile_title = view.findViewById(R.id.profile_title);
 
         if (!itsMyProfile) { // 타인
             btn_edit.setVisibility(View.GONE); // 편집 불가능
@@ -142,6 +146,7 @@ public class ProfileFragment extends Fragment {
         } else { // 나 지신
             btn_edit.setVisibility(View.VISIBLE);
             img_message.setVisibility(View.GONE);
+            profile_title.setText("나의 프로필");
         }
 
         //기본정보
@@ -154,9 +159,6 @@ public class ProfileFragment extends Fragment {
         age = view.findViewById(R.id.pf_age);
         gender = view.findViewById(R.id.pf_gender);
         career = view.findViewById(R.id.pf_career);
-
-        //기본정보 가져오기
-        getBasicInfo();
 
         //프로필 편집 바로가기
         btn_edit.setOnClickListener(v -> {
@@ -228,7 +230,6 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putLong("me", loginId);
                 bundle.putParcelable("team", teamInfo.get(position));
                 bundle.putParcelable("personal", personal);
                 setBtnNavIndex(1);
@@ -332,8 +333,8 @@ public class ProfileFragment extends Fragment {
 
                 personal = gson.fromJson(changeString, listType);
 
-               int image = getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName());
-               img.setImageResource(image);
+                int image = getResources().getIdentifier(personal.img, "drawable", getContext().getPackageName());
+                img.setImageResource(image);
                 nick.setText(personal.nickname);
                 school.setText(personal.school);
                 major.setText(personal.major);
@@ -346,7 +347,9 @@ public class ProfileFragment extends Fragment {
                     gender.setText("여");
                 }
                 career.setText(personal.career);
-
+                if (!itsMyProfile) { // 타인
+                    profile_title.setText(personal.nickname + "님의 프로필");
+                }
                 if (personal.evaluation != null) {
                     getearnest = personal.evaluation.earnest;
                     getteamwork = personal.evaluation.teamwork;

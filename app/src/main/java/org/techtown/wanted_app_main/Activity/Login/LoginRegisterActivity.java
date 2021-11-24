@@ -43,6 +43,7 @@ import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Adapter.PostingAdapter;
+import org.techtown.wanted_app_main.Adapter.SearchAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
@@ -50,6 +51,7 @@ import org.techtown.wanted_app_main.database.OuterApi.OuterData;
 import org.techtown.wanted_app_main.database.OuterApi.School;
 import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
+import org.techtown.wanted_app_main.database.Search;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
@@ -93,7 +95,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
     //학과
     EditText et_major;
 
+    // 검색
     Button btnSchoolSearch, btnMajorSearch;
+    private RecyclerView rvSearch;
+    private SearchAdapter searchAdapter;
+    private ArrayList<Search> searchItem;
 
     boolean idValidation = false;
     boolean pwValidation = false;
@@ -111,28 +117,33 @@ public class LoginRegisterActivity extends AppCompatActivity {
         spinner_age = findViewById(R.id.register_age_spinner);
         setSpinner("age");
 
+        // 학교
         et_school = findViewById(R.id.register_school);
 
         btnSchoolSearch = findViewById(R.id.register_school_search);
         btnSchoolSearch.setOnClickListener(v -> {
 
+            // 학교 다이얼로그
             AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
             View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
             alert.setView(dialogSchool);
 
             AlertDialog alertDialog = alert.create();
             alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            RecyclerView recyclerView = alertDialog.findViewById(R.id.recyclerView_search);
-
-//            PostingAdapter postingAdapter = new PostingAdapter();
-//            recyclerView.setAdapter(postingAdapter);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
-
-//            for(String school : OuterData.schoolList) {
-//                Items.add();
-//            }
-
             alertDialog.show();
+
+            searchAdapter = new SearchAdapter();
+            searchItem = new ArrayList<>();
+
+            rvSearch = dialogSchool.findViewById(R.id.recyclerView_search);
+            rvSearch.setAdapter(searchAdapter);
+            rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+
+            for(String school : OuterData.schoolList) {
+                searchItem.add(new Search(school));
+            }
+
+            searchAdapter.setSearch(searchItem);
 
             EditText input = (EditText) dialogSchool.findViewById(R.id.search_school_edittext);
             Button btnSearchDB = (Button) dialogSchool.findViewById(R.id.search_school_btn);
@@ -140,13 +151,14 @@ public class LoginRegisterActivity extends AppCompatActivity {
             btnSearchDB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Items.clear();  //기존 리싸이클러뷰 초기화
+                    searchItem.clear();  //기존 리싸이클러뷰 초기화
                     String temp = input.getText().toString();
                     for (String school : OuterData.schoolList) {
                         if (school.contains(temp)) {
-//                            Items.add();
+                            searchItem.add(new Search(school));
                         }
                     }
+                    searchAdapter.notifyDataSetChanged();
                 }
             });
 

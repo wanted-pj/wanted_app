@@ -81,7 +81,6 @@ public class LoginActivity extends AppCompatActivity {
                 OuterData.schoolList = new ArrayList<>();
                 for (School school : temp) {
                     OuterData.schoolList.add(school.getSchool_name());
-                    System.out.println("학교: " + school.getSchool_name());
                 }
 
             }
@@ -107,7 +106,6 @@ public class LoginActivity extends AppCompatActivity {
                 OuterData.majorList = new ArrayList<>();
                 for (Major major : temp) {
                     OuterData.majorList.add(major.getMajor_name());
-                    System.out.println("전공: " + major.getMajor_name());
                 }
             }
         };
@@ -131,7 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                 OuterData.regionList = new ArrayList<>();
                 for (Region region : temp) {
                     OuterData.regionList.add(region.getRegion_name());
-                    System.out.println("지역: " + region.getRegion_name());
                 }
             }
         };

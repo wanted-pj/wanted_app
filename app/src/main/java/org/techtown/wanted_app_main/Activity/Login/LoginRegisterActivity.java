@@ -110,7 +110,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
     boolean idValidation = false;
     boolean pwValidation = false;
 
-
     String returnValue;
 
     @Override
@@ -236,15 +235,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 String postimage = imageName; //선택된 이미지url 가져오기
                 //Integer postage = Integer.valueOf(et_age.getText().toString());
 
+                dialog = new Dialog(LoginRegisterActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_register);
+                TextView textView = dialog.findViewById(R.id.text);
+                Button cancel = dialog.findViewById(R.id.btnCancel);
+
                 //제대로 입력안했을 시
                 if ((postid.length() <= 0) || (postpwd.length() <= 0) || (postnickname.length() <= 0)
                         || !idValidation || !pwValidation) {
-                    dialog = new Dialog(LoginRegisterActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_register);
-                    TextView textView = dialog.findViewById(R.id.text);
-                    Button cancel1 = dialog.findViewById(R.id.btnCancel);
-                    cancel1.setOnClickListener(new View.OnClickListener() {
+
+                    cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
@@ -252,27 +253,27 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     });
 
                     if (postid.length() == 0) {
-                        textView.setText("아이디를 입력해주세요");
+                        textView.setText("아이디를 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (postpwd.length() == 0 ){
-                        textView.setText("비밀번호를 입력해주세요");
+                        textView.setText("비밀번호를 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (postnickname.length() == 0 ){
-                        textView.setText("닉네임을 입력해주세요");
+                        textView.setText("닉네임을 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (!idValidation) {
-                        textView.setText("아이디 중복 체크해주세요");
+                        textView.setText("아이디 중복 확인해주세요.");
                         dialog.show();
                         return;
                     }
                     if (!pwValidation) {
-                        textView.setText("비밀번호 중복 체크해주세요");
+                        textView.setText("비밀번호가 일치하지 않습니다.");
                         dialog.show();
                         return;
                     }
@@ -285,13 +286,13 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     map.put("pwd", postpwd);
                     map.put("nickname", postnickname);
                     map.put("img", postimage);
-                    map.put("school", school); // 바꿔야됨
-                    map.put("major", major); // 바꿔야됨
+                    map.put("school", school);
+                    map.put("major", major);
                     map.put("grade", postgrade);
                     map.put("career", postcareer);
                     map.put("age", postage);
                     map.put("gender", postgender);
-                    map.put("address", address); // 바꿔야됨
+                    map.put("address", address);
 
                     JSONObject params = new JSONObject(map);
 
@@ -299,10 +300,20 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject obj) {
-                                    System.out.println("회원가입 성공");
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    textView.setText("회원가입이 완료되었습니다!");
+                                    dialog.show();
+
+                                    Button cancel = dialog.findViewById(R.id.btnCancel);
+                                    cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
                                 }
                             },
                             new Response.ErrorListener() {

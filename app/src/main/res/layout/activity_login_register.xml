@@ -383,22 +383,41 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="1"
-                app:layout_constraintTop_toBottomOf="@id/register_grade_group"
-                app:layout_constraintStart_toStartOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/register_grade_group">
 
                 <TextView
                     android:id="@+id/register_gender_title"
+                    style="@style/registerTitle"
                     android:text="성별"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    style="@style/registerTitle" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <Spinner
-                    android:id="@+id/register_gender_spinner"
+                <RadioGroup
+                    android:id="@+id/gender_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     app:layout_constraintTop_toBottomOf="@id/register_gender_title"
                     app:layout_constraintStart_toStartOf="parent"
-                    style="@style/registerSpinner" />
+                    app:layout_constraintEnd_toEndOf="parent">
+
+                    <RadioButton
+                        android:id="@+id/gender_male"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="남자"
+                        android:layout_weight="1" />
+
+                    <RadioButton
+                        android:id="@+id/gender_female"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="여자"
+                        android:layout_weight="1"/>
+                </RadioGroup>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

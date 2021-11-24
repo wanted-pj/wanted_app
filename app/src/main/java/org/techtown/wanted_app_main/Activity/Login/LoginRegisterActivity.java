@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -64,7 +66,9 @@ import java.util.Map;
 public class LoginRegisterActivity extends AppCompatActivity {
 
     //성별
-    Spinner spinner_gender;
+    RadioGroup radio_gender;
+    RadioButton gender_male;
+    RadioButton gender_female;
     Integer value_gender;
     //학년
     Spinner spinner_grade;
@@ -109,9 +113,22 @@ public class LoginRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_register);
 
-        //성별,사는곳,학교,학과,학년 spinner 지정
-        spinner_gender = findViewById(R.id.register_gender_spinner);
-        setSpinner("gender");
+        //성별
+        radio_gender = findViewById(R.id.gender_group);
+        gender_male = findViewById(R.id.gender_male);
+        gender_female = findViewById(R.id.gender_female);
+        radio_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == gender_male.getId()) {
+                    value_gender = 0;
+                } else if(checkedId == gender_female.getId()) {
+                    value_gender = 1;
+                }
+            }
+        });
+
+        //학년, 나이 spinner 지정
         spinner_grade = findViewById(R.id.register_grade_spinner);
         setSpinner("grade");
         spinner_age = findViewById(R.id.register_age_spinner);
@@ -320,27 +337,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
 
     public void setSpinner(String topic) { //spinner 설정 함수
-
         //topic에 따른 spinner설정
-        //성별
-        if (topic.equals("gender")) {
-            ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(this, R.array.gender, android.R.layout.simple_spinner_dropdown_item);
-            genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_gender.setAdapter(genderAdapter);
-
-            spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    value_gender = position;
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        }
         //학년
-        else if (topic.equals("grade")) {
+        if (topic.equals("grade")) {
             ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(this, R.array.grade, android.R.layout.simple_spinner_dropdown_item);
             genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_grade.setAdapter(genderAdapter);

@@ -19,6 +19,9 @@ import org.techtown.wanted_app_main.database.Friend;
 
 import java.util.ArrayList;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static NavController navController;
@@ -123,6 +126,8 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                 Bundle bundle = new Bundle();
                 bundle.putInt("friendsCategory", friendsCategory);
                 bundle.putParcelableArrayList("personal_list", MainFragment.personal_list);
+                setBtnNavIndex(0);
+                updateBottomMenu();
                 navController.navigate(R.id.action_main_to_friendMore, bundle);
             });
         }
@@ -153,8 +158,6 @@ public class FriendAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         listener.onItemClick(v, position);
                 }
             });
-
-
         }
 
         public void setFriend(Friend friend) {

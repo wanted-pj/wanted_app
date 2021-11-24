@@ -40,6 +40,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 public class PostingFragment extends Fragment {
 
     private static NavController navController;
@@ -250,23 +253,30 @@ public class PostingFragment extends Fragment {
         postingDetailImage.setImageResource(image);
 
 
+        // 케릭터 클릭하면 반응
         writer_layout = view.findViewById(R.id.writer_layout);
         writer_layout.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
                      Bundle bundle = new Bundle();
                      bundle.putLong("profileId", posting.personalId);
+                     setBtnNavIndex(3);
+                     updateBottomMenu();
                      navController.navigate(R.id.action_posting_to_profile, bundle);
                  }
             }
         );
 
+        //
         postingDetailAdapter.setOnItemClicklistener(new PostingDetailAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putLong("profileId", connectItems.get(position).senderId);
+                setBtnNavIndex(3);
+                updateBottomMenu();
                 navController.navigate(R.id.action_posting_to_profile, bundle);
+
             }
         });
 

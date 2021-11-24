@@ -38,6 +38,9 @@ import org.techtown.wanted_app_main.database.Team;
 
 import java.util.ArrayList;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 public class  ProfileTeamFragment extends Fragment {
     //팀이름
     TextView team_title;
@@ -135,6 +138,8 @@ public class  ProfileTeamFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putLong("profileId",memberInfo.get(position).personalId);
                 navController.navigate(R.id.action_profile_team_to_profile, bundle);
+                setBtnNavIndex(3);
+                updateBottomMenu();
             }
         });
         return view;
@@ -153,6 +158,8 @@ public class  ProfileTeamFragment extends Fragment {
             @Override
             public void onResponse(String response) {
                 navController.navigate(R.id.action_profile_team_to_profile);
+                setBtnNavIndex(3);
+                updateBottomMenu();
             }
         }, new Response.ErrorListener() {
             @Override

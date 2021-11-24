@@ -108,8 +108,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         // 홈화면으로 온 경우
         NavDestination currentDestination = navController.getCurrentDestination();
-        NavDestination tag1 = navController.getGraph().findNode(R.id.mainFragment);
-        if (currentDestination == tag1) {
+        NavDestination main = navController.getGraph().findNode(R.id.mainFragment);
+        NavDestination friendMore = navController.getGraph().findNode(R.id.friendMoreFragment);
+        if (currentDestination == main || currentDestination == friendMore) {
             setBtnNavIndex(0);
             updateBottomMenu();
         }

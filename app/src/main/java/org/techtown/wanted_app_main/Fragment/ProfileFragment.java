@@ -3,11 +3,14 @@ package org.techtown.wanted_app_main.Fragment;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.DrawableContainer;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -181,6 +184,8 @@ public class ProfileFragment extends Fragment {
                                 // bundle.putParcelable("participants", participants.get(position));
                                 // navController.navigate(R.id.action_chat_to_chat, bundle);
                                 // 일단 채팅 리스트로 가자
+                                setBtnNavIndex(1);
+                                updateBottomMenu();
                                 navController.navigate(R.id.action_global_chatListFragment);
                             }
                         },
@@ -191,6 +196,8 @@ public class ProfileFragment extends Fragment {
                                 // Bundle bundle = new Bundle();
                                 // bundle.putParcelable("participants", participants.get(position));
                                 // navController.navigate(R.id.action_chat_to_chat, bundle);
+                                setBtnNavIndex(2);
+                                updateBottomMenu();
                                 navController.navigate(R.id.action_global_chatListFragment);
                             }
                         }) {

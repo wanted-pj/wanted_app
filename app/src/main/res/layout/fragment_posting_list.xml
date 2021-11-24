@@ -116,7 +116,8 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never">
+        android:overScrollMode="never"
+        android:background="@color/gray">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -129,8 +130,9 @@
                 android:layout_height="40dp"
                 android:orientation="horizontal"
                 android:gravity="center"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp">
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:background="@color/white">
 
                 <EditText
                     android:id="@+id/search"
@@ -160,20 +162,20 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView_board_more"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="15dp"
                 android:layout_width="match_parent"
                 android:nestedScrollingEnabled="false"
                 android:overScrollMode="never"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:background="@color/white" />
 
             <!--Footer-->
             <LinearLayout
                 android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:background="@color/gray"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -187,7 +189,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:text="상호명: 원티드\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @원티드 친구 추가하고 소식을 받아보세요"
+                    android:text="상호명: 드림메이트\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @드림메이트 친구 추가하고 소식을 받아보세요"
                     android:textSize="8dp"
                     android:textColor="#ff191919"
                     android:letterSpacing="-0.02"

@@ -116,7 +116,6 @@ public class PostingFragment extends Fragment {
                 Map map = new HashMap();
                 map.put("checkRecruiting", !posting.checkRecruiting);
                 JSONObject params = new JSONObject(map);
-                System.out.println("여기1");
                 JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, params,
                         new Response.Listener<JSONObject>() {
                             @Override
@@ -280,10 +279,6 @@ public class PostingFragment extends Fragment {
             }
         });
 
-//        connectItems.add(new Connect("시미즈" + " ", profile_basic1", "drawable", getContext().getPackageName())));
-//        connectItems.add(new Connect("리안" + " ", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        connectItems.add(new Connect("가비" + " ", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-//        connectItems.add(new Connect("피넛" + " ", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
         return view;
     }
 

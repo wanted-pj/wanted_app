@@ -3,6 +3,7 @@ package org.techtown.wanted_app_main.Activity.Login;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -140,6 +141,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getId = findViewById(R.id.login_id);
         getPwd = findViewById(R.id.login_pwd);
+        getPwd.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
         btnLogin = findViewById(R.id.login_login);
         btnRegister = findViewById(R.id.login_register);
 
@@ -256,8 +258,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //forgot password클릭시
-
-
     }
+
 }

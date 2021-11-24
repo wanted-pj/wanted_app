@@ -1,14 +1,10 @@
 package org.techtown.wanted_app_main.Fragment;
 
-import android.app.Dialog;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,18 +12,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -47,17 +38,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
-import org.techtown.wanted_app_main.Activity.Login.LoginActivity;
-import org.techtown.wanted_app_main.Activity.Login.LoginRegisterActivity;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.database.Personal;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProfileEditFragment extends Fragment {
@@ -66,16 +52,12 @@ public class ProfileEditFragment extends Fragment {
     public Personal personal;
     private int id;
     //성별
-    Spinner spinner_gender;
-    Integer basic_gender;
     Integer change_gender;
     //학년
     Spinner spinner_grade;
-    Integer basic_grade;
     Integer change_grade;
     //나이
     Spinner spinner_age;
-    Integer basic_age;
     Integer change_age;
 
     //이미지
@@ -104,9 +86,7 @@ public class ProfileEditFragment extends Fragment {
         id = 1;
 
         //아이디값 가져오기
-        //성별,학년,나이 spinner
-        spinner_gender = view.findViewById(R.id.profile_edit_gender_spinner);
-        setSpinner("gender");
+        //성학년,나이 spinner
         spinner_grade = view.findViewById(R.id.profile_edit_grade_spinner);
         setSpinner("grade");
         spinner_age = view.findViewById(R.id.profile_edit_age_spinner);
@@ -185,8 +165,6 @@ public class ProfileEditFragment extends Fragment {
                 }
                 //학년설정
                 spinner_grade.setSelection(personal.grade-1);
-                //성별설정
-                spinner_gender.setSelection(personal.gender);
                 //나이설정
                 spinner_age.setSelection(personal.age - 19);
                 //역량설정
@@ -246,25 +224,8 @@ public class ProfileEditFragment extends Fragment {
 
     public void setSpinner(String topic) { //spinner 설정 함수
 
-        //성별
-        if (topic.equals("gender")) {
-            ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.gender, android.R.layout.simple_spinner_dropdown_item);
-            genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_gender.setAdapter(genderAdapter);
-
-            spinner_gender.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    change_gender = position;
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
-        }
         //학년
-        else if (topic.equals("grade")) {
+        if (topic.equals("grade")) {
             ArrayAdapter genderAdapter = ArrayAdapter.createFromResource(requireContext(), R.array.grade, android.R.layout.simple_spinner_dropdown_item);
             genderAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner_grade.setAdapter(genderAdapter);

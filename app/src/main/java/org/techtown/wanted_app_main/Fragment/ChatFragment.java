@@ -123,18 +123,6 @@ public class ChatFragment extends Fragment {
         rvChat.setAdapter(chatAdapter);
         rvChat.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL,false));
 
-//        chatItems = new ArrayList<>();
-//        chatItems.add(new Chat("안녕하세요!", "12:35", TYPE_SENDER));
-//        chatItems.add(new Chat("아직 팀원 구하시나요?", "12:36", TYPE_SENDER));
-//        chatItems.add(new Chat("네네!", "12:40", TYPE_RECEIVER));
-//        chatItems.add(new Chat("저 안드로이드 개발 맡고 싶습니다", "12:40", TYPE_SENDER));
-//        chatItems.add(new Chat("앱 개발 경험 2회 있고 배포도 한 번 했었습니다! 두줄테스트 두줄테스트 두줄테스트 두줄테스트 두줄테스트", "12:41", TYPE_SENDER));
-//        chatItems.add(new Chat("배포된 앱 한 번 볼 수 있을까요?", "12:42", TYPE_RECEIVER));
-//        chatItems.add(new Chat("넵 플레이스토어에서 ㅇㅇㅇㅇ 검색하시면 나와요", "12:44", TYPE_SENDER));
-//        chatItems.add(new Chat("확인했습니다! 팀원들과 얘기해보았는데 저희랑 함께하시면 좋을 것 같아요", "13:02", TYPE_RECEIVER));
-//        chatItems.add(new Chat("신청 수락 누를게요 잘 부탁드립니다 :)", "13:02", TYPE_RECEIVER));
-//        chatAdapter.setChats(chatItems);
-
         // 넘어온 데이터를 기준으로 채팅 기본 파일 구성
         chatItems = new ArrayList<>();
 

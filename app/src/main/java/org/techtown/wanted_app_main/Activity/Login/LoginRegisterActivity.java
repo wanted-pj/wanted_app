@@ -98,15 +98,19 @@ public class LoginRegisterActivity extends AppCompatActivity {
     EditText et_school;
     //학과
     EditText et_major;
+    //지역
+    EditText et_region;
 
     // 검색
-    Button btnSchoolSearch, btnMajorSearch;
+    Button btnSchoolSearch, btnMajorSearch, btnRegionSearch;
     private RecyclerView rvSearch;
     private SearchAdapter searchAdapter;
     private ArrayList<Search> searchItem;
 
     boolean idValidation = false;
     boolean pwValidation = false;
+
+    String returnValue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,52 +140,37 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
         // 학교
         et_school = findViewById(R.id.register_school);
+        et_major = findViewById(R.id.register_major);
+        et_region = findViewById(R.id.register_address);
 
         btnSchoolSearch = findViewById(R.id.register_school_search);
-        btnSchoolSearch.setOnClickListener(v -> {
+        btnMajorSearch = findViewById(R.id.register_major_search);
+        btnRegionSearch = findViewById(R.id.register_address_search);
 
-            // 학교 다이얼로그
-            AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
-            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
-            alert.setView(dialogSchool);
-
-            AlertDialog alertDialog = alert.create();
-            alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            alertDialog.show();
-
-            searchAdapter = new SearchAdapter();
-            searchItem = new ArrayList<>();
-
-            rvSearch = dialogSchool.findViewById(R.id.recyclerView_search);
-            rvSearch.setAdapter(searchAdapter);
-            rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
-
-            for(String school : OuterData.schoolList) {
-                searchItem.add(new Search(school));
-            }
-
-            searchAdapter.setSearch(searchItem);
-
-            EditText input = (EditText) dialogSchool.findViewById(R.id.search_school_edittext);
-            Button btnSearchDB = (Button) dialogSchool.findViewById(R.id.search_school_btn);
-
-            btnSearchDB.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    searchItem.clear();  //기존 리싸이클러뷰 초기화
-                    String temp = input.getText().toString();
-                    for (String school : OuterData.schoolList) {
-                        if (school.contains(temp)) {
-                            searchItem.add(new Search(school));
-                        }
-                    }
-                    searchAdapter.notifyDataSetChanged();
+        Button.OnClickListener onClickListener = new Button.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<String> list;
+                switch (v.getId()) {
+                    case R.id.register_school_search:
+                        list = OuterData.schoolList;
+                        showSearchDialog(list, "school");
+                        break;
+                    case R.id.register_major_search:
+                        list = OuterData.majorList;
+                        showSearchDialog(list, "major");
+                        break;
+                    case R.id.register_address_search:
+                        list = OuterData.regionList;
+                        showSearchDialog(list, "region");
+                        break;
                 }
-            });
+            }
+        };
 
-            // + 리싸이클러뷰에서 하나의 뷰 클릭 시 해당 정보를 기존 LoginRegisterActicity -> (et_school) 칸 변경
-        });
-
+        btnSchoolSearch.setOnClickListener(onClickListener);
+        btnMajorSearch.setOnClickListener(onClickListener);
+        btnRegionSearch.setOnClickListener(onClickListener);
 
         //id
         et_id = findViewById(R.id.register_id);
@@ -236,6 +225,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 String postid = et_id.getText().toString();
                 String postpwd = et_pwd.getText().toString();
                 String postnickname = et_nickname.getText().toString();
+                String school = et_school.getText().toString();
+                String major = et_major.getText().toString();
+                String address = et_region.getText().toString();
                 String postcareer = et_career.getText().toString();
                 Integer postgender = value_gender;
                 Integer postgrade = value_grade;
@@ -243,15 +235,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 String postimage = imageName; //선택된 이미지url 가져오기
                 //Integer postage = Integer.valueOf(et_age.getText().toString());
 
+                dialog = new Dialog(LoginRegisterActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_register);
+                TextView textView = dialog.findViewById(R.id.text);
+                Button cancel = dialog.findViewById(R.id.btnCancel);
+
                 //제대로 입력안했을 시
                 if ((postid.length() <= 0) || (postpwd.length() <= 0) || (postnickname.length() <= 0)
                         || !idValidation || !pwValidation) {
-                    dialog = new Dialog(LoginRegisterActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_register);
-                    TextView textView = dialog.findViewById(R.id.text);
-                    Button cancel1 = dialog.findViewById(R.id.btnCancel);
-                    cancel1.setOnClickListener(new View.OnClickListener() {
+
+                    cancel.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             dialog.dismiss();
@@ -259,27 +253,27 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     });
 
                     if (postid.length() == 0) {
-                        textView.setText("아이디를 입력해주세요");
+                        textView.setText("아이디를 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (postpwd.length() == 0 ){
-                        textView.setText("비밀번호를 입력해주세요");
+                        textView.setText("비밀번호를 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (postnickname.length() == 0 ){
-                        textView.setText("닉네임을 입력해주세요");
+                        textView.setText("닉네임을 입력해주세요.");
                         dialog.show();
                         return;
                     }
                     if (!idValidation) {
-                        textView.setText("아이디 중복 체크해주세요");
+                        textView.setText("아이디 중복 확인해주세요.");
                         dialog.show();
                         return;
                     }
                     if (!pwValidation) {
-                        textView.setText("비밀번호 중복 체크해주세요");
+                        textView.setText("비밀번호가 일치하지 않습니다.");
                         dialog.show();
                         return;
                     }
@@ -292,13 +286,13 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     map.put("pwd", postpwd);
                     map.put("nickname", postnickname);
                     map.put("img", postimage);
-                    map.put("school", "경기대"); // 바꿔야됨
-                    map.put("major", "경영"); // 바꿔야됨
+                    map.put("school", school);
+                    map.put("major", major);
                     map.put("grade", postgrade);
                     map.put("career", postcareer);
                     map.put("age", postage);
                     map.put("gender", postgender);
-                    map.put("address", "성남시"); // 바꿔야됨
+                    map.put("address", address);
 
                     JSONObject params = new JSONObject(map);
 
@@ -306,10 +300,20 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             new Response.Listener<JSONObject>() {
                                 @Override
                                 public void onResponse(JSONObject obj) {
-                                    System.out.println("회원가입 성공");
-                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-                                    startActivity(intent);
-                                    finish();
+
+                                    textView.setText("회원가입이 완료되었습니다!");
+                                    dialog.show();
+
+                                    Button cancel = dialog.findViewById(R.id.btnCancel);
+                                    cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            dialog.dismiss();
+                                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                            startActivity(intent);
+                                            finish();
+                                        }
+                                    });
                                 }
                             },
                             new Response.ErrorListener() {
@@ -328,7 +332,6 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                     queue.add(objectRequest);
                 }
-
             }
         });
 
@@ -505,4 +508,61 @@ public class LoginRegisterActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void showSearchDialog(List<String> list, String how){
+        //다이얼로그
+        AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
+        View dialog = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
+        alert.setView(dialog);
+
+        AlertDialog alertDialog = alert.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        searchAdapter = new SearchAdapter();
+        searchItem = new ArrayList<>();
+
+        rvSearch = dialog.findViewById(R.id.recyclerView_search);
+        rvSearch.setAdapter(searchAdapter);
+        rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
+
+        for(String temp : list) {
+            searchItem.add(new Search(temp));
+        }
+
+        searchAdapter.setSearch(searchItem);
+
+        EditText input = (EditText) dialog.findViewById(R.id.search_edittext);
+        Button btnSearchDB = (Button) dialog.findViewById(R.id.search_btn);
+
+        btnSearchDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItem.clear();  //기존 리싸이클러뷰 초기화
+                String temp = input.getText().toString();
+                for (String obj : list) {
+                    if (obj.contains(temp)) {
+                        searchItem.add(new Search(obj));
+                    }
+                }
+                searchAdapter.notifyDataSetChanged();
+            }
+        });
+
+        searchAdapter.setOnItemClicklistener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                returnValue = searchItem.get(position).name;
+//                et_school.setText(temp);
+                if(how.equals("school")) {
+                    et_school.setText(returnValue);
+                } else if(how.equals("major")) {
+                    et_major.setText(returnValue);
+                } else if(how.equals("region")) {
+                    et_region.setText(returnValue);
+                }
+                alertDialog.dismiss();
+            }
+        });
+    };
 }

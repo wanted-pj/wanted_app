@@ -20,7 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:text="프로필"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -30,19 +29,35 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp">
 
-    <ImageView
-        android:id="@+id/edit_btn"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="5dp"
-        android:src="@drawable/ic_write"
-        app:tint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        />
+        <!--프로필탭 타이틀-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
+            android:letterSpacing="-0.05"
+            android:text="프로필"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/edit_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="3dp"
+            android:src="@drawable/ic_write"
+            app:tint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!--프로필탭 구분선-->
@@ -73,8 +88,7 @@
                 <ImageView
                     android:id="@+id/pf_img"
                     android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:srcCompat="@drawable/profile_basic1" />
+                    android:layout_height="70dp" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -89,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:letterSpacing="-0.05"
-                        android:text="시미즈"
+                        android:text=""
                         android:textSize="20dp"
                         android:textColor="@color/black" />
 
@@ -119,19 +133,19 @@
                         android:id="@+id/pf_star2"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star3"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star4"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:src="@drawable/profile_star"/>
+                        android:src="@drawable/profile_star_gray"/>
 
                     <ImageView
                         android:id="@+id/pf_star5"
@@ -214,7 +228,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="홍익대학교"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -246,7 +260,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="컴퓨터공학과"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -277,7 +291,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="수원시"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -318,7 +332,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="2"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -350,7 +364,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="21"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -381,7 +395,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:letterSpacing="-0.05"
-                                android:text="여"
+                                android:text=""
                                 android:background="@null"
                                 android:textColor="@color/white"
                                 android:textSize="14dp" />
@@ -465,7 +479,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:text="상호명: 원티드\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @원티드 친구 추가하고 소식을 받아보세요"
+                    android:text="상호명: 드림메이트\n대표자: 임현승\n이메일: temp@gmail.com\n카카오톡: @드림메이트 친구 추가하고 소식을 받아보세요"
                     android:textSize="8dp"
                     android:textColor="#ff191919"
                     android:letterSpacing="-0.02"

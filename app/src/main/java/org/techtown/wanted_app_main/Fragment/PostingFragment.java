@@ -250,6 +250,7 @@ public class PostingFragment extends Fragment {
         postingDetailImage.setImageResource(image);
 
 
+        // 케릭터 클릭하면 반응
         writer_layout = view.findViewById(R.id.writer_layout);
         writer_layout.setOnClickListener(new View.OnClickListener() {
                  @Override
@@ -261,6 +262,7 @@ public class PostingFragment extends Fragment {
             }
         );
 
+        //
         postingDetailAdapter.setOnItemClicklistener(new PostingDetailAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

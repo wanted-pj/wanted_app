@@ -95,6 +95,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
     Button btnSchoolSearch, btnMajorSearch;
 
+    boolean idValidation = false;
+    boolean pwValidation = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +117,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         btnSchoolSearch.setOnClickListener(v -> {
 
             AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
-            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search,null);
+            View dialogSchool = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
             alert.setView(dialogSchool);
 
             AlertDialog alertDialog = alert.create();
@@ -131,18 +134,18 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
             alertDialog.show();
 
-            EditText input = (EditText)dialogSchool.findViewById(R.id.search_school_edittext);
-            Button btnSearchDB = (Button)dialogSchool.findViewById(R.id.search_school_btn);
+            EditText input = (EditText) dialogSchool.findViewById(R.id.search_school_edittext);
+            Button btnSearchDB = (Button) dialogSchool.findViewById(R.id.search_school_btn);
 
             btnSearchDB.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 //                    Items.clear();  //기존 리싸이클러뷰 초기화
                     String temp = input.getText().toString();
-                    for(String school : OuterData.schoolList) {
-                      if(school.contains(temp)) {
+                    for (String school : OuterData.schoolList) {
+                        if (school.contains(temp)) {
 //                            Items.add();
-                      }
+                        }
                     }
                 }
             });
@@ -212,11 +215,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 //Integer postage = Integer.valueOf(et_age.getText().toString());
 
                 //제대로 입력안했을 시
-                if ((postid.length() <= 0) && (postpwd.length() <= 0) && (postnickname.length() <= 0)) {
+                if ((postid.length() <= 0) || (postpwd.length() <= 0) || (postnickname.length() <= 0)
+                        || !idValidation || !pwValidation) {
                     dialog = new Dialog(LoginRegisterActivity.this);
                     dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                     dialog.setContentView(R.layout.dialog_register);
-                    dialog.show();
+                    TextView textView = dialog.findViewById(R.id.text);
                     Button cancel1 = dialog.findViewById(R.id.btnCancel);
                     cancel1.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -224,6 +228,33 @@ public class LoginRegisterActivity extends AppCompatActivity {
                             dialog.dismiss();
                         }
                     });
+
+                    if (postid.length() == 0) {
+                        textView.setText("아이디를 입력해주세요");
+                        dialog.show();
+                        return;
+                    }
+                    if (postpwd.length() == 0 ){
+                        textView.setText("비밀번호를 입력해주세요");
+                        dialog.show();
+                        return;
+                    }
+                    if (postnickname.length() == 0 ){
+                        textView.setText("닉네임을 입력해주세요");
+                        dialog.show();
+                        return;
+                    }
+                    if (!idValidation) {
+                        textView.setText("아이디 중복 체크해주세요");
+                        dialog.show();
+                        return;
+                    }
+                    if (!pwValidation) {
+                        textView.setText("비밀번호 중복 체크해주세요");
+                        dialog.show();
+                        return;
+                    }
+
                 } else {  //제대로 입력했을 시 서버에 post 후 LoginActivity로 이동
 
                     String url = "http://13.125.214.178:8080/personal";
@@ -328,7 +359,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
                 }
-            });}
+            });
+        }
     }
 
     public void checkId() { //아이디 중복검사
@@ -345,11 +377,13 @@ public class LoginRegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 id_checkmes.setText("사용 가능한 아이디입니다.");
+                idValidation = true;
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 id_checkmes.setText("이미 아이디가 존재합니다.");
+                idValidation = false;
             }
         });
         requestQueue.add(stringRequest);
@@ -367,9 +401,10 @@ public class LoginRegisterActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (et_pwdcheck.isFocusable() && s.toString().equals(et_pwd.getText().toString())) {
                     pwd_checkmes.setText("비밀번호를 올바르게 입력했습니다.");
-
+                    pwValidation = true;
                 } else {
                     pwd_checkmes.setText("비밀번호를 다시 확인해주세요.");
+                    pwValidation = false;
                 }
             }
 

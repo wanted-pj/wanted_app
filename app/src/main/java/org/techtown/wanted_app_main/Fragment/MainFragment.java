@@ -215,9 +215,9 @@ public class MainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("posting", postingItems.get(position));
-                navController.navigate(R.id.action_main_to_posting, bundle);
                 setBtnNavIndex(1);
                 updateBottomMenu();
+                navController.navigate(R.id.action_main_to_posting, bundle);
             }
         });
 
@@ -227,11 +227,12 @@ public class MainFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putLong("profileId", friendIds.get(position));
+                setBtnNavIndex(3);
+                updateBottomMenu();
                 navController.navigate(R.id.action_main_to_profile, bundle);
             }
         });
-        
-        
+
         return view;
     }
 

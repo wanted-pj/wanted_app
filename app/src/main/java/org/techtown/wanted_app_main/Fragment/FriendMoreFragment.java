@@ -33,6 +33,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 public class FriendMoreFragment extends Fragment {
 
     private static final String argParam1 = "friendsCategory";
@@ -180,6 +183,8 @@ public class FriendMoreFragment extends Fragment {
             public void onfriendClick(View view, int position) {
                 Bundle bundle = new Bundle();
                 bundle.putLong("profileId", friendMoreAdapter.friendList.get(position).id);
+                setBtnNavIndex(3);
+                updateBottomMenu();
                 navController.navigate(R.id.action_friend_to_profile, bundle);
             }
         });

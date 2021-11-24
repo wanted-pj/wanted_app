@@ -184,6 +184,8 @@ public class ProfileFragment extends Fragment {
                                 // bundle.putParcelable("participants", participants.get(position));
                                 // navController.navigate(R.id.action_chat_to_chat, bundle);
                                 // 일단 채팅 리스트로 가자
+                                setBtnNavIndex(1);
+                                updateBottomMenu();
                                 navController.navigate(R.id.action_global_chatListFragment);
                             }
                         },
@@ -194,6 +196,8 @@ public class ProfileFragment extends Fragment {
                                 // Bundle bundle = new Bundle();
                                 // bundle.putParcelable("participants", participants.get(position));
                                 // navController.navigate(R.id.action_chat_to_chat, bundle);
+                                setBtnNavIndex(2);
+                                updateBottomMenu();
                                 navController.navigate(R.id.action_global_chatListFragment);
                             }
                         }) {

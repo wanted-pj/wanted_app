@@ -180,12 +180,14 @@ public class PostingListFragment extends Fragment {
         btnMyPosting.setOnClickListener(v -> {
             if (myPostingCheck) {
                 myPostingCheck = false;
+                btnMyPosting.setImageResource(R.drawable.ic_myposting_off);
                 String findingText = searchText.getText().toString();
                 postingItems = new ArrayList<>(posting_list);
                 setCommunityCategory(communityCategory, findingText);
                 // 아이콘 변경
             } else {
                 myPostingCheck = true;
+                btnMyPosting.setImageResource(R.drawable.ic_myposting);
                 String findingText = searchText.getText().toString();
                 setFindMyPosting(communityCategory, findingText);
             }

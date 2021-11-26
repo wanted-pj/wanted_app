@@ -3,20 +3,18 @@ package org.techtown.wanted_app_main.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.database.Search;
 
 import java.util.ArrayList;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-    private ArrayList<Search> search = new ArrayList<Search>();
+    private ArrayList<String> searchList = new ArrayList<>();
     static SearchAdapter.OnItemClickListener listener;
 
     public interface OnItemClickListener {
@@ -25,12 +23,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     public void setOnItemClicklistener(SearchAdapter.OnItemClickListener listener) {
         this.listener = listener;
-
-    }
-
-    public void onItemClick(View view, int position) {
-        if (listener != null)
-            listener.onItemClick(view, position);
     }
 
     @NonNull
@@ -44,18 +36,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        Search search = this.search.get(position);
+        String search = this.searchList.get(position);
         viewHolder.setSearch(search);
     }
 
-    public void setSearch(ArrayList<Search> arrayList) {
-        this.search = arrayList;
+    public void setSearchList(ArrayList<String> searchList) {
+        this.searchList = searchList;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return search.size();
+        return searchList.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,8 +67,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             });
         }
 
-        public void setSearch(Search search) {
-            tv_name.setText(search.getName());
+        public void setSearch(String search) {
+            tv_name.setText(search);
         }
     }
 }

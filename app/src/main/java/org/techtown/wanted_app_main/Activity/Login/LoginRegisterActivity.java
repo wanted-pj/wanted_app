@@ -39,26 +39,13 @@ import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
-import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.Adapter.SearchAdapter;
 import org.techtown.wanted_app_main.R;
-import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
-import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
 import org.techtown.wanted_app_main.database.OuterApi.OuterData;
-import org.techtown.wanted_app_main.database.OuterApi.School;
-import org.techtown.wanted_app_main.database.Personal;
-import org.techtown.wanted_app_main.database.Posting;
-import org.techtown.wanted_app_main.database.Search;
 
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,7 +94,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     Button btnSchoolSearch, btnMajorSearch, btnRegionSearch;
     private RecyclerView rvSearch;
     private SearchAdapter searchAdapter;
-    private ArrayList<Search> searchItem;
+    private ArrayList<String> searchItem;
 
     boolean idValidation = false;
     boolean pwValidation = false;
@@ -557,6 +544,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
     }
 
     public void showSearchDialog(List<String> list, String how) {
+
         //다이얼로그
         AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
         View dialog = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
@@ -567,40 +555,20 @@ public class LoginRegisterActivity extends AppCompatActivity {
         alertDialog.show();
 
         searchAdapter = new SearchAdapter();
-        searchItem = new ArrayList<>();
 
         rvSearch = dialog.findViewById(R.id.recyclerView_search);
         rvSearch.setAdapter(searchAdapter);
         rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
 
-        for (String temp : list) {
-            searchItem.add(new Search(temp));
-        }
+        // 데이터 채워줌
+        searchItem = new ArrayList<>(list);
+        searchAdapter.setSearchList(searchItem);
 
-        searchAdapter.setSearch(searchItem);
-
-        EditText input = (EditText) dialog.findViewById(R.id.search_edittext);
-        Button btnSearchDB = (Button) dialog.findViewById(R.id.search_btn);
-
-        btnSearchDB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchItem.clear();  //기존 리싸이클러뷰 초기화
-                String temp = input.getText().toString();
-                for (String obj : list) {
-                    if (obj.contains(temp)) {
-                        searchItem.add(new Search(obj));
-                    }
-                }
-                searchAdapter.notifyDataSetChanged();
-            }
-        });
-
+        // Adapter 의 listener 지정 (값 선택했을 때)
         searchAdapter.setOnItemClicklistener(new SearchAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                returnValue = searchItem.get(position).name;
-//                et_school.setText(temp);
+                returnValue = searchItem.get(position);
                 if (how.equals("school")) {
                     et_school.setText(returnValue);
                 } else if (how.equals("major")) {
@@ -611,6 +579,24 @@ public class LoginRegisterActivity extends AppCompatActivity {
                 alertDialog.dismiss();
             }
         });
+
+        // 탐색 버튼 누르면 검색됨
+        EditText input = dialog.findViewById(R.id.search_edittext);
+        Button btnSearchDB = dialog.findViewById(R.id.search_btn);
+        btnSearchDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItem.clear();  //기존 리싸이클러뷰 초기화
+                String findString = input.getText().toString();
+                for (String search : list) {
+                    if (search.contains(findString)) {
+                        searchItem.add(search);
+                    }
+                }
+                searchAdapter.setSearchList(searchItem);
+            }
+        });
+
     }
 
     ;

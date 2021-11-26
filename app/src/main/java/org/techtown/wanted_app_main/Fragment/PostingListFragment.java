@@ -81,7 +81,7 @@ public class PostingListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         me = MainActivity.me;
-        System.out.println("postingListFragment >> " + me);
+        System.out.println("출력: postingListFragment >> " + me);
 
         // 카테고리의 기본값 설정은 (전체)
         communityCategory = 0;
@@ -112,7 +112,6 @@ public class PostingListFragment extends Fragment {
                 if (posting_list.size() > 2) {
                     Collections.sort(posting_list, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
-
                 // 카테고리에 따라 boadItem채우기
                 postingItems = new ArrayList<>(posting_list);
                 setCommunityCategory(communityCategory, "");

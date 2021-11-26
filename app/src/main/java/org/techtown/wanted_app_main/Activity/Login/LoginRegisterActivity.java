@@ -88,6 +88,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
     String imageName;
     //닉네임
     EditText et_nickname;
+    TextView nickname_checkmes;
+    Button nickname_dupcheck;
     //역량
     EditText et_career;
     //등록
@@ -109,6 +111,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
     boolean idValidation = false;
     boolean pwValidation = false;
+    boolean nicknameValidation = false;
+
 
     String returnValue;
 
@@ -124,9 +128,9 @@ public class LoginRegisterActivity extends AppCompatActivity {
         radio_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if(checkedId == gender_male.getId()) {
+                if (checkedId == gender_male.getId()) {
                     value_gender = 0;
-                } else if(checkedId == gender_female.getId()) {
+                } else if (checkedId == gender_female.getId()) {
                     value_gender = 1;
                 }
             }
@@ -179,11 +183,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
         id_dupcheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (et_id.getText().equals("")) {
+                if (et_id.getText().toString().equals("")) {
                     id_checkmes.setText("아이디를 입력해주세요.");
-                    return;
+                } else {
+                    checkId();     //id중복확인
                 }
-                checkId();     //id중복확인
             }
         });
 
@@ -210,6 +214,18 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
         //닉네임
         et_nickname = findViewById(R.id.register_nickname);
+        nickname_checkmes = findViewById(R.id.register_nickname_check_txt);
+        nickname_dupcheck = findViewById(R.id.register_nickname_check_btn);
+        nickname_dupcheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (et_nickname.getText().toString().equals("")) {
+                    nickname_checkmes.setText("닉네임을 입력해주세요.");
+                } else {
+                    checkNickname();     //id중복확인
+                }
+            }
+        });
 
         //학과
         btnMajorSearch = findViewById(R.id.profile_edit_major_search);
@@ -257,12 +273,12 @@ public class LoginRegisterActivity extends AppCompatActivity {
                         dialog.show();
                         return;
                     }
-                    if (postpwd.length() == 0 ){
+                    if (postpwd.length() == 0) {
                         textView.setText("비밀번호를 입력해주세요.");
                         dialog.show();
                         return;
                     }
-                    if (postnickname.length() == 0 ){
+                    if (postnickname.length() == 0) {
                         textView.setText("닉네임을 입력해주세요.");
                         dialog.show();
                         return;
@@ -274,6 +290,11 @@ public class LoginRegisterActivity extends AppCompatActivity {
                     }
                     if (!pwValidation) {
                         textView.setText("비밀번호가 일치하지 않습니다.");
+                        dialog.show();
+                        return;
+                    }
+                    if (!nicknameValidation) {
+                        textView.setText("닉네임 중복 확인해주세요.");
                         dialog.show();
                         return;
                     }
@@ -403,6 +424,32 @@ public class LoginRegisterActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    public void checkNickname() { //아이디 중복검사
+
+        RequestQueue requestQueue;
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        Network network = new BasicNetwork(new HurlStack());
+        requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        String url1 = "http://13.125.214.178:8080/personal/nickname/" + et_nickname.getText().toString();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                nickname_checkmes.setText("사용 가능한 닉네임입니다.");
+                nicknameValidation = true;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                nickname_checkmes.setText("이미 해당 닉네임이 존재합니다.");
+                nicknameValidation = false;
+            }
+        });
+        requestQueue.add(stringRequest);
+    }
+
 
     public void checkPwd() { //비밀번호와 비밀번호확인 일치체크
         et_pwdcheck.addTextChangedListener(new TextWatcher() {
@@ -509,7 +556,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void showSearchDialog(List<String> list, String how){
+    public void showSearchDialog(List<String> list, String how) {
         //다이얼로그
         AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
         View dialog = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
@@ -526,7 +573,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
         rvSearch.setAdapter(searchAdapter);
         rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
 
-        for(String temp : list) {
+        for (String temp : list) {
             searchItem.add(new Search(temp));
         }
 
@@ -554,15 +601,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 returnValue = searchItem.get(position).name;
 //                et_school.setText(temp);
-                if(how.equals("school")) {
+                if (how.equals("school")) {
                     et_school.setText(returnValue);
-                } else if(how.equals("major")) {
+                } else if (how.equals("major")) {
                     et_major.setText(returnValue);
-                } else if(how.equals("region")) {
+                } else if (how.equals("region")) {
                     et_region.setText(returnValue);
                 }
                 alertDialog.dismiss();
             }
         });
-    };
+    }
+
+    ;
 }

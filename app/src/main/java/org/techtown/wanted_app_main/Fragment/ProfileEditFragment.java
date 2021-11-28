@@ -1,5 +1,8 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -38,40 +43,59 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
+import org.techtown.wanted_app_main.Adapter.SearchAdapter;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.OuterApi.OuterData;
 import org.techtown.wanted_app_main.database.Personal;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProfileEditFragment extends Fragment {
 
     NavController navController;
     public Personal personal;
-    private int id;
-    //성별
+    private Long id;
+    // 성별
     Integer change_gender;
-    //학년
+    // 학년
     Spinner spinner_grade;
     Integer change_grade;
-    //나이
+    // 나이
     Spinner spinner_age;
     Integer change_age;
-
-    //이미지
+    // 이미지
     CheckBox r1, r2, r3, r4, r5, r6;
     String change_img;
-
-    //역량
+    // 역량
     EditText et_career;
-
-    //등록
+    // 등록
     Button btn_edit_done;
 
+    // 학교
+    Button profile_edit_school_search;
+    EditText profile_edit_school;
+    // 학과
+    Button profile_edit_major_search;
+    EditText profile_edit_major;
+    // 지역
+    Button register_address_search;
+    EditText register_address;
+    // 다이얼로그 뷰 컴포넌트
+    private RecyclerView recyclerView_search;
+    private ArrayList<String> searchItem;
+    private SearchAdapter searchAdapter;
 
-    public ProfileEditFragment() { }
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle bundle = getArguments();
+        id = bundle.getLong("id");
+    }
 
     @Nullable
     @Override
@@ -80,10 +104,6 @@ public class ProfileEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
         hideBottomNavigation(true);
-
-       // Bundle bundle = getArguments();
-        //id = bundle.getInt("id");
-        id = 1;
 
         //아이디값 가져오기
         //성학년,나이 spinner
@@ -101,6 +121,41 @@ public class ProfileEditFragment extends Fragment {
         selectMyImage();
         //역량
         et_career =view.findViewById(R.id.profile_edit_career_et);
+        // 학과, 학과, 지역
+        profile_edit_school_search = view.findViewById(R.id.profile_edit_school_search);
+        profile_edit_school = view.findViewById(R.id.profile_edit_school);
+        // 학과
+        profile_edit_major_search = view.findViewById(R.id.profile_edit_major_search);
+        profile_edit_major = view.findViewById(R.id.profile_edit_major);
+        // 지역
+        register_address_search = view.findViewById(R.id.register_address_search);
+        register_address = view.findViewById(R.id.register_address);
+
+        Button.OnClickListener schoolMajorRegionListener = new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                List<String> list;
+                switch (v.getId()) {
+                    case R.id.profile_edit_school_search:
+                        list = OuterData.schoolList;
+                        showSearchDialog(list, "school");
+                        break;
+                    case R.id.profile_edit_major_search:
+                        list = OuterData.majorList;
+                        showSearchDialog(list, "major");
+                        break;
+                    case R.id.register_address_search:
+                        list = OuterData.regionList;
+                        showSearchDialog(list, "region");
+                        break;
+
+                }
+            }
+        };
+        profile_edit_school_search.setOnClickListener(schoolMajorRegionListener);
+        profile_edit_major_search.setOnClickListener(schoolMajorRegionListener);
+        register_address_search.setOnClickListener(schoolMajorRegionListener);
+
         //버튼
         btn_edit_done = view.findViewById(R.id.profile_edit_done);
 
@@ -122,6 +177,60 @@ public class ProfileEditFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
+    }
+
+    public void showSearchDialog(List<String> list, String how) {
+        // 다이얼로그
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
+        dialogBuilder.setView(dialogView);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+
+        // 다이얼로그 내의 리사이클러 뷰에 Adapter 삽입
+        searchAdapter = new SearchAdapter();
+        recyclerView_search = alertDialog.findViewById(R.id.recyclerView_search);
+        recyclerView_search.setAdapter(searchAdapter);
+        recyclerView_search.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+        // 데이터 채워줌
+        searchItem = new ArrayList<>(list);
+        searchAdapter.setSearchList(searchItem);
+
+        // Adapter 의 listener 지정 (값 선택했을 때)
+        searchAdapter.setOnItemClicklistener(new SearchAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String returnValue = searchItem.get(position);
+                if (how.equals("school")) {
+                    profile_edit_school.setText(returnValue);
+                } else if (how.equals("major")) {
+                    profile_edit_major.setText(returnValue);
+                } else if (how.equals("region")) {
+                    register_address.setText(returnValue);
+                }
+                alertDialog.dismiss();
+            }
+        });
+
+        // 탐색 버튼 누르면 검색됨
+        EditText input = alertDialog.findViewById(R.id.search_edittext);
+        Button btnSearchDB = alertDialog.findViewById(R.id.search_btn);
+        btnSearchDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItem.clear();  //기존 리싸이클러뷰 초기화
+                String findString = input.getText().toString();
+                for (String search : list) {
+                    if (search.contains(findString)) {
+                        searchItem.add(search);
+                    }
+                }
+                searchAdapter.setSearchList(searchItem);
+            }
+        });
     }
 
     public void get_basic_info(){
@@ -148,6 +257,7 @@ public class ProfileEditFragment extends Fragment {
                 }.getType();
 
                 personal = gson.fromJson(changeString, listType);
+                System.out.println(personal);
 
                 //이미지 설정
                 if (personal.img.matches(".*1")) {

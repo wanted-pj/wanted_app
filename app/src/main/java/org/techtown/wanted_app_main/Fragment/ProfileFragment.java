@@ -162,9 +162,9 @@ public class ProfileFragment extends Fragment {
 
         //프로필 편집 바로가기
         btn_edit.setOnClickListener(v -> {
-            Bundle bundle1 = new Bundle();
-            bundle1.putString("btnGoedit", "test");
-            navController.navigate(R.id.action_profile_to_profile_edit, bundle1);
+            Bundle bundle = new Bundle();
+            bundle.putLong("id", loginId);
+            navController.navigate(R.id.action_profile_to_profile_edit, bundle);
         });
 
         //쪽지하기

@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -25,6 +27,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Cache;
 import com.android.volley.Network;
 import com.android.volley.Request;
@@ -42,9 +45,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.techtown.wanted_app_main.Adapter.SearchAdapter;
 import org.techtown.wanted_app_main.R;
+import org.techtown.wanted_app_main.database.Dto.PersonalChatDto;
 import org.techtown.wanted_app_main.database.OuterApi.OuterData;
 import org.techtown.wanted_app_main.database.Personal;
 
@@ -60,14 +65,17 @@ public class ProfileEditFragment extends Fragment {
     NavController navController;
     public Personal personal;
     private Long id;
-    // 성별
-    Integer change_gender;
     // 학년
     Spinner spinner_grade;
     Integer change_grade;
     // 나이
     Spinner spinner_age;
     Integer change_age;
+    // 성별
+    RadioGroup gender_group;
+    RadioButton gender_male;
+    RadioButton gender_female;
+    Integer change_gender;
     // 이미지
     CheckBox r1, r2, r3, r4, r5, r6;
     String change_img;
@@ -75,6 +83,7 @@ public class ProfileEditFragment extends Fragment {
     EditText et_career;
     // 등록
     Button btn_edit_done;
+
 
     // 학교
     Button profile_edit_school_search;
@@ -104,7 +113,20 @@ public class ProfileEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile_edit, container, false);
         hideBottomNavigation(true);
-
+        // 성별 위젯 가져오기
+        gender_male = view.findViewById(R.id.gender_male);
+        gender_female = view.findViewById(R.id.gender_female);
+        gender_group = view.findViewById(R.id.gender_group);
+        gender_group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if (checkedId == gender_male.getId()) {
+                    change_gender = 0;
+                } else if (checkedId == gender_female.getId()) {
+                    change_gender = 1;
+                }
+            }
+        });
         //아이디값 가져오기
         //성학년,나이 spinner
         spinner_grade = view.findViewById(R.id.profile_edit_grade_spinner);
@@ -120,7 +142,7 @@ public class ProfileEditFragment extends Fragment {
         r6 = view.findViewById(R.id.iv6);
         selectMyImage();
         //역량
-        et_career =view.findViewById(R.id.profile_edit_career_et);
+        et_career = view.findViewById(R.id.profile_edit_career_et);
         // 학과, 학과, 지역
         profile_edit_school_search = view.findViewById(R.id.profile_edit_school_search);
         profile_edit_school = view.findViewById(R.id.profile_edit_school);
@@ -131,7 +153,7 @@ public class ProfileEditFragment extends Fragment {
         register_address_search = view.findViewById(R.id.register_address_search);
         register_address = view.findViewById(R.id.register_address);
 
-        Button.OnClickListener schoolMajorRegionListener = new Button.OnClickListener(){
+        Button.OnClickListener schoolMajorRegionListener = new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<String> list;
@@ -233,7 +255,7 @@ public class ProfileEditFragment extends Fragment {
         });
     }
 
-    public void get_basic_info(){
+    public void get_basic_info() {
         RequestQueue requestQueue;
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
         Network network = new BasicNetwork(new HurlStack());
@@ -273,8 +295,14 @@ public class ProfileEditFragment extends Fragment {
                 } else {
                     r6.setChecked(true);
                 }
+                //성별설정
+                if (personal.gender == 0) {
+                    gender_male.setChecked(true);
+                } else {
+                    gender_female.setChecked(true);
+                }
                 //학년설정
-                spinner_grade.setSelection(personal.grade-1);
+                spinner_grade.setSelection(personal.grade - 1);
                 //나이설정
                 spinner_age.setSelection(personal.age - 19);
                 //역량설정
@@ -286,29 +314,32 @@ public class ProfileEditFragment extends Fragment {
             }
         });
         requestQueue.add(stringRequest);
-            }
+    }
 
-    public void put_edited_info(){
+    public void put_edited_info() {
 
-        String url = "http://13.125.214.178:8080/personal" + "/" + id;
+        String url = "http://13.125.214.178:8080/personal/" + id;
         Map map = new HashMap();
-        map.put("stringId", personal.stringId);
-        map.put("pwd", personal.pwd);
-        map.put("nickname", personal.nickname);
         map.put("img", change_img);
-        map.put("school", "서울대학교");
-        map.put("major", null);
+        map.put("school", profile_edit_school.getText().toString());
+        map.put("major", profile_edit_major.getText().toString());
         map.put("grade", change_grade);
         map.put("age", change_age);
         map.put("gender", change_gender);
-        map.put("address", null);
+        map.put("address", register_address.getText().toString());
         map.put("career", et_career.getText().toString());
-        JSONObject params = new JSONObject(map);
+        JSONObject jsonObject = new JSONObject(map);
 
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, params,
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonObject,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject obj) {
+                    public void onResponse(JSONObject response) {
+                        // 한글깨짐 해결 코드
+                        System.out.println("response 출력: " + response);
+                        System.out.println("프로필 수정이 완료되었다.");
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("profileId", id);
+                        navController.navigate(R.id.action_profile_edit_to_profile, bundle);
                     }
                 },
                 new Response.ErrorListener() {
@@ -317,18 +348,9 @@ public class ProfileEditFragment extends Fragment {
                         Log.e("register_Error", error.getMessage());
                     }
                 }) {
-
-            @Override
-            public String getBodyContentType() {
-                return "application/json; charset=UTF-8";
-            }
         };
         RequestQueue queue = Volley.newRequestQueue(requireContext());
         queue.add(objectRequest);
-        Bundle bundle1 = new Bundle();
-        bundle1.putString("btnGoedit", "test");
-
-        navController.navigate(R.id.action_profile_edit_to_profile, bundle1);
     }
 
 

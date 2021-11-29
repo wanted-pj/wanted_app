@@ -204,7 +204,6 @@ public class ProfileFragment extends Fragment {
                             }
                         }) {
 
-
                     @Override
                     public String getBodyContentType() {
                         return "application/json; charset=UTF-8";

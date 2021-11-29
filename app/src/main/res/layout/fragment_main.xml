@@ -48,6 +48,7 @@
 
                 <!--커뮤니티 타이틀-->
                 <LinearLayout
+                    android:id="@+id/arrow_community"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
@@ -63,7 +64,6 @@
                         android:letterSpacing="-0.05"/>
 
                     <Button
-                        android:id="@+id/arrow_community"
                         android:layout_width="10dp"
                         android:layout_height="15dp"
                         android:background="@drawable/ic_arrow"

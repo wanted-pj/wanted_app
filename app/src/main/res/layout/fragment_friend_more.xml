@@ -10,7 +10,7 @@
     <!--친구탭 타이틀-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="55dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:text="친구"
@@ -18,8 +18,7 @@
         android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:letterSpacing="-0.05"
-        android:paddingLeft="20dp"
-        android:paddingBottom="5dp"/>
+        android:paddingLeft="20dp"/>
 
     <!--친구탭 구분선-->
     <View

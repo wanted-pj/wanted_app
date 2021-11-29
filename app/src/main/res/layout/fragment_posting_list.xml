@@ -166,7 +166,7 @@
                 android:overScrollMode="never"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="10dp"
+                android:paddingTop="15dp"
                 android:paddingBottom="15dp"
                 android:background="@color/white" />
 

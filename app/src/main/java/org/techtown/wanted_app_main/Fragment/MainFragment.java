@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -178,7 +179,7 @@ public class MainFragment extends Fragment {
         btnAddress.setOnClickListener(onClickListener);
 
         //커뮤니티로 이동
-        Button btnGoCommunity = view.findViewById(R.id.arrow_community);
+        LinearLayout btnGoCommunity = view.findViewById(R.id.arrow_community);
         btnGoCommunity.setOnClickListener(view1 -> {
             navController.navigate(R.id.action_main_to_posting_list);
             setBtnNavIndex(1);

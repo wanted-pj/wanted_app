@@ -87,7 +87,7 @@
                     android:layout_marginRight="8dp"
                     android:letterSpacing="-0.05"
                     android:text="공모전"
-                    android:textColor="@color/white"
+                    android:textColor="@color/grayDark"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 
@@ -99,7 +99,7 @@
                     android:letterSpacing="-0.05"
                     android:maxLines="1"
                     android:text="원티드 해커톤 같이 나가실 개발자 구해요!"
-                    android:textColor="@color/white"
+                    android:textColor="@color/black"
                     android:textSize="14sp" />
 
             </LinearLayout>

@@ -179,13 +179,14 @@ public class PostingListFragment extends Fragment {
         btnMyPosting = view.findViewById(R.id.btn_myposting);
         btnMyPosting.setOnClickListener(v -> {
             if (myPostingCheck) {
+                // 내 글 보기 상태였으면
                 myPostingCheck = false;
-                btnMyPosting.setImageResource(R.drawable.ic_myposting);
+                btnMyPosting.setImageResource(R.drawable.ic_myposting_off);
                 String findingText = searchText.getText().toString();
                 postingItems = new ArrayList<>(posting_list);
                 setCommunityCategory(communityCategory, findingText);
-                // 아이콘 변경
             } else {
+                // 전체 글 보기 상태였으면
                 myPostingCheck = true;
                 btnMyPosting.setImageResource(R.drawable.ic_myposting);
                 String findingText = searchText.getText().toString();

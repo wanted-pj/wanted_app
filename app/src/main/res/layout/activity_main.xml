@@ -9,30 +9,12 @@
     tools:context=".Activity.MainActivity"
     android:id="@+id/main_layout">
 
-    <LinearLayout
-        android:id="@+id/topNavigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/white">
-
-        <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="15dp"
-            android:src="@drawable/logo" />
-
-    </LinearLayout>
-
     <!-- navigation graph fragment -->
     <fragment
         android:id="@+id/nav_host_fragment"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/topNavigation"
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph" />
 

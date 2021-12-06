@@ -10,36 +10,26 @@ import java.util.ArrayList;
 
 public class PostingDtoInPersonal {
 
-    public Long id;
-    @SerializedName("personal")
-    @Expose
-    public Long personalId;
+    public Long postingId;
     public String category;
     public String title;
     public String content;
     public String postingTime;
+    public String endTime;
     public ArrayList<Connect> connects;
-    public PostingDtoInPersonal(Long id, Long personalId, String category, String title, String content, Team team, String postingTime, ArrayList<Connect> connects) {
-        this.id = id;
-        this.personalId = personalId;
+    public String teamName;
+    public boolean checkRecruiting;
+
+    public PostingDtoInPersonal(Long postingId, String category, String title, String content, String postingTime, String endTime, ArrayList<Connect> connects, String teamName, boolean checkRecruiting) {
+        this.postingId = postingId;
         this.category = category;
         this.title = title;
         this.content = content;
         this.postingTime = postingTime;
+        this.endTime = endTime;
         this.connects = connects;
-    }
-
-    @Override
-    public String toString() {
-        return "PostingDtoInPersonal{" +
-                "id=" + id +
-                ", personal=" + personalId +
-                ", category='" + category + '\'' +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", postingTime='" + postingTime + '\'' +
-                ", connects=" + connects +
-                '}';
+        this.teamName = teamName;
+        this.checkRecruiting = checkRecruiting;
     }
 }
 

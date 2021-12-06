@@ -1,10 +1,14 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import static org.techtown.wanted_app_main.Activity.MainActivity.setBtnNavIndex;
+import static org.techtown.wanted_app_main.Activity.MainActivity.updateBottomMenu;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,11 +30,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Adapter.FriendAdapter;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPersonalsRequest;
-import org.techtown.wanted_app_main.database.Dto.PersonalDtoInPosting;
-import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Dto.PostingDtoInPersonal;
+import org.techtown.wanted_app_main.database.Friend;
+import org.techtown.wanted_app_main.database.Personal;
 import org.techtown.wanted_app_main.database.Posting;
 
 import java.io.UnsupportedEncodingException;
@@ -50,20 +56,20 @@ public class MainFragment extends Fragment {
     private RecyclerView recyclerViewFriend;
     private FriendAdapter friendAdapter = new FriendAdapter();
     private ArrayList<Friend> friendItems = new ArrayList<>();
-
+    Personal another;
+    private ArrayList<Long> friendIds = new ArrayList<>();
     // layout
     private Button btnSchool, btnMajor, btnAddress;
 
     // 가져온 Personal과 posting정보
-    public ArrayList<Personal> personal_list;
+    public static ArrayList<Personal> personal_list;
 
     // category -> 0은 school, 1은 major, 2는 address
     private int friendsCategory = 0;
 
-    // 나 자신
-    private Personal me;
-
     private static NavController navController;
+
+    private Personal me;
 
     public MainFragment() {
         // Required empty public constructor
@@ -72,8 +78,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        me = getArguments().getParcelable("me");
-        System.out.println("MainFragment onCreate 출력:" + me);
+        System.out.println("MainFragment onCreate 출력:" + MainActivity.me);
 
         //서버 호출
         Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
@@ -99,23 +104,26 @@ public class MainFragment extends Fragment {
                 List<Personal> temp = gson.fromJson(changeString, listType);
                 personal_list = new ArrayList<>(temp);
 
-                // 사람을 통해 posting 데이터 접근
+                // 사람을 통해 posting 데이터 접근, 모든 Posting 데이터 가져옴
+                ArrayList<Posting> tempPostings = new ArrayList<>();
                 for (Personal personal : personal_list) {
                     if (!personal.postings.isEmpty()) {
                         for (PostingDtoInPersonal posting : personal.postings) {
                             // 포스팅 넣기
-                            // 포스팅 보여주기 위한
-                            postingItems.add(new Posting(posting.id,
-                                    new PersonalDtoInPosting(posting.personalId, personal.nickname, personal.img),
-                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime));
+                            tempPostings.add(new Posting(posting.postingId, personal.id,
+                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.endTime, posting.teamName, personal.nickname, personal.img, posting.checkRecruiting));
                         }
                     }
                 }
-                if (postingItems.size() > 1) {
-                    Collections.sort(postingItems, (a, b) -> b.postingTime.compareTo(a.postingTime));
+                // 포스팅 올린 시간에 따라 정렬 후 4개의 데이터로만 채워 넣기
+                postingItems = new ArrayList<>();
+                if (tempPostings.size() > 1) {
+                    Collections.sort(tempPostings, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
-                // 예시데이터
-                me = personal_list.get(0);
+                int count = Math.min(postingItems.size(), 4);
+                for (int i = 0; i < count; i++) {
+                    postingItems.add(tempPostings.get(i));
+                }
 
                 // 친구 채우기
                 setCategory(friendsCategory);
@@ -131,18 +139,11 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-        //friendsCategoryList = getResources().getStringArray(R.array.friends_array);
 
+        me = MainActivity.me;
         System.out.println("MainFragment onCreateView 출력:" + MainActivity.me);
-
-        Bundle bundle = getArguments();
-        //id = bundle.getInt("id");
-//        Personal me = bundle.getParcelable("me");
-//        id = 1;
-//        Log.d("test_MainFragment", String.valueOf(me.id));
-
 
         // 커뮤니티 리사이 클러뷰 설정
         recyclerViewCommunity = view.findViewById(R.id.recyclerView_board);
@@ -153,25 +154,6 @@ public class MainFragment extends Fragment {
         recyclerViewFriend = view.findViewById(R.id.recyclerView_friend);
         recyclerViewFriend.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.HORIZONTAL, false));
         recyclerViewFriend.setAdapter(friendAdapter);
-
-
-        /*
-        friendItems = new ArrayList<>();
-        friendItems.add(new Friend("리헤이", "홍익대학교", "컴퓨터공학과", "수원시", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("피넛", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "서강대학교", "수학교육과", "서울시", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("엠마", "홍익대학교", "컴퓨터공학과", "김포시", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("스콧", "홍익대학교", "경제학과", "하남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        // 아래 두개는 display 안 됨 (item display 갯수제한 테스트용 -> DB 연동하고 필요 없어지면 지워주세요)
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-        friendItems.add(new Friend("다니엘", "홍익대학교", "경제학과", "성남시", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-
-        friendAdapter.setFriendList(friendItems); */
-
-        //        boardItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-//        boardItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        boardItems.add(new Board("기타", "광명에서 카공하실 분!", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-
 
         // btn 클릭 이벤트
         btnSchool = view.findViewById(R.id.btn_school);
@@ -201,13 +183,37 @@ public class MainFragment extends Fragment {
         btnAddress.setOnClickListener(onClickListener);
 
         //커뮤니티로 이동
-        Button btnGoCommunity = view.findViewById(R.id.arrow_community);
-
+        LinearLayout btnGoCommunity = view.findViewById(R.id.arrow_community);
         btnGoCommunity.setOnClickListener(view1 -> {
-            Bundle bundle1 = new Bundle();
-            bundle1.putString("btnGoCommunity", "test");
-            navController.navigate(R.id.action_mainFragment_to_boardFragment, bundle);
+            navController.navigate(R.id.action_main_to_posting_list);
+            setBtnNavIndex(1);
+            updateBottomMenu();
         });
+
+        // 포스팅 글로 이동
+        postingAdapter.setOnItemClicklistener(new PostingAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("posting", postingItems.get(position));
+                setBtnNavIndex(1);
+                updateBottomMenu();
+                navController.navigate(R.id.action_main_to_posting, bundle);
+            }
+        });
+
+        //친구 눌렀을 시 프로필페이지로 이동
+        friendAdapter.setOnItemClicklistener(new FriendAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putLong("profileId", friendIds.get(position));
+                setBtnNavIndex(3);
+                updateBottomMenu();
+                navController.navigate(R.id.action_main_to_profile, bundle);
+            }
+        });
+
         return view;
     }
 
@@ -237,28 +243,31 @@ public class MainFragment extends Fragment {
     // 카테고리에 따라서, 나와 일치하는 정보를 가진 사람들의 데이터를 FriendAdapter에 채워줌
     public void setCategory(int friendsCategory) {
         friendItems.clear();
+        friendIds.clear();
         for (int i = 0; i < personal_list.size(); i++) {
-            Personal another = personal_list.get(i);
-            if (me.id != another.id) {
+            another = personal_list.get(i);
+            if (MainActivity.me.id != another.id) {
                 switch (friendsCategory) {
                     case 0:
-                        if (!me.school.equals(another.school)) {
+                        if (!MainActivity.me.school.equals(another.school)) {
                             continue;
                         }
                         break;
                     case 1:
-                        if (!me.major.equals(another.major)) {
+                        if (!MainActivity.me.major.equals(another.major)) {
                             continue;
                         }
                         break;
                     case 2:
-                        if (!me.address.equals(another.address)) {
+                        if (!MainActivity.me.address.equals(another.address)) {
                             continue;
                         }
                         break;
                 }
+                System.out.println("패키지 이름 출력: " + getContext().getPackageName());
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
-                friendItems.add(new Friend(another.nickname, another.school, another.major, another.address, image));
+                friendItems.add(new Friend(another.getId(), another.nickname, another.school, another.major, another.address, image));
+                friendIds.add(another.id);
             }
         }
         friendAdapter.setFriendList(friendItems);

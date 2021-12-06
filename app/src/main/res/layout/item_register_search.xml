@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--내용-->
+    <TextView
+        android:id="@+id/search_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:ellipsize="end"
+        android:letterSpacing="-0.05"
+        android:maxLines="1"
+        android:text="홍익대학교"
+        android:textColor="@color/black"
+        android:textSize="14dp"/>
+
+    <!--구분선-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.8dp"
+        android:background="@color/gray" />
+
+</LinearLayout>

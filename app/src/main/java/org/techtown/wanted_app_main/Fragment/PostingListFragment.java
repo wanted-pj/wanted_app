@@ -1,5 +1,6 @@
 package org.techtown.wanted_app_main.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.EditText;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -26,6 +29,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import org.techtown.wanted_app_main.Activity.MainActivity;
+import org.techtown.wanted_app_main.Activity.PostingWriteActivity;
+import org.techtown.wanted_app_main.Adapter.PostingAdapter;
 import org.techtown.wanted_app_main.R;
 import org.techtown.wanted_app_main.ServerRequest.GetPostingsRequest;
 import org.techtown.wanted_app_main.database.Personal;
@@ -40,7 +46,9 @@ import java.util.List;
 
 public class PostingListFragment extends Fragment {
     private static NavController navController;
-    private Button btnAll, btnContest, btnStudy, btnEtc;
+    private Button btnAll, btnContest, btnStudy, btnEtc, btnSearch;
+    private ImageView btnMyPosting, btnWrite;
+    private EditText searchText;
 
     // 사람과 포스팅
     public List<Posting> posting_list = new ArrayList<>();
@@ -56,6 +64,9 @@ public class PostingListFragment extends Fragment {
     // communityCategory => 0전체, 1공모전 2스터디, 3기타
     int communityCategory;
 
+    // 내글 보기 토큰
+    boolean myPostingCheck = false;
+
     public PostingListFragment() {
         // Required empty public constructor
     }
@@ -63,21 +74,14 @@ public class PostingListFragment extends Fragment {
     // test
     public static PostingListFragment newInstance(String param1, String param2) {
         PostingListFragment fragment = new PostingListFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // 이전 프래그먼트에서 전달한 args 받기
-        if (getArguments() != null) {
-//            getArguments().getParcelable("me", Personal);
-        }
+        me = MainActivity.me;
+        System.out.println("출력: postingListFragment >> " + me);
 
         // 카테고리의 기본값 설정은 (전체)
         communityCategory = 0;
@@ -105,16 +109,12 @@ public class PostingListFragment extends Fragment {
 
                 List<Posting> temp = gson.fromJson(changeString, listType);
                 posting_list = new ArrayList<>(temp);
-                for (Posting posting : posting_list) {
-                    System.out.println(posting);
-                }
                 if (posting_list.size() > 2) {
                     Collections.sort(posting_list, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
-
                 // 카테고리에 따라 boadItem채우기
-                setCommunityCategory(communityCategory);
-                postingAdapter.setPostingList(postingItems);
+                postingItems = new ArrayList<>(posting_list);
+                setCommunityCategory(communityCategory, "");
             }
         };
         requestQueue.add(new GetPostingsRequest(postingResponseListener));
@@ -130,14 +130,15 @@ public class PostingListFragment extends Fragment {
         recyclerViewPosting.setAdapter(postingAdapter);
         recyclerViewPosting.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), RecyclerView.VERTICAL, false));
 
-        // 임시데이터 받기
-//        postingItems.add(new Board("공모전", "원티드 해커톤 같이 나가실 개발자 구해요!", "시미즈", getResources().getIdentifier("@drawable/profile_basic1", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("스터디", "열품타 스터디원 충원합니다", "리안", getResources().getIdentifier("@drawable/profile_basic2", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("기타", "광명에서 카공하실 분!", "가비", getResources().getIdentifier("@drawable/profile_basic3", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("공모전", "DND 해커톤 디자이너 구합니다", "엠마", getResources().getIdentifier("@drawable/profile_basic4", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("공모전", "KBSC 소프트웨어 공모전 같이 준비하실 분?", "다니엘", getResources().getIdentifier("@drawable/profile_basic5", "drawable", getContext().getPackageName())));
-//        postingItems.add(new Board("스터디", "PSAT 스터디 인원 구해요~", "스콧", getResources().getIdentifier("@drawable/profile_basic6", "drawable", getContext().getPackageName())));
-//        postingAdapter.(postingItems);
+        // SearchText 설정
+        searchText = view.findViewById(R.id.search);
+        btnSearch = view.findViewById(R.id.searchButton);
+
+        btnSearch.setOnClickListener(v -> {
+                    String findingText = searchText.getText().toString();
+                    setCommunityCategory(communityCategory, findingText);
+                }
+        );
 
         // 버튼
         // 버튼 뷰 컴포넌트 받기
@@ -166,7 +167,7 @@ public class PostingListFragment extends Fragment {
                         break;
                 }
                 onCommunityCategoryClickedChangeButtonDesign(communityCategory);
-                setCommunityCategory(communityCategory);
+                setCommunityCategory(communityCategory, searchText.getText().toString());
             }
         };
         btnAll.setOnClickListener(onClickListener);
@@ -174,14 +175,44 @@ public class PostingListFragment extends Fragment {
         btnStudy.setOnClickListener(onClickListener);
         btnEtc.setOnClickListener(onClickListener);
 
+        // 내 글 보기 버튼 눌렀을 때
+        btnMyPosting = view.findViewById(R.id.btn_myposting);
+        btnMyPosting.setOnClickListener(v -> {
+            if (myPostingCheck) {
+                // 내 글 보기 상태였으면
+                myPostingCheck = false;
+                btnMyPosting.setImageResource(R.drawable.ic_myposting_off);
+                String findingText = searchText.getText().toString();
+                postingItems = new ArrayList<>(posting_list);
+                setCommunityCategory(communityCategory, findingText);
+            } else {
+                // 전체 글 보기 상태였으면
+                myPostingCheck = true;
+                btnMyPosting.setImageResource(R.drawable.ic_myposting);
+                String findingText = searchText.getText().toString();
+                setFindMyPosting(communityCategory, findingText);
+            }
+        });
+
+
         // 포스팅 하나 클릭했을떄, [포스팅]으로 가는 코드
         postingAdapter.setOnItemClicklistener(new PostingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putString("test", "testmessage");
-                navController.navigate(R.id.action_board_to_board_detail, bundle);
+                bundle.putParcelable("me", me);
+                bundle.putParcelable("posting", postingItems.get(position));
+                navController.navigate(R.id.action_posting_list_to_posting, bundle);
             }
+        });
+
+        btnMyPosting = view.findViewById(R.id.btn_myposting);
+        btnWrite = view.findViewById(R.id.btn_write);
+
+        btnWrite.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext().getApplicationContext(), PostingWriteActivity.class);
+            intent.putExtra("me", me);
+            startActivity(intent);
         });
 
         return view;
@@ -211,23 +242,35 @@ public class PostingListFragment extends Fragment {
     }
 
     // 커뮤니티의 카테고리에 따라서, 카테고리가 일치하는 포스팅정보만 화면에 보여지게 설정
-    public void setCommunityCategory(int communityCategory) {
-        postingItems.clear();
-        for (Posting posting : posting_list) {
+    public void setCommunityCategory(int communityCategory, String searchText) {
+        ArrayList<Posting> tempList = new ArrayList<>();
+        for (Posting posting : postingItems) {
             boolean check = false;
-            if (communityCategory == 0) {
+            if (communityCategory == 0 && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 1 && posting.category.equals("공모전")) {
+            } else if (communityCategory == 1 && posting.category.equals("공모전") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 2 && posting.category.equals("스터디")) {
+            } else if (communityCategory == 2 && posting.category.equals("스터디") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
-            } else if (communityCategory == 3 && posting.category.equals("기타")) {
+            } else if (communityCategory == 3 && posting.category.equals("기타") && (searchText.equals("") || posting.title.contains(searchText))) {
                 check = true;
             }
             if (check) {
+                tempList.add(posting);
+            }
+        }
+        postingAdapter.setPostingList(tempList);
+    }
+
+    // 내글 보기 버튼을 눌렀을 때 내 글만 화면에 보여지게 설정
+    public void setFindMyPosting(int communityCategory, String searchText) {
+        postingItems.clear();
+        for (Posting posting : posting_list) {
+            if (me.id == posting.personalId) {
                 postingItems.add(posting);
             }
         }
         postingAdapter.setPostingList(postingItems);
+        setCommunityCategory(communityCategory, searchText);
     }
 }

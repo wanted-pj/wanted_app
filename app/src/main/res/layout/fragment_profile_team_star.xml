@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:gravity="center_horizontal"
+            android:letterSpacing="-0.05"
+            android:text="활동이 종료되었습니다.\n팀원들의 참여 태도를 평가해주세요."
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--구분선-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.8dp"
+                android:background="@color/gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="40dp">
+
+                <!--프로필 사진-->
+                <ImageView
+                    android:id="@+id/star_img"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@drawable/profile_basic1" />
+
+                <!--이름-->
+                <TextView
+                    android:id="@+id/star_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:letterSpacing="-0.05"
+                    android:text="시미즈"
+                    android:textColor="@color/black"
+                    android:textSize="14dp" />
+
+                <!--별점-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <!--별점 1 성실성-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/btn_teal"
+                            android:gravity="center"
+                            android:letterSpacing="-0.05"
+                            android:padding="6dp"
+                            android:text="성실성"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <RadioGroup
+                            android:id="@+id/attend_rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/attend_btn1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="1" />
+
+                            <RadioButton
+                                android:id="@+id/attend_btn2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="2" />
+
+                            <RadioButton
+                                android:id="@+id/attend_btn3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="3" />
+
+                            <RadioButton
+                                android:id="@+id/attend_btn4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="4" />
+
+                            <RadioButton
+                                android:id="@+id/attend_btn5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="5" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <!--별점 2 팀워크-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/btn_teal"
+                            android:gravity="center"
+                            android:letterSpacing="-0.05"
+                            android:padding="6dp"
+                            android:text="팀워크"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <RadioGroup
+                            android:id="@+id/teamwork_rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/teamwork_btn1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="1" />
+
+                            <RadioButton
+                                android:id="@+id/teamwork_btn2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="2" />
+
+                            <RadioButton
+                                android:id="@+id/teamwork_btn3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="3" />
+
+                            <RadioButton
+                                android:id="@+id/teamwork_btn4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="4" />
+
+                            <RadioButton
+                                android:id="@+id/teamwork_btn5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="5" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                    <!--별점 3 기여도-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="200dp"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="60dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/btn_teal"
+                            android:gravity="center"
+                            android:letterSpacing="-0.05"
+                            android:padding="6dp"
+                            android:text="기여도"
+                            android:textColor="@color/white"
+                            android:textSize="14dp" />
+
+                        <RadioGroup
+                            android:id="@+id/contriute_rg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RadioButton
+                                android:id="@+id/contriute_btn1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="1" />
+
+                            <RadioButton
+                                android:id="@+id/contriute_btn2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="2" />
+
+                            <RadioButton
+                                android:id="@+id/contriute_btn3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="3" />
+
+                            <RadioButton
+                                android:id="@+id/contriute_btn4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="4" />
+
+                            <RadioButton
+                                android:id="@+id/contriute_btn5"
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:text="5" />
+
+                        </RadioGroup>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+        <!--버튼-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="40dp">
+
+            <Button
+                style="@style/btnBasic"
+                android:id="@+id/star_cancel"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/btn_teal_off"
+                android:text="취소"
+                android:textColor="@color/colorPrimaryDark" />
+
+            <Button
+                style="@style/btnBasic"
+                android:id="@+id/star_complete"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/btn_teal_off"
+                android:text="완료"
+                android:textColor="@color/colorPrimaryDark" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

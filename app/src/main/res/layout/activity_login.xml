@@ -64,6 +64,7 @@
         // Password
         <EditText
             android:id="@+id/login_pwd"
+            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="15dp"
@@ -78,22 +79,7 @@
             app:layout_constraintTop_toBottomOf="@id/login_id"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        // 로그인버튼
-        <TextView
-            android:id="@+id/login_login"
-            android:layout_width="110dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:background="@drawable/btn_white"
-            android:text="로그인"
-            android:textSize="14dp"
-            android:textColor="@color/colorPrimaryDark"
-            android:letterSpacing="-0.05"
-            app:layout_constraintTop_toBottomOf="@id/login_pwd"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        // 회원가입
+        // 로그인버튼 -> 회원가입
         <TextView
             android:id="@+id/login_register"
             android:layout_width="110dp"
@@ -102,6 +88,21 @@
             android:gravity="center"
             android:background="@drawable/btn_white"
             android:text="회원가입"
+            android:textSize="14dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:letterSpacing="-0.05"
+            app:layout_constraintTop_toBottomOf="@id/login_pwd"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        // 회원가입 -> 로그인
+        <TextView
+            android:id="@+id/login_login"
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:background="@drawable/btn_white"
+            android:text="로그인"
             android:textSize="14dp"
             android:textColor="@color/colorPrimaryDark"
             android:letterSpacing="-0.05"

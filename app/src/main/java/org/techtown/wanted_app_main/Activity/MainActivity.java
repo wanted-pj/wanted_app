@@ -29,11 +29,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public static Personal me;
     public static MainActivity mainActivity;
+    public static BottomNavigationView bottomNavigationView;
+
+    Bundle bundle = new Bundle();
+
+    public static int btnNavIndex; // 0홈 1커뮤니티 2채팅 3프로필
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 회원 받기
+        me = getIntent().getParcelableExtra("me");
         setContentView(R.layout.activity_main);
+
         // 본인
         mainActivity = this;
 
@@ -43,22 +51,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navController = navHostFragment.getNavController();
 
         // Activity 바텀 NavigationView 설정
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        setBtnNavIndex(0);
 
-        // 회원 받기
-        me = getIntent().getParcelableExtra("me");
 
-//        FragmentManager fm = getSupportFragmentManager();
-//        FragmentTransaction ft = fm.beginTransaction();
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, navHostFragment).commit();
-
+        // MainFragment 에 me 뿌리기
+//        MainFragment mainFragment = new MainFragment();
 //        Bundle bundle = new Bundle();
 //        bundle.putParcelable("me", me);
-//        MainFragment mainFragment = new MainFragment();
-
 //        mainFragment.setArguments(bundle);
+//        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, mainFragment).commitAllowingStateLoss();
     }
 
     // <----바텀 네비게이션--->
@@ -70,10 +73,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 navController.navigate(R.id.action_global_mainFragment);
                 break;
             case R.id.menu_community:
-                navController.navigate(R.id.action_global_boardFragment);
+                navController.navigate(R.id.action_global_postingListFragment);
                 break;
             case R.id.menu_chat:
-                navController.navigate(R.id.action_global_chatFragment);
+                navController.navigate(R.id.action_global_chatListFragment);
                 break;
             case R.id.menu_profile:
                 navController.navigate(R.id.action_global_profileFragment);
@@ -82,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
         }
         return true;
+    }
+
+    public static void setBtnNavIndex(int btnNavIndex) {
+        MainActivity.btnNavIndex = btnNavIndex;
     }
 
     // 뒤로가기 버튼 눌렀을 때, 홈화면 일때와 다른 화면 일때의 구현
@@ -102,16 +109,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         // 홈화면으로 온 경우
         NavDestination currentDestination = navController.getCurrentDestination();
-        NavDestination tag1 = navController.getGraph().findNode(R.id.mainFragment);
-        if (currentDestination == tag1) {
-            BottomNavigationView bnv = findViewById(R.id.bottomNavigation);
-            updateBottomMenu(bnv);
+        NavDestination main = navController.getGraph().findNode(R.id.mainFragment);
+        NavDestination friendMore = navController.getGraph().findNode(R.id.friendMoreFragment);
+        NavDestination community = navController.getGraph().findNode(R.id.postingListFragment);
+
+        if (currentDestination == main || currentDestination == friendMore) {
+            setBtnNavIndex(0);
+            updateBottomMenu();
+        } else if (currentDestination == community) {
+            setBtnNavIndex(1);
+            updateBottomMenu();
         }
     }
 
-    private void updateBottomMenu(BottomNavigationView navigation) {
-        navigation.getMenu().findItem(R.id.menu_home).setChecked(true);
+    public static void updateBottomMenu() {
+        // 0홈 1커뮤니티 2채팅 3프로필
+        switch (btnNavIndex) {
+            case 0:
+                bottomNavigationView.getMenu().findItem(R.id.menu_home).setChecked(true);
+                break;
+            case 1:
+                bottomNavigationView.getMenu().findItem(R.id.menu_community).setChecked(true);
+                break;
+            case 2:
+                bottomNavigationView.getMenu().findItem(R.id.menu_chat).setChecked(true);
+                break;
+            case 3:
+                bottomNavigationView.getMenu().findItem(R.id.menu_profile).setChecked(true);
+                break;
+        }
     }
     // </----바텀 네비게이션--->
-
 }

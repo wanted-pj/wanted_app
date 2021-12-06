@@ -104,23 +104,27 @@ public class MainFragment extends Fragment {
                 List<Personal> temp = gson.fromJson(changeString, listType);
                 personal_list = new ArrayList<>(temp);
 
-                int count = 0;
-                // 사람을 통해 posting 데이터 접근
+                // 사람을 통해 posting 데이터 접근, 모든 Posting 데이터 가져옴
+                ArrayList<Posting> tempPostings = new ArrayList<>();
                 for (Personal personal : personal_list) {
                     if (!personal.postings.isEmpty()) {
                         for (PostingDtoInPersonal posting : personal.postings) {
                             // 포스팅 넣기
-                            if (count < 4) {
-                                postingItems.add(new Posting(posting.postingId, personal.id,
-                                        posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.endTime, posting.teamName, personal.nickname, personal.img, posting.checkRecruiting));
-                                count += 1;
-                            }
+                            tempPostings.add(new Posting(posting.postingId, personal.id,
+                                    posting.category, posting.title, posting.content, posting.connects, posting.postingTime, posting.endTime, posting.teamName, personal.nickname, personal.img, posting.checkRecruiting));
                         }
                     }
                 }
-                if (postingItems.size() > 1) {
-                    Collections.sort(postingItems, (a, b) -> b.postingTime.compareTo(a.postingTime));
+                // 포스팅 올린 시간에 따라 정렬 후 4개의 데이터로만 채워 넣기
+                postingItems = new ArrayList<>();
+                if (tempPostings.size() > 1) {
+                    Collections.sort(tempPostings, (a, b) -> b.postingTime.compareTo(a.postingTime));
                 }
+                int count = Math.min(postingItems.size(), 4);
+                for (int i = 0; i < count; i++) {
+                    postingItems.add(tempPostings.get(i));
+                }
+
                 // 친구 채우기
                 setCategory(friendsCategory);
 
@@ -260,6 +264,7 @@ public class MainFragment extends Fragment {
                         }
                         break;
                 }
+                System.out.println("패키지 이름 출력: " + getContext().getPackageName());
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
                 friendItems.add(new Friend(another.getId(), another.nickname, another.school, another.major, another.address, image));
                 friendIds.add(another.id);

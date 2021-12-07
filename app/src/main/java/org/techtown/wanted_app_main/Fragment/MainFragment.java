@@ -264,7 +264,6 @@ public class MainFragment extends Fragment {
                         }
                         break;
                 }
-                System.out.println("패키지 이름 출력: " + getContext().getPackageName());
                 int image = getResources().getIdentifier(another.img, "drawable", getContext().getPackageName());
                 friendItems.add(new Friend(another.getId(), another.nickname, another.school, another.major, another.address, image));
                 friendIds.add(another.id);

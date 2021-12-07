@@ -1,7 +1,10 @@
 package org.techtown.wanted_app_main.Activity.Login;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -42,14 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
-    private ArrayList<Personal> list = new ArrayList<>();
-
     private EditText getId, getPwd;
     private TextView btnLogin, btnRegister;
     private Personal me;
-
-    private boolean check = false;
-    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,37 +155,32 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Id = getId.getText().toString();
-                String Pwd = getPwd.getText().toString();
+                String stringId = getId.getText().toString();
+                String pwd = getPwd.getText().toString();
 
-                if (Id.length() <= 0) { //아이디 미입력시
-                    dialog = new Dialog(LoginActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_register);
-                    dialog.show();
-                    TextView textView = dialog.findViewById(R.id.text);
-                    textView.setText("아이디를 입력해주세요.");
-                    Button cancel = dialog.findViewById(R.id.btnCancel);
-                    cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
-                } else if (Pwd.length() <= 0) { //비번 미입력시
-                    dialog = new Dialog(LoginActivity.this);
-                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    dialog.setContentView(R.layout.dialog_register);
-                    dialog.show();
-                    TextView textView = dialog.findViewById(R.id.text);
-                    textView.setText("비밀번호를 입력해주세요.");
-                    Button cancel = dialog.findViewById(R.id.btnCancel);
-                    cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            dialog.dismiss();
-                        }
-                    });
+                // 다이얼로그 생성
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                View view = getLayoutInflater().inflate(R.layout.dialog_register, null);
+                builder.setView(view);
+                AlertDialog alertDialog = builder.create();
+                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                // 다이얼로그 뷰 컴포넌트
+                TextView dialogMessageView = view.findViewById(R.id.text);
+                Button cancel = view.findViewById(R.id.btnCancel);
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                if (stringId.length() <= 0) { //아이디 미입력시
+                    dialogMessageView.setText("아이디를 입력해주세요.");
+                    alertDialog.show();
+                } else if (pwd.length() <= 0) { //비번 미입력시
+                    dialogMessageView.setText("비밀번호를 입력해주세요.");
+                    alertDialog.show();
                 } else { //비정상입력시 재입력, 정상입력시 mainfragment로 이동
                     RequestQueue requestQueue;
                     Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
@@ -195,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
                     requestQueue = new RequestQueue(cache, network);
                     requestQueue.start();
 
-                    String url1 = "http://13.125.214.178:8080/personal";
+                    String url1 = "http://13.125.214.178:8080/personal/login/" + stringId;
 
                     StringRequest stringRequest = new StringRequest(Request.Method.GET, url1, new Response.Listener<String>() {
                         @Override
@@ -208,35 +201,12 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                            Type listType = new TypeToken<ArrayList<Personal>>() {
-                            }.getType();
-                            list = gson.fromJson(changeString, listType);
+                            me = gson.fromJson(changeString, (Type) Personal.class);
+                            System.out.println(me);
 
-
-                            for (int i = 0; i < list.size(); i++) {  //id와 pwd비교
-                                if (Id.equals(list.get(i).stringId)) {
-                                    if (Pwd.equals(list.get(i).pwd)) {
-                                        check = true;
-                                        me = list.get(i);
-                                    }
-                                    break;
-                                }
-                            }
-
-                            if (check == false) { //아이디 비번 정확히 입력x ->재입력하라는 dialog 창이 뜸
-                                dialog = new Dialog(LoginActivity.this);
-                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog.setContentView(R.layout.dialog_register);
-                                dialog.show();
-                                TextView textView = dialog.findViewById(R.id.text);
-                                textView.setText("아이디나 비밀번호를\n정확히 입력해주세요.");
-                                Button cancel = dialog.findViewById(R.id.btnCancel);
-                                cancel.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        dialog.dismiss();
-                                    }
-                                });
+                            if (!me.getPwd().equals(pwd)) { //아이디 비번 정확히 입력x ->재입력하라는 dialog 창이 뜸
+                                dialogMessageView.setText("비밀번호를\n정확히 입력해주세요.");
+                                alertDialog.show();
                             } else { //올바른 입력시 mainactivity로 이동
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                 intent.putExtra("me", me);
@@ -246,8 +216,9 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     }, new Response.ErrorListener() {
                         @Override
-                        public void onErrorResponse(VolleyError error) {//서버오류시
-                            Log.e("Dd", error.getMessage());
+                        public void onErrorResponse(VolleyError error) { // 아이디가 존재하지 않는 경우
+                           dialogMessageView.setText("존재하지 않는 아이디 입니다.");
+                           alertDialog.show();
                         }
                     });
                     requestQueue.add(stringRequest);

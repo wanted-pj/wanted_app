@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="30dp"
         android:gravity="center"
-        android:text="빈칸이 있습니다.\n정보를 마저 입력해주세요."
         android:textSize="14dp"
         android:textColor="@color/black"
         android:letterSpacing="-0.05"/>

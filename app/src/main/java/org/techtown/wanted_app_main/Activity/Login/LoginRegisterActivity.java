@@ -546,17 +546,17 @@ public class LoginRegisterActivity extends AppCompatActivity {
     public void showSearchDialog(List<String> list, String how) {
 
         //다이얼로그
-        AlertDialog.Builder alert = new AlertDialog.Builder(LoginRegisterActivity.this);
-        View dialog = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
-        alert.setView(dialog);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(LoginRegisterActivity.this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_register_search, null);
+        dialogBuilder.setView(dialogView);
 
-        AlertDialog alertDialog = alert.create();
+        AlertDialog alertDialog = dialogBuilder.create();
         alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         alertDialog.show();
 
         searchAdapter = new SearchAdapter();
 
-        rvSearch = dialog.findViewById(R.id.recyclerView_search);
+        rvSearch = dialogView.findViewById(R.id.recyclerView_search);
         rvSearch.setAdapter(searchAdapter);
         rvSearch.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
 
@@ -581,8 +581,8 @@ public class LoginRegisterActivity extends AppCompatActivity {
         });
 
         // 탐색 버튼 누르면 검색됨
-        EditText input = dialog.findViewById(R.id.search_edittext);
-        Button btnSearchDB = dialog.findViewById(R.id.search_btn);
+        EditText input = dialogView.findViewById(R.id.search_edittext);
+        Button btnSearchDB = dialogView.findViewById(R.id.search_btn);
         btnSearchDB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

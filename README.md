@@ -69,10 +69,10 @@
 
 | 이름 | 담당 업무 |
 | ------ | ------ |
-| 임현승 | 개발 종료 후 Update 예정 |
-| 김선주 | 개발 종료 후 Update 예정 |
-| 정석우 | 개발 종료 후 Update 예정 |
-| 박지혜 | 개발 종료 후 Update 예정 |
+| 임현승 | Back-End 개발, DB 설계 |
+| 김선주 | Front-End 개발, UI/UX 디자인 |
+| 정석우 | Back-End 개발, DB 설계 |
+| 박지혜 | Front-End 개발, Open API 가공 |
 
 
 
